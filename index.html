@@ -6,65 +6,46 @@
 <title>GLS Printer — Henry</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   DESIGN TOKENS — v6
-   Lighter background, higher contrast text
-═══════════════════════════════════════════ */
 :root {
-  /* Backgrounds — lighter, more contrast */
-  --bg-app:   #0d1117;   /* main app bg — GitHub dark */
-  --bg-side:  #111827;   /* sidebar */
-  --bg-card:  #1a2332;   /* cards */
-  --bg-row:   #161d2b;   /* table rows */
-  --bg-row-h: #1e2840;   /* row hover */
-  --bg-input: #1a2235;   /* inputs */
-
-  /* Borders */
+  --bg-app:   #0d1117;
+  --bg-side:  #111827;
+  --bg-card:  #1a2332;
+  --bg-row:   #161d2b;
+  --bg-row-h: #1e2840;
+  --bg-input: #1a2235;
   --b0: rgba(255,255,255,.07);
   --b1: rgba(255,255,255,.12);
   --b2: rgba(255,255,255,.20);
-
-  /* Brand colors */
   --blue:    #3b82f6;
   --blue-hi: #60a5fa;
   --blue-lo: rgba(59,130,246,.15);
-
   --teal:    #14b8a6;
   --teal-hi: #2dd4bf;
-
   --amber:   #f59e0b;
   --amber-hi:#fbbf24;
-
   --green:   #22c55e;
   --green-hi:#4ade80;
   --green-lo:rgba(34,197,94,.12);
-
   --red:     #ef4444;
   --red-hi:  #f87171;
   --red-lo:  rgba(239,68,68,.12);
-
-  /* ── TEXT — 3 clear levels, as requested ── */
-  --tx-primary:   #E5E7EB;  /* near-white  — names, numbers */
-  --tx-secondary: #9CA3AF;  /* warm gray   — company */
-  --tx-tertiary:  #6B7280;  /* cool gray   — address, meta */
-  --tx-muted:     #374151;  /* dark gray   — labels, dividers */
-
-  /* Geometry */
+  --purple:  #a855f7;
+  --purple-hi:#c084fc;
+  --tx-primary:   #E5E7EB;
+  --tx-secondary: #9CA3AF;
+  --tx-tertiary:  #6B7280;
+  --tx-muted:     #374151;
   --r:  12px;
   --r2: 8px;
   --r3: 6px;
-
   --rail-w: 64px;
   --sb-w:   290px;
   --hist-w: 264px;
-
-  /* Layered shadows — Linear style */
   --sh1: 0 1px 2px rgba(0,0,0,.25), 0 4px 12px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.06);
   --sh2: 0 2px 4px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.25), 0 20px 48px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.08);
   --sh-blue: 0 4px 16px rgba(59,130,246,.3);
   --sh-teal: 0 4px 16px rgba(20,184,166,.28);
 }
-
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html,body { height:100%; overflow:hidden; }
 body {
@@ -73,32 +54,18 @@ body {
   font-size: 14px; color: var(--tx-primary);
   display: flex; line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  /* Subtle noise like Stripe */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.032'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
-
-/* Cursor on all interactive */
 button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .sdc-btn,.btn-go,.btn-fetch,.btn-new,.hd-close,.sdc-close,
-.topbar-btn,.hp-contact a,[data-email],.filter-btn { cursor:pointer; }
+.topbar-btn,.hp-contact a,[data-email],.filter-btn,
+.pkg-btn,.empik-salon-item { cursor:pointer; }
 
-/* ═══════════════════════════════════════════
-   PROGRESS + TOAST
-═══════════════════════════════════════════ */
-.g-progress { position:fixed; top:0; left:0; right:0; height:3px; z-index:9999; }
-.g-progress-fill {
-  height:100%; border-radius:0 3px 3px 0;
-  background: linear-gradient(90deg,var(--blue),var(--teal-hi),var(--blue-hi));
-  background-size:200% 100%; transition:width .6s cubic-bezier(.4,0,.2,1);
-  width:0%; animation:shimmer 2.5s linear infinite;
-  box-shadow:0 0 14px rgba(59,130,246,.5);
-}
+/* PROGRESS + TOAST */
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
 .step-track { height:2px; background:var(--b0); flex-shrink:0; }
 .step-track-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--teal)); transition:width .55s cubic-bezier(.4,0,.2,1); }
-
 .toast-container { position:fixed; top:24px; right:24px; z-index:9998; display:flex; flex-direction:column; gap:10px; pointer-events:none; }
 .toast {
   display:flex; align-items:flex-start; gap:12px; padding:14px 16px;
@@ -121,18 +88,11 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .toast.warn{border-color:rgba(245,158,11,.25)} .toast.warn .toast-bar{background:var(--amber)}
 .toast.err {border-color:rgba(239,68,68,.25)}  .toast.err  .toast-bar{background:var(--red)}
 
-/* ═══════════════════════════════════════════
-   CONFETTI CANVAS
-═══════════════════════════════════════════ */
-#confettiCanvas {
-  position:fixed; inset:0; pointer-events:none;
-  z-index:8000; display:none;
-}
+/* CONFETTI */
+#confettiCanvas { position:fixed; inset:0; pointer-events:none; z-index:8000; display:none; }
 #confettiCanvas.active{display:block}
 
-/* ═══════════════════════════════════════════
-   RAIL
-═══════════════════════════════════════════ */
+/* RAIL */
 .rail {
   width:var(--rail-w); background:var(--bg-app);
   box-shadow:1px 0 0 var(--b0); flex-shrink:0;
@@ -149,71 +109,40 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .rail-sep{width:28px;height:1px;background:var(--b0);margin:8px 0}
 .rail-btn{width:40px;height:40px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--tx-muted);transition:all .15s}
 .rail-btn:hover{background:rgba(255,255,255,.06);color:var(--tx-secondary)}
-/* Toned down — less gaming */
 .rail-btn.active{background:rgba(59,130,246,.12);color:var(--blue-hi)}
 
-/* ═══════════════════════════════════════════
-   SIDEBAR — lighter, less intense
-═══════════════════════════════════════════ */
+/* SIDEBAR */
 .sidebar {
   width:var(--sb-w); background:var(--bg-side);
-  /* gradient separator */
   box-shadow:1px 0 0 var(--b0), 2px 0 8px rgba(0,0,0,.2);
   display:flex; flex-direction:column; flex-shrink:0; overflow:hidden;
 }
-
 .sb-head{padding:24px 20px 20px;border-bottom:1px solid var(--b0)}
 .sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}
 .sb-logo{height:20px;filter:brightness(0) invert(.45)}
 .sb-divider{width:1px;height:18px;background:var(--b1)}
 .sb-app-name{font-size:13px;font-weight:600;color:var(--tx-tertiary)}
-
-.sb-printer{
-  display:flex;align-items:center;gap:10px;
-  background:rgba(255,255,255,.035);border:1px solid var(--b0);
-  border-radius:var(--r2);padding:12px 14px;
-}
+.sb-printer{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.035);border:1px solid var(--b0);border-radius:var(--r2);padding:12px 14px;}
 .sb-printer-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.6);animation:blink 2.5s infinite;flex-shrink:0}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .sb-printer-name{font-size:13px;font-weight:600;color:var(--tx-primary);line-height:1.3}
 .sb-printer-sub {font-size:11px;color:var(--tx-tertiary);margin-top:1px}
 
-/* Steps — cleaner, less glow */
 .sb-steps{padding:24px 20px;border-bottom:1px solid var(--b0);display:flex;flex-direction:column;gap:0}
 .sb-step{display:flex;align-items:flex-start;gap:14px;padding:12px 0;position:relative}
-.sb-step:not(:last-child)::after{
-  content:'';position:absolute;left:16px;top:46px;
-  width:2px;height:calc(100% - 24px);
-  background:var(--b0);border-radius:2px;
-}
+.sb-step:not(:last-child)::after{content:'';position:absolute;left:16px;top:46px;width:2px;height:calc(100% - 24px);background:var(--b0);border-radius:2px;}
 .sb-step.done::after{background:linear-gradient(to bottom,rgba(34,197,94,.5),rgba(34,197,94,.08))}
-.sbc{
-  width:34px;height:34px;border-radius:50%;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:700;
-  border:2px solid var(--b1);color:var(--tx-muted);
-  transition:all .3s;font-family:'JetBrains Mono',monospace;
-}
-.sb-step.active .sbc{
-  border-color:var(--blue);background:var(--blue);color:#fff;
-  /* softer glow — less gaming */
-  box-shadow:0 0 0 4px rgba(59,130,246,.15),0 4px 14px rgba(59,130,246,.35);
-}
+.sbc{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--b1);color:var(--tx-muted);transition:all .3s;font-family:'JetBrains Mono',monospace;}
+.sb-step.active .sbc{border-color:var(--blue);background:var(--blue);color:#fff;box-shadow:0 0 0 4px rgba(59,130,246,.15),0 4px 14px rgba(59,130,246,.35);}
 .sb-step.done .sbc{border-color:var(--green);background:rgba(34,197,94,.1);color:var(--green-hi)}
 .sb-step-text{padding-top:6px}
-/* Longer descriptions as requested */
 .sb-step-name{font-size:13px;font-weight:600;color:var(--tx-tertiary);transition:color .3s}
 .sb-step.active .sb-step-name{color:var(--tx-primary);font-weight:700}
 .sb-step.done   .sb-step-name{color:var(--green)}
 .sb-step-hint{font-size:11px;color:var(--tx-muted);margin-top:2px;display:none;line-height:1.4}
 .sb-step.active .sb-step-hint{display:block;color:var(--tx-tertiary)}
 
-/* Doc preview card */
-/* ═══════════════════════════════
-   SELECTED DOCUMENT CARD — v6.1
-   Full redesign: professional,
-   scannable, structured
-═══════════════════════════════ */
+/* SELECTED DOC CARD */
 .sb-doc-card {
   margin: 12px 10px 0;
   background: #111d2e;
@@ -222,134 +151,47 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
   overflow: hidden;
   display: none;
   animation: slideDown .28s cubic-bezier(.16,1,.3,1);
-  box-shadow:
-    0 1px 2px rgba(0,0,0,.3),
-    0 6px 20px rgba(0,0,0,.25),
-    inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
 }
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 .sb-doc-card.visible { display: block; }
-
-/* ── Header strip ── */
-.sdc-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 14px;
-  background: rgba(34,197,94,.08);
-  border-bottom: 1px solid rgba(34,197,94,.14);
-}
+.sdc-header {display: flex; align-items: center; justify-content: space-between;padding: 10px 14px;background: rgba(34,197,94,.08);border-bottom: 1px solid rgba(34,197,94,.14);}
 .sdc-header-left { display: flex; align-items: center; gap: 7px; }
-.sdc-status-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 7px rgba(34,197,94,.7);
-  flex-shrink: 0;
-}
-.sdc-header-label {
-  font-size: 10px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 2px;
-  color: var(--green-hi);
-}
-.sdc-close {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  color: var(--tx-tertiary); font-size: 11px;
-  width: 22px; height: 22px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 5px; transition: all .15s; flex-shrink: 0;
-}
+.sdc-status-dot {width: 7px; height: 7px; border-radius: 50%;background: var(--green);box-shadow: 0 0 7px rgba(34,197,94,.7);flex-shrink: 0;}
+.sdc-header-label {font-size: 10px; font-weight: 700;text-transform: uppercase; letter-spacing: 2px;color: var(--green-hi);}
+.sdc-close {background: rgba(255,255,255,.06);border: 1px solid rgba(255,255,255,.1);color: var(--tx-tertiary); font-size: 11px;width: 22px; height: 22px;display: flex; align-items: center; justify-content: center;border-radius: 5px; transition: all .15s; flex-shrink: 0;}
 .sdc-close:hover { background: rgba(239,68,68,.18); color: var(--red-hi); }
-
-/* ── Document number section ── */
-.sdc-docnum-block {
-  padding: 14px 14px 12px;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.sdc-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px; font-weight: 600;
-  color: #60a5fa;
-  letter-spacing: .4px;
-}
-.sdc-type-badge {
-  font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 5px;
-  text-transform: uppercase; letter-spacing: .5px;
-  background: rgba(59,130,246,.15);
-  color: #93c5fd;
-  border: 1px solid rgba(59,130,246,.28);
-}
-
-/* ── Recipient section ── */
-.sdc-section {
-  padding: 12px 14px;
-  border-bottom: 1px solid rgba(255,255,255,.05);
-}
+.sdc-docnum-block {padding: 14px 14px 12px;border-bottom: 1px solid rgba(255,255,255,.06);display: flex; align-items: center; justify-content: space-between;}
+.sdc-num {font-family: 'JetBrains Mono', monospace;font-size: 13px; font-weight: 600;color: #60a5fa;letter-spacing: .4px;}
+.sdc-type-badge {font-size: 10px; font-weight: 700;padding: 3px 8px; border-radius: 5px;text-transform: uppercase; letter-spacing: .5px;background: rgba(59,130,246,.15);color: #93c5fd;border: 1px solid rgba(59,130,246,.28);}
+.sdc-section {padding: 12px 14px;border-bottom: 1px solid rgba(255,255,255,.05);}
 .sdc-section:last-of-type { border-bottom: none; }
-.sdc-section-label {
-  font-size: 9px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 2.5px;
-  color: var(--tx-muted);
-  margin-bottom: 7px;
-}
-.sdc-company {
-  font-size: 14px; font-weight: 700;
-  color: #E5E7EB;
-  line-height: 1.3; margin-bottom: 6px;
-  letter-spacing: -.1px;
-}
-.sdc-meta-row {
-  display: flex; align-items: flex-start; gap: 7px;
-  margin-bottom: 5px;
-}
+.sdc-section-label {font-size: 9px; font-weight: 700;text-transform: uppercase; letter-spacing: 2.5px;color: var(--tx-muted);margin-bottom: 7px;}
+.sdc-company {font-size: 14px; font-weight: 700;color: #E5E7EB;line-height: 1.3; margin-bottom: 6px;letter-spacing: -.1px;}
+.sdc-meta-row {display: flex; align-items: flex-start; gap: 7px;margin-bottom: 5px;}
 .sdc-meta-row:last-child { margin-bottom: 0; }
-.sdc-meta-icon {
-  width: 18px; height: 18px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 4px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; flex-shrink: 0; margin-top: 1px;
-}
+.sdc-meta-icon {width: 18px; height: 18px;background: rgba(255,255,255,.05);border: 1px solid rgba(255,255,255,.08);border-radius: 4px;display: flex; align-items: center; justify-content: center;font-size: 10px; flex-shrink: 0; margin-top: 1px;}
 .sdc-meta-text { font-size: 12px; color: #9CA3AF; line-height: 1.45; }
 .sdc-meta-text strong { color: #D1D5DB; font-weight: 500; }
 
-/* ── Contents / opis ── */
-.sdc-contents {
-  padding: 11px 14px;
-  background: rgba(0,0,0,.15);
-  border-top: 1px solid rgba(255,255,255,.05);
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  display: flex; align-items: flex-start; gap: 8px;
+/* Empik badge in sidebar */
+.empik-badge {
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;
+  padding:3px 9px;border-radius:20px;
+  background:rgba(168,85,247,.12);
+  border:1px solid rgba(168,85,247,.28);
+  color:#c084fc;letter-spacing:.3px;
+  margin-bottom:8px;
 }
+
+.sdc-contents {padding: 11px 14px;background: rgba(0,0,0,.15);border-top: 1px solid rgba(255,255,255,.05);border-bottom: 1px solid rgba(255,255,255,.05);display: flex; align-items: flex-start; gap: 8px;}
 .sdc-contents-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
 .sdc-contents-text { font-size: 12px; color: #9CA3AF; line-height: 1.4; font-style: italic; }
-
-/* ── Service info chips ── */
-.sdc-chips {
-  padding: 10px 14px;
-  display: flex; gap: 6px; flex-wrap: wrap;
-  border-bottom: 1px solid rgba(255,255,255,.05);
-}
-.sdc-chip {
-  font-size: 10px; font-weight: 600;
-  padding: 3px 9px; border-radius: 20px;
-  letter-spacing: .3px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.08);
-  color: #6B7280;
-  display: flex; align-items: center; gap: 4px;
-}
-.sdc-chip.active {
-  background: rgba(20,184,166,.1);
-  border-color: rgba(20,184,166,.25);
-  color: #2dd4bf;
-}
-
-/* ── Action footer ── */
-.sdc-foot {
-  padding: 12px 14px;
-}
+.sdc-chips {padding: 10px 14px;display: flex; gap: 6px; flex-wrap: wrap;border-bottom: 1px solid rgba(255,255,255,.05);}
+.sdc-chip {font-size: 10px; font-weight: 600;padding: 3px 9px; border-radius: 20px;letter-spacing: .3px;background: rgba(255,255,255,.05);border: 1px solid rgba(255,255,255,.08);color: #6B7280;display: flex; align-items: center; gap: 4px;}
+.sdc-chip.active {background: rgba(20,184,166,.1);border-color: rgba(20,184,166,.25);color: #2dd4bf;}
+.sdc-foot {padding: 12px 14px;}
 .sdc-btn {
   width: 100%;
   background: linear-gradient(135deg, var(--blue), #1d4ed8);
@@ -360,11 +202,7 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
   box-shadow: 0 2px 4px rgba(0,0,0,.3), 0 4px 14px rgba(59,130,246,.3);
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.sdc-btn:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0,0,0,.3), 0 8px 24px rgba(59,130,246,.4);
-}
+.sdc-btn:hover {filter: brightness(1.1);transform: translateY(-1px);}
 .sdc-btn-icon { font-size: 14px; }
 
 .sb-history{margin-top:auto;border-top:1px solid var(--b0);padding:20px}
@@ -376,34 +214,20 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .sb-st{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tx-tertiary)}
 .sb-st-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(34,197,94,.5)}
 
-/* ═══════════════════════════════════════════
-   MAIN
-═══════════════════════════════════════════ */
+/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-
-.topbar{
-  height:58px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;
-  background:var(--bg-side);
-  border-bottom:1px solid var(--b0);
-  position:relative;
-}
-.topbar::after{
-  content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent 0%,rgba(59,130,246,.3) 35%,rgba(20,184,166,.22) 65%,transparent 100%);
-}
+.topbar{height:58px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--bg-side);border-bottom:1px solid var(--b0);position:relative;}
+.topbar::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(59,130,246,.3) 35%,rgba(20,184,166,.22) 65%,transparent 100%);}
 .topbar-title{font-size:16px;font-weight:700;color:var(--tx-primary);letter-spacing:-.15px}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .topbar-tag{font-size:10px;font-weight:700;letter-spacing:.8px;padding:5px 11px;border-radius:20px;text-transform:uppercase;background:rgba(59,130,246,.12);color:var(--blue-hi);border:1px solid rgba(59,130,246,.2)}
 .topbar-btn{width:34px;height:34px;border-radius:var(--r3);background:rgba(255,255,255,.05);border:1px solid var(--b1);color:var(--tx-secondary);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .topbar-btn:hover{background:rgba(255,255,255,.09);color:var(--tx-primary)}
-
 .content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0;scrollbar-width:thin;scrollbar-color:var(--bg-card) transparent;position:relative}
 .content::-webkit-scrollbar{width:5px}
 .content::-webkit-scrollbar-thumb{background:var(--bg-card);border-radius:4px}
 
-/* Panels */
+/* PANELS */
 .panel{display:none;position:absolute;inset:0;padding:28px;overflow-y:auto}
 .panel.active{display:block;animation:panelIn .36s cubic-bezier(.16,1,.3,1)}
 .panel.slide-out{display:block;animation:panelOut .26s cubic-bezier(.4,0,1,1) forwards;pointer-events:none}
@@ -415,97 +239,40 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 #panel1.active{display:flex}
 #panel1.slide-out{display:flex}
 
-/* ═══════════════════════════════════════════
-   P1 — DOCUMENT LIST
-═══════════════════════════════════════════ */
+/* P1 — DOCUMENT LIST */
 .p1-top{padding:24px 28px 0;flex-shrink:0}
-
-/* ── Search bar — prominent, high contrast ── */
 .search-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .search-wrap{flex:1;position:relative}
-.search-input{
-  width:100%;
-  background:var(--bg-input);
-  border:1.5px solid var(--b1);
-  border-radius:var(--r2);color:var(--tx-primary);
-  font-family:'Inter',sans-serif;font-size:14px;font-weight:500;
-  padding:13px 16px 13px 44px;outline:none;transition:all .2s;
-}
-.search-input:focus{
-  border-color:var(--blue);
-  background:rgba(30,40,60,.9);
-  box-shadow:0 0 0 3px rgba(59,130,246,.15);
-}
+.search-input{width:100%;background:var(--bg-input);border:1.5px solid var(--b1);border-radius:var(--r2);color:var(--tx-primary);font-family:'Inter',sans-serif;font-size:14px;font-weight:500;padding:13px 16px 13px 44px;outline:none;transition:all .2s;}
+.search-input:focus{border-color:var(--blue);background:rgba(30,40,60,.9);box-shadow:0 0 0 3px rgba(59,130,246,.15);}
 .search-input::placeholder{color:var(--tx-muted);font-weight:400}
 .search-ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--tx-tertiary);font-size:15px;pointer-events:none}
-/* Clear button */
 .search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:none;background:none;border:none;color:var(--tx-tertiary);font-size:14px;padding:3px;border-radius:4px;transition:color .15s}
 .search-clear:hover{color:var(--tx-primary)}
 .search-wrap.has-value .search-clear{display:block}
-
-/* Filter chips */
 .filter-row{display:flex;align-items:center;gap:6px;margin-bottom:0}
 .filter-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx-muted);margin-right:2px;white-space:nowrap}
-.filter-btn{
-  font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;
-  padding:6px 12px;border-radius:20px;
-  border:1.5px solid var(--b0);background:transparent;color:var(--tx-tertiary);
-  transition:all .15s;white-space:nowrap;
-}
+.filter-btn{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;padding:6px 12px;border-radius:20px;border:1.5px solid var(--b0);background:transparent;color:var(--tx-tertiary);transition:all .15s;white-space:nowrap;}
 .filter-btn:hover{border-color:var(--b1);color:var(--tx-secondary)}
 .filter-btn.active{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.35);color:var(--blue-hi)}
 .filter-btn.f-urgent.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:var(--red-hi)}
 .filter-btn.f-ready.active{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:var(--green-hi)}
 .filter-btn.f-new.active{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:var(--blue-hi)}
-
-/* Tab row */
 .p1-tab-row{display:flex;gap:4px;padding:14px 28px 0;flex-shrink:0}
 .p1-tab{padding:9px 18px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx-tertiary);border-radius:var(--r3);border:1.5px solid transparent;transition:all .15s}
 .p1-tab.active{background:rgba(255,255,255,.07);color:var(--tx-primary);border-color:var(--b2)}
 .p1-tab:hover:not(.active){color:var(--tx-secondary);background:rgba(255,255,255,.04)}
 
-/* ── TABLE ── */
+/* TABLE */
 .doc-table-wrap{padding:12px 28px 28px;flex:1;min-height:0;display:flex;flex-direction:column}
-.doc-table{
-  flex:1;background:var(--bg-row);
-  border:1px solid var(--b0);border-radius:var(--r);
-  overflow:hidden;display:flex;flex-direction:column;min-height:0;
-  box-shadow:var(--sh1);
-}
-
-/* STICKY header */
-.doc-table-head{
-  display:grid;
-  grid-template-columns: 200px 1fr 90px 130px 48px;
-  padding:12px 24px;
-  border-bottom:1px solid var(--b1);
-  background:rgba(10,16,28,.8);
-  backdrop-filter:blur(16px);
-  position:sticky;top:0;z-index:10;flex-shrink:0;
-}
+.doc-table{flex:1;background:var(--bg-row);border:1px solid var(--b0);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;min-height:0;box-shadow:var(--sh1);}
+.doc-table-head{display:grid;grid-template-columns: 200px 1fr 90px 130px 48px;padding:12px 24px;border-bottom:1px solid var(--b1);background:rgba(10,16,28,.8);backdrop-filter:blur(16px);position:sticky;top:0;z-index:10;flex-shrink:0;}
 .dth{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--tx-muted)}
-
 .doc-table-body{overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:var(--bg-card) transparent}
 .doc-table-body::-webkit-scrollbar{width:5px}
 .doc-table-body::-webkit-scrollbar-thumb{background:var(--bg-card);border-radius:4px}
-
-.doc-group-row{
-  padding:12px 24px 8px;
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--tx-muted);
-  background:rgba(0,0,0,.2);border-bottom:1px solid var(--b0);
-}
-
-/* ── ROWS — 60px min height ── */
-.doc-row{
-  display:grid;
-  grid-template-columns:200px 1fr 90px 130px 48px;
-  padding:18px 24px;  /* ~60px total with content */
-  min-height:60px;
-  border-bottom:1px solid var(--b0);
-  transition:background .1s;align-items:center;
-  position:relative;
-}
-/* Left stripe by status */
+.doc-group-row{padding:12px 24px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--tx-muted);background:rgba(0,0,0,.2);border-bottom:1px solid var(--b0);}
+.doc-row{display:grid;grid-template-columns:200px 1fr 90px 130px 48px;padding:18px 24px;min-height:60px;border-bottom:1px solid var(--b0);transition:background .1s;align-items:center;position:relative;}
 .doc-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;transition:all .15s}
 .doc-row[data-status="ready"]::before  {background:var(--green);opacity:.45}
 .doc-row[data-status="urgent"]::before {background:var(--red);opacity:.7;animation:stripeFlash 2s infinite}
@@ -518,61 +285,31 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .doc-row.selected{background:rgba(245,158,11,.06)}
 .doc-row.selected::before{background:var(--amber) !important;opacity:1 !important;width:4px}
 .doc-row.filtered-out{display:none}
-
-/* ── TYPOGRAPHY HIERARCHY in rows ── */
-/* Level 1: Document number — monospace, blue, 13px */
 .dr-num{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--blue-hi);letter-spacing:.3px;transition:color .15s}
 .doc-row.selected .dr-num{color:var(--amber-hi)}
-
-/* Level 2: Company name — bold, near-white, 15px */
 .dr-company{font-size:15px;font-weight:700;color:var(--tx-primary);letter-spacing:-.1px;line-height:1.25}
-
-/* Level 3: Address — smaller, muted, 12px */
 .dr-addr{font-size:12px;color:var(--tx-tertiary);margin-top:3px;font-weight:400}
-
 .dr-num-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-
-/* ── DOCUMENT TYPE BADGES — consistent palette ── */
 .dr-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.4px;text-transform:uppercase}
-/* WZ — blue */
 .b-wz{background:rgba(59,130,246,.16);color:#93c5fd;border:1px solid rgba(59,130,246,.28)}
-/* FV — purple */
 .b-fv{background:rgba(168,85,247,.16);color:#c4b5fd;border:1px solid rgba(168,85,247,.28)}
-/* MW — teal */
 .b-mw{background:rgba(20,184,166,.16);color:#99f6e4;border:1px solid rgba(20,184,166,.28)}
-
 .dr-time{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--tx-tertiary)}
-
-/* ── STATUS BADGES — with icons, most prominent element ── */
-.ds{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:12px;font-weight:700;
-  padding:5px 11px;border-radius:20px;
-  text-transform:uppercase;letter-spacing:.5px;
-  white-space:nowrap;
-}
+.ds{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:5px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
 .ds::before{font-size:11px;flex-shrink:0}
-/* ✔ GOTOWE */
 .ds-ready{background:var(--green-lo);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
 .ds-ready::before{content:'✔'}
-/* ⚠ PILNE — pulsing badge */
-.ds-urgent{
-  background:var(--red-lo);color:#fca5a5;border:1px solid rgba(239,68,68,.3);
-  animation:badgePulse 1.7s ease-in-out infinite;
-  box-shadow:0 0 8px rgba(239,68,68,.15);
-}
+.ds-urgent{background:var(--red-lo);color:#fca5a5;border:1px solid rgba(239,68,68,.3);animation:badgePulse 1.7s ease-in-out infinite;box-shadow:0 0 8px rgba(239,68,68,.15);}
 .ds-urgent::before{content:'⚠'}
 @keyframes badgePulse{0%,100%{box-shadow:0 0 8px rgba(239,68,68,.15)}50%{box-shadow:0 0 16px rgba(239,68,68,.35)}}
-/* ● NOWE — brighter blue, clear border as requested */
 .ds-new{background:rgba(59,130,246,.15);color:#93c5fd;border:2px solid rgba(59,130,246,.45)}
 .ds-new::before{content:'●';font-size:8px}
-
 .dr-action{display:flex;align-items:center;justify-content:flex-end}
 .dr-arrow{opacity:0;color:var(--tx-secondary);font-size:18px;transition:all .15s}
 .doc-row.selected .dr-arrow{opacity:1;color:var(--amber-hi)}
 .no-results{display:none;padding:56px 28px;text-align:center;font-size:14px;color:var(--tx-tertiary)}
 
-/* ── SKELETON LOADING ── */
+/* SKELETON */
 .skeleton-wrap{display:none;flex-direction:column}
 .skeleton-wrap.show{display:flex}
 .sk-row{display:grid;grid-template-columns:200px 1fr 90px 130px 48px;padding:18px 24px;min-height:60px;border-bottom:1px solid var(--b0);align-items:center;gap:16px}
@@ -594,18 +331,58 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .mi:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
 .mi::placeholder{color:var(--tx-muted);font-family:'Inter',sans-serif}
 
-/* ═══════════════════════════════════════════
-   P2 — WEIGHT
-═══════════════════════════════════════════ */
+/* P2 — WEIGHT */
 .p-wrap{max-width:580px}
 .p-title{font-size:24px;font-weight:800;color:var(--tx-primary);margin-bottom:5px;letter-spacing:-.3px}
 .p-sub  {font-size:14px;color:var(--tx-tertiary);margin-bottom:32px;line-height:1.5}
-
 .doc-banner{background:var(--bg-card);border:1px solid var(--b1);border-radius:var(--r);padding:20px 22px;margin-bottom:24px;display:flex;align-items:center;gap:18px;box-shadow:var(--sh1)}
 .db-icon{font-size:26px}
 .db-num {font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue-hi);margin-bottom:4px;letter-spacing:.3px}
 .db-name{font-size:15px;font-weight:700;color:var(--tx-primary)}
 .db-addr{font-size:12px;color:var(--tx-tertiary);margin-top:3px}
+
+/* ═══════════════════════════════
+   PACKAGE COUNT STEPPER — NEW
+═══════════════════════════════ */
+.pkg-block {
+  background: var(--bg-card);
+  border: 1px solid var(--b1);
+  border-radius: var(--r);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--sh1);
+}
+.pkg-label-wrap { display:flex; flex-direction:column; gap:4px; }
+.pkg-label { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.8px; color:var(--tx-tertiary); }
+.pkg-hint  { font-size:12px; color:var(--tx-muted); }
+.pkg-stepper { display:flex; align-items:center; gap:0; border:1.5px solid var(--b1); border-radius:10px; overflow:hidden; }
+.pkg-btn {
+  width:44px; height:44px;
+  background: rgba(255,255,255,.04);
+  border: none;
+  color: var(--tx-secondary);
+  font-size: 20px; font-weight: 400;
+  display:flex; align-items:center; justify-content:center;
+  transition: all .15s;
+}
+.pkg-btn:hover { background:rgba(59,130,246,.12); color:var(--blue-hi); }
+.pkg-btn:active { transform:scale(.93); }
+.pkg-count {
+  min-width: 52px;
+  text-align: center;
+  font-size: 26px; font-weight: 900;
+  color: var(--tx-primary);
+  font-family: 'JetBrains Mono', monospace;
+  border-left: 1px solid var(--b1);
+  border-right: 1px solid var(--b1);
+  padding: 0 8px;
+  line-height: 44px;
+  transition: color .15s;
+}
+.pkg-count.many { color: var(--amber-hi); }
 
 .weight-block{background:var(--bg-card);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;margin-bottom:24px;box-shadow:var(--sh2)}
 .wb-display-area{background:rgba(0,0,0,.2);border-bottom:1px solid var(--b0);padding:36px 28px;text-align:center}
@@ -619,7 +396,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .weightDisplay.active .wb-underline{background:linear-gradient(90deg,var(--blue),var(--teal-hi));box-shadow:0 0 12px rgba(59,130,246,.4)}
 .weightDisplay.error  .wb-underline{background:var(--red);animation:shake .3s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-
 .numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
 .nk{background:var(--bg-card);border:none;border-top:1px solid var(--b0);border-right:1px solid var(--b0);color:var(--tx-primary);font-family:'Inter',sans-serif;font-size:22px;font-weight:600;padding:20px;transition:all .1s;display:flex;align-items:center;justify-content:center;min-height:68px;user-select:none}
 .nk:nth-child(3n){border-right:none}
@@ -628,9 +404,50 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .nk.del{font-size:17px;color:var(--tx-tertiary)}
 .nk.del:hover{color:var(--red-hi);background:rgba(239,68,68,.07)}
 
-/* ═══════════════════════════════════════════
-   P3 — PRINT PREVIEW
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════
+   EMPIK SALON PICKER — NEW
+═══════════════════════════════ */
+.empik-detect-block {
+  background: rgba(168,85,247,.07);
+  border: 1px solid rgba(168,85,247,.22);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  animation: slideDown .3s cubic-bezier(.16,1,.3,1);
+}
+.empik-detect-head {
+  display:flex; align-items:center; gap:10px; margin-bottom:12px;
+}
+.empik-detect-icon { font-size:20px; }
+.empik-detect-title { font-size:14px; font-weight:700; color:var(--purple-hi); }
+.empik-detect-sub { font-size:11px; color:var(--tx-tertiary); margin-top:2px; }
+.empik-order-row {
+  display:flex; align-items:center; gap:8px; margin-bottom:12px;
+}
+.empik-order-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--tx-muted); white-space:nowrap; }
+.empik-order-num {
+  font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600;
+  color:var(--purple-hi);
+  background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.22);
+  padding:4px 12px; border-radius:6px; flex:1;
+}
+.empik-salon-list { display:flex; flex-direction:column; gap:4px; }
+.empik-salon-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--tx-muted); margin-bottom:6px; }
+.empik-salon-item {
+  display:flex; align-items:flex-start; gap:10px;
+  background:rgba(255,255,255,.04); border:1px solid var(--b0);
+  border-radius:8px; padding:10px 12px;
+  transition:all .15s;
+}
+.empik-salon-item:hover { background:rgba(168,85,247,.08); border-color:rgba(168,85,247,.25); }
+.empik-salon-item.selected { background:rgba(168,85,247,.12); border-color:rgba(168,85,247,.4); }
+.empik-salon-check { width:16px; height:16px; border-radius:50%; border:2px solid var(--b1); flex-shrink:0; margin-top:2px; transition:all .15s; }
+.empik-salon-item.selected .empik-salon-check { background:var(--purple); border-color:var(--purple); }
+.empik-salon-name { font-size:13px; font-weight:600; color:var(--tx-primary); }
+.empik-salon-addr { font-size:11px; color:var(--tx-tertiary); margin-top:2px; }
+.empik-salon-pending { font-size:12px; color:var(--tx-muted); font-style:italic; padding:8px 0; }
+
+/* P3 — PRINT PREVIEW */
 .print-card{background:var(--bg-card);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;margin-bottom:24px;box-shadow:var(--sh2)}
 .pc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:rgba(59,130,246,.08);border-bottom:1px solid rgba(59,130,246,.14)}
 .pc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--blue-hi)}
@@ -641,40 +458,109 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .pf-val.big{font-size:40px;font-weight:900;color:var(--teal-hi);line-height:1;letter-spacing:-2px}
 .pc-div  {grid-column:1/-1;height:1px;background:var(--b0)}
 
+/* ═══════════════════════════════
+   UWAGI FIELD — NEW
+═══════════════════════════════ */
+.uwagi-block {
+  background: var(--bg-card);
+  border: 1px solid var(--b1);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: var(--sh1);
+}
+.uwagi-head {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--b0);
+  background: rgba(0,0,0,.15);
+}
+.uwagi-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--tx-tertiary); }
+.uwagi-auto-badge {
+  font-size:10px; font-weight:700;
+  padding:2px 8px; border-radius:20px;
+  background:rgba(168,85,247,.1);
+  border:1px solid rgba(168,85,247,.22);
+  color:var(--purple-hi);
+  display:none;
+}
+.uwagi-auto-badge.show { display:inline-block; }
+.uwagi-textarea {
+  width:100%; min-height:80px;
+  background: transparent;
+  border: none; outline: none;
+  color: var(--tx-primary);
+  font-family:'Inter',sans-serif;
+  font-size:14px; line-height:1.6;
+  padding:16px 20px;
+  resize:vertical;
+}
+.uwagi-textarea::placeholder { color:var(--tx-muted); }
+.uwagi-hint {
+  padding: 8px 20px 12px;
+  font-size:11px; color:var(--tx-muted);
+  border-top:1px solid var(--b0);
+  display:flex; align-items:center; gap:6px;
+}
+
+/* ═══════════════════════════════
+   PACZKI INFO in preview — NEW
+═══════════════════════════════ */
+.pkg-preview-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.25);
+  border-radius:6px; padding:5px 12px;
+  font-size:13px; font-weight:700; color:var(--amber-hi);
+}
+
 .loading-print{display:none;padding:44px;text-align:center}
 .loading-print.show{display:block}
 .spin-lg{width:40px;height:40px;border:2.5px solid var(--b1);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spin-msg{font-size:12px;font-weight:600;color:var(--tx-tertiary);letter-spacing:1.5px;text-transform:uppercase;line-height:2.5}
 
-/* ═══════════════════════════════════════════
-   BUTTONS
-═══════════════════════════════════════════ */
+/* BUTTONS */
 .btn-row{display:flex;gap:10px;align-items:center}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border:none;border-radius:var(--r2);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;transition:all .18s;text-transform:uppercase;min-height:48px}
 .btn-ghost{background:rgba(255,255,255,.05);color:var(--tx-secondary);border:1.5px solid var(--b1)}
 .btn-ghost:hover{background:rgba(255,255,255,.09);color:var(--tx-primary)}
 .btn-teal{background:linear-gradient(135deg,var(--teal),#0d9488);color:#fff;box-shadow:var(--sh-teal);padding:14px 28px;flex:1}
-.btn-teal:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,.3),0 10px 26px rgba(20,184,166,.38)}
+.btn-teal:hover{filter:brightness(1.08);transform:translateY(-1px);}
 .btn-print{background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;box-shadow:var(--sh-blue);padding:16px 36px;font-size:14px;flex:1;min-height:56px;border-radius:var(--r)}
-.btn-print:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 2px 4px rgba(0,0,0,.3),0 12px 32px rgba(59,130,246,.44)}
+.btn-print:hover{filter:brightness(1.08);transform:translateY(-2px);}
 .btn-fetch{width:100%;background:linear-gradient(135deg,var(--blue),#2563eb);color:#fff;border:none;border-radius:var(--r2);padding:15px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;transition:all .18s;box-shadow:var(--sh-blue)}
 .btn-fetch:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
-/* ═══════════════════════════════════════════
-   SUCCESS + CONFETTI TOGGLE
-═══════════════════════════════════════════ */
+/* SUCCESS */
 .success-wrap{text-align:center;padding:72px 28px;max-width:500px;margin:0 auto}
 .success-icon{font-size:72px;margin-bottom:20px;animation:pop .48s cubic-bezier(.175,.885,.32,1.275)}
 @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
 .success-title{font-size:30px;font-weight:900;color:var(--tx-primary);margin-bottom:6px;letter-spacing:-.4px}
-.success-sub{font-size:14px;color:var(--tx-tertiary);margin-bottom:32px;line-height:1.6}
-.tracking-box{background:var(--bg-card);border:1px solid var(--b2);border-radius:var(--r2);padding:16px 24px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--blue-hi);letter-spacing:3px;display:inline-block;margin-bottom:8px;box-shadow:var(--sh1)}
-.tracking-note{font-size:11px;color:var(--tx-muted);margin-bottom:32px;letter-spacing:.3px}
+.success-sub{font-size:14px;color:var(--tx-tertiary);margin-bottom:24px;line-height:1.6}
+
+/* ═══════════════════════════════
+   MULTI-LABEL TRACKING — NEW
+═══════════════════════════════ */
+.tracking-list { margin-bottom:8px; display:flex; flex-direction:column; gap:6px; }
+.tracking-item {
+  background:var(--bg-card); border:1px solid var(--b2); border-radius:var(--r2);
+  padding:12px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.tracking-item-badge {
+  font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+  color:var(--tx-muted); background:rgba(255,255,255,.05);
+  padding:2px 8px; border-radius:4px; border:1px solid var(--b0);
+}
+.tracking-item-num {
+  font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600;
+  color:var(--blue-hi); letter-spacing:2px;
+}
+
+.tracking-note{font-size:11px;color:var(--tx-muted);margin-bottom:28px;letter-spacing:.3px}
 .success-info{font-size:13px;color:var(--tx-tertiary);line-height:1.7;margin-bottom:32px}
 .btn-new{background:linear-gradient(135deg,var(--teal),#0d9488);color:#fff;border:none;border-radius:var(--r2);padding:16px 44px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;transition:all .2s;box-shadow:var(--sh-teal)}
 .btn-new:hover{filter:brightness(1.08);transform:translateY(-2px)}
-/* Confetti toggle */
 .confetti-toggle{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;font-size:11px;color:var(--tx-muted)}
 .confetti-toggle label{display:flex;align-items:center;gap:7px}
 .toggle-sw{position:relative;width:34px;height:18px;cursor:pointer}
@@ -684,9 +570,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .toggle-sw input:checked ~ .toggle-track{background:rgba(59,130,246,.2);border-color:rgba(59,130,246,.4)}
 .toggle-sw input:checked ~ .toggle-thumb{transform:translateX(16px);background:var(--blue-hi)}
 
-/* ═══════════════════════════════════════════
-   HISTORY PANEL
-═══════════════════════════════════════════ */
+/* HISTORY PANEL */
 .hist-panel{width:var(--hist-w);flex-shrink:0;box-shadow:-1px 0 0 var(--b0),-3px 0 12px rgba(0,0,0,.2);background:rgba(10,16,26,.98);display:flex;flex-direction:column;overflow:hidden}
 .hp-head{padding:18px 22px;border-bottom:1px solid var(--b0);display:flex;align-items:center;justify-content:space-between}
 .hp-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--tx-tertiary)}
@@ -702,9 +586,10 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .hp-num {font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--tx-primary)}
 .hp-time{font-size:10px;color:var(--tx-muted);font-family:'JetBrains Mono',monospace}
 .hp-name{font-size:12px;color:var(--tx-secondary);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hp-meta{display:flex;gap:7px;align-items:center}
+.hp-meta{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .hp-track{font-size:10px;color:var(--blue-hi);font-family:'JetBrains Mono',monospace}
 .hp-wt  {font-size:10px;font-weight:700;color:var(--tx-tertiary);background:rgba(255,255,255,.05);border-radius:4px;padding:2px 7px;border:1px solid var(--b0)}
+.hp-pkg {font-size:10px;font-weight:700;color:var(--amber-hi);background:rgba(245,158,11,.08);border-radius:4px;padding:2px 7px;border:1px solid rgba(245,158,11,.2)}
 .hp-foot{margin-top:auto;border-top:1px solid var(--b0);padding:18px 22px}
 .hp-stat{display:flex;justify-content:space-between;margin-bottom:5px}
 .hp-stat-lbl{font-size:10px;color:var(--tx-muted);text-transform:uppercase;letter-spacing:1.5px}
@@ -713,9 +598,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .hp-contact a{color:var(--blue-hi);text-decoration:none;font-size:11px;display:block;margin-top:3px}
 .hp-contact a:hover{text-decoration:underline}
 
-/* ═══════════════════════════════════════════
-   OVERLAYS
-═══════════════════════════════════════════ */
+/* OVERLAYS */
 .overlay{position:fixed;inset:0;z-index:999;background:rgba(3,7,15,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:24px}
 .overlay.hidden{display:none}
 .popup{background:rgba(17,24,39,.92);backdrop-filter:blur(32px);border:1px solid var(--b1);border-radius:18px;padding:40px 36px;max-width:480px;width:100%;box-shadow:var(--sh2);animation:fadeUp .3s cubic-bezier(.16,1,.3,1)}
@@ -731,7 +614,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .popup-note{background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:var(--r2);padding:12px 14px;font-size:13px;color:var(--tx-tertiary);line-height:1.6;margin-bottom:24px}
 .btn-go{width:100%;background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;border:none;border-radius:var(--r2);padding:16px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .18s;box-shadow:var(--sh-blue)}
 .btn-go:hover{filter:brightness(1.08);transform:translateY(-1px)}
-
 .hd-overlay{position:fixed;inset:0;z-index:499;background:rgba(0,0,0,.28);display:none}
 .hd-overlay.show{display:block}
 .help-drawer{position:fixed;top:0;right:-320px;width:300px;height:100%;background:rgba(11,18,32,.96);backdrop-filter:blur(28px);border-left:1px solid var(--b1);box-shadow:-4px 0 20px rgba(0,0,0,.4);z-index:500;transition:right .3s cubic-bezier(.16,1,.3,1);padding:24px 22px;display:flex;flex-direction:column;overflow-y:auto}
@@ -755,7 +637,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 <body>
 
 <canvas id="confettiCanvas"></canvas>
-<div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
 <div class="toast-container" id="toastContainer"></div>
 
 <!-- INTRO -->
@@ -766,9 +647,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     <div class="popup-title">GLS Label Printer</div>
     <div class="popup-sub">Generowanie etykiet kurierskich dla drukarki GODEX RT700</div>
     <ul class="popup-steps">
-      <li><div class="pst-n">1</div><div><strong style="color:var(--tx-primary)">Wybierz dokument WZ</strong><br>Kliknij z listy lub wpisz numer ręcznie.</div></li>
-      <li><div class="pst-n">2</div><div><strong style="color:var(--tx-primary)">Podaj wagę paczki</strong><br>Wpisz wagę klawiaturą dotykową. Min. 0.1 kg.</div></li>
-      <li><div class="pst-n">3</div><div><strong style="color:var(--tx-primary)">Drukuj etykietę</strong><br>Sprawdź dane i kliknij Drukuj.</div></li>
+      <li><div class="pst-n">1</div><div><strong style="color:var(--tx-primary)">Wybierz dokument WZ/MW</strong><br>Kliknij z listy lub wpisz numer ręcznie. Empik rozpoznawany automatycznie.</div></li>
+      <li><div class="pst-n">2</div><div><strong style="color:var(--tx-primary)">Podaj wagę i ilość paczek</strong><br>Wpisz wagę klawiaturą dotykową. Wybierz liczbę paczek (domyślnie 1).</div></li>
+      <li><div class="pst-n">3</div><div><strong style="color:var(--tx-primary)">Drukuj etykiety</strong><br>Sprawdź dane, uzupełnij uwagi i kliknij Drukuj.</div></li>
     </ul>
     <div class="popup-note">💡 Historia sesji w prawym panelu. Problemy? Kliknij <strong>?</strong> w nagłówku.</div>
     <button class="btn-go" data-action="closeIntro">Rozpocznij pracę →</button>
@@ -783,9 +664,14 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   <div class="hd-sub">Instrukcja GLS Printer</div>
   <div class="hd-sec">
     <div class="hd-sec-lbl">Jak korzystać</div>
-    <div class="hd-step"><div class="hd-n">1</div><div class="hd-t"><strong style="color:var(--tx-primary)">Wybierz dokument</strong> — kliknij wiersz w tabeli lub wpisz numer ręcznie.</div></div>
-    <div class="hd-step"><div class="hd-n">2</div><div class="hd-t"><strong style="color:var(--tx-primary)">Zważ paczkę</strong> — wpisz wagę. Min. 0.1 kg.</div></div>
-    <div class="hd-step"><div class="hd-n">3</div><div class="hd-t"><strong style="color:var(--tx-primary)">Drukuj</strong> — sprawdź dane i naciśnij Drukuj.</div></div>
+    <div class="hd-step"><div class="hd-n">1</div><div class="hd-t"><strong style="color:var(--tx-primary)">Wybierz dokument</strong> — kliknij wiersz lub wpisz numer ręcznie.</div></div>
+    <div class="hd-step"><div class="hd-n">2</div><div class="hd-t"><strong style="color:var(--tx-primary)">Zważ i policz paczki</strong> — wpisz wagę, ustaw ilość paczek.</div></div>
+    <div class="hd-step"><div class="hd-n">3</div><div class="hd-t"><strong style="color:var(--tx-primary)">Drukuj</strong> — sprawdź dane, uzupełnij uwagi i naciśnij Drukuj.</div></div>
+  </div>
+  <div class="hd-sec">
+    <div class="hd-sec-lbl">Empik</div>
+    <div class="hd-step"><div class="hd-t">📦 Dokumenty MW dla Empiku rozpoznawane automatycznie. Salon i numer zamówienia wyciągane z pola Uwagi dokumentu.</div></div>
+    <div class="hd-step"><div class="hd-t">🏪 Adresy salonów — do uzupełnienia w bazie (skontaktuj się z administratorem).</div></div>
   </div>
   <div class="hd-sec">
     <div class="hd-sec-lbl">Rozwiązywanie problemów</div>
@@ -835,8 +721,8 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     <div class="sb-step" id="step2">
       <div class="sbc" id="sc2">2</div>
       <div class="sb-step-text">
-        <div class="sb-step-name">Waga paczki</div>
-        <div class="sb-step-hint">Podaj wagę w kilogramach</div>
+        <div class="sb-step-name">Waga i ilość paczek</div>
+        <div class="sb-step-hint">Podaj wagę i liczbę paczek</div>
       </div>
     </div>
     <div class="sb-step" id="step3">
@@ -849,8 +735,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   </div>
 
   <div class="sb-doc-card" id="docPreview">
-
-    <!-- Header: status indicator -->
     <div class="sdc-header">
       <div class="sdc-header-left">
         <div class="sdc-status-dot"></div>
@@ -858,16 +742,13 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       </div>
       <button class="sdc-close" data-action="clearDoc">✕</button>
     </div>
-
-    <!-- Document number -->
     <div class="sdc-docnum-block">
-      <div class="sdc-num" id="docBadge">WZ/2024/—</div>
+      <div class="sdc-num" id="docBadge">—</div>
       <span class="sdc-type-badge" id="docTypeBadge">WZ</span>
     </div>
-
-    <!-- Recipient -->
     <div class="sdc-section">
       <div class="sdc-section-label">Odbiorca</div>
+      <div id="empik-sidebar-badge" class="empik-badge" style="display:none">🟣 EMPIK — rozpoznany</div>
       <div class="sdc-company" id="d-name">—</div>
       <div class="sdc-meta-row">
         <div class="sdc-meta-icon">📍</div>
@@ -878,29 +759,22 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
         <div class="sdc-meta-text" id="d-phone">—</div>
       </div>
     </div>
-
-    <!-- Contents -->
     <div class="sdc-contents">
       <div class="sdc-contents-icon">📦</div>
       <div class="sdc-contents-text" id="d-desc">—</div>
     </div>
-
-    <!-- Service chips -->
     <div class="sdc-chips">
       <span class="sdc-chip active">🚚 GLS Standard</span>
       <span class="sdc-chip active">24h</span>
       <span class="sdc-chip">Ubezpieczenie</span>
       <span class="sdc-chip">Pobranie</span>
     </div>
-
-    <!-- CTA -->
     <div class="sdc-foot">
       <button class="sdc-btn" data-action="goToWeight">
         <span class="sdc-btn-icon">⚖️</span>
         Podaj wagę i drukuj
       </button>
     </div>
-
   </div>
 
   <div class="sb-history">
@@ -931,7 +805,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
     <!-- ═══ P1 ═══ -->
     <div class="panel active" id="panel1">
-      <!-- Search + Filters -->
       <div class="p1-top">
         <div class="search-row">
           <div class="search-wrap" id="searchWrap">
@@ -948,14 +821,10 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
           <button class="filter-btn f-new"    data-action="filter" data-filter="new">● Nowe</button>
         </div>
       </div>
-
-      <!-- Tabs -->
       <div class="p1-tab-row">
         <div class="p1-tab active" data-action="switchTab" data-tab="list">📋 Lista WZ</div>
         <div class="p1-tab" data-action="switchTab" data-tab="manual">✏️ Wpisz ręcznie</div>
       </div>
-
-      <!-- Table -->
       <div class="doc-table-wrap">
         <div class="doc-table" id="tableWrap">
           <div class="doc-table-head">
@@ -966,14 +835,12 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
             <div class="dth"></div>
           </div>
           <div class="doc-table-body" id="docTableBody">
-            <!-- SKELETON rows shown during load -->
             <div class="skeleton-wrap" id="skeleton">
               <div class="sk-row"><div class="sk sk-num"></div><div><div class="sk sk-company"></div><div class="sk sk-addr"></div></div><div class="sk sk-time"></div><div class="sk sk-badge"></div><div></div></div>
               <div class="sk-row"><div class="sk sk-num"></div><div><div class="sk sk-company" style="width:60%"></div><div class="sk sk-addr" style="width:45%"></div></div><div class="sk sk-time"></div><div class="sk sk-badge"></div><div></div></div>
               <div class="sk-row"><div class="sk sk-num"></div><div><div class="sk sk-company" style="width:80%"></div><div class="sk sk-addr" style="width:50%"></div></div><div class="sk sk-time"></div><div class="sk sk-badge"></div><div></div></div>
               <div class="sk-row"><div class="sk sk-num"></div><div><div class="sk sk-company" style="width:65%"></div><div class="sk sk-addr" style="width:70%"></div></div><div class="sk sk-time"></div><div class="sk sk-badge"></div><div></div></div>
             </div>
-            <!-- Real data rows (hidden until loaded) -->
             <div id="realRows" style="display:none">
               <div class="doc-group-row">Dzisiaj</div>
               <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1042" data-status="ready">
@@ -983,9 +850,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
                 <div><span class="ds ds-ready">Gotowe</span></div>
                 <div class="dr-action"><span class="dr-arrow">›</span></div>
               </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1043" data-status="urgent">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1043</span><span class="dr-badge b-wz">WZ</span></div>
-                <div><div class="dr-company">ABC Transport Sp. k.</div><div class="dr-addr">ul. Długa 5/3, 30-001 Kraków</div></div>
+              <div class="doc-row" data-action="selectDoc" data-doc="MW/04339/26" data-status="urgent">
+                <div class="dr-num-wrap"><span class="dr-num">MW/04339/26</span><span class="dr-badge b-mw">MW</span></div>
+                <div><div class="dr-company">🟣 EMPIK — Jaworzno Galeria Galena</div><div class="dr-addr">Magazyn docelowy EMPIK S.A.</div></div>
                 <div class="dr-time">08:32</div>
                 <div><span class="ds ds-urgent">Pilne</span></div>
                 <div class="dr-action"><span class="dr-arrow">›</span></div>
@@ -1025,29 +892,14 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
                 <div><span class="ds ds-new">Nowe</span></div>
                 <div class="dr-action"><span class="dr-arrow">›</span></div>
               </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1049" data-status="ready">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1049</span><span class="dr-badge b-wz">WZ</span></div>
-                <div><div class="dr-company">Anna Wiśniewska</div><div class="dr-addr">ul. Zielona 4/2, 15-344 Białystok</div></div>
-                <div class="dr-time">10:55</div>
-                <div><span class="ds ds-ready">Gotowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1050" data-status="urgent">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1050</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">Hurtownia Elektryczna ELMAX</div><div class="dr-addr">ul. Elektryczna 14, 70-952 Szczecin</div></div>
-                <div class="dr-time">11:10</div>
-                <div><span class="ds ds-urgent">Pilne</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
               <div class="no-results" id="noResults">Brak wyników dla podanej frazy</div>
             </div>
           </div>
         </div>
-
         <div class="manual-pane" id="tab-manual">
           <div class="manual-inner">
             <label class="ml">Numer dokumentu (WZ / FV / MW)</label>
-            <input class="mi" type="text" id="docInput" placeholder="np. WZ/2024/1042">
+            <input class="mi" type="text" id="docInput" placeholder="np. WZ/2024/1042 lub MW/04339/26">
             <button class="btn-fetch" data-action="loadDoc">Pobierz dane z WF-Mag →</button>
           </div>
         </div>
@@ -1057,8 +909,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     <!-- ═══ P2 ═══ -->
     <div class="panel" id="panel2">
       <div class="p-wrap">
-        <div class="p-title">Podaj wagę paczki</div>
-        <div class="p-sub">Wpisz wagę z wagi lub użyj klawiatury dotykowej</div>
+        <div class="p-title">Waga i ilość paczek</div>
+        <div class="p-sub">Wpisz wagę i wybierz liczbę paczek — każda dostanie osobną etykietę</div>
+
         <div class="doc-banner">
           <div class="db-icon">📦</div>
           <div>
@@ -1067,9 +920,44 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
             <div class="db-addr" id="w-addr">—</div>
           </div>
         </div>
+
+        <!-- EMPIK detect block — shown only for Empik docs -->
+        <div class="empik-detect-block" id="empikDetectBlock" style="display:none">
+          <div class="empik-detect-head">
+            <span class="empik-detect-icon">🟣</span>
+            <div>
+              <div class="empik-detect-title">Dokument Empik — dane rozpoznane</div>
+              <div class="empik-detect-sub">Salon i zamówienie wyciągnięte automatycznie z pola Uwagi MW</div>
+            </div>
+          </div>
+          <div class="empik-order-row">
+            <span class="empik-order-label">Nr zamówienia:</span>
+            <span class="empik-order-num" id="empikOrderNum">—</span>
+          </div>
+          <div class="empik-salon-list">
+            <div class="empik-salon-label">Salon docelowy — potwierdź lub wybierz:</div>
+            <div id="empikSalonOptions">
+              <!-- filled dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- PACKAGE COUNT STEPPER -->
+        <div class="pkg-block">
+          <div class="pkg-label-wrap">
+            <span class="pkg-label">Ilość paczek</span>
+            <span class="pkg-hint">Każda paczka = osobna etykieta GLS</span>
+          </div>
+          <div class="pkg-stepper">
+            <button class="pkg-btn" data-action="pkgDec">−</button>
+            <div class="pkg-count" id="pkgCount">1</div>
+            <button class="pkg-btn" data-action="pkgInc">＋</button>
+          </div>
+        </div>
+
         <div class="weight-block">
           <div class="wb-display-area">
-            <div class="wb-label">Waga paczki</div>
+            <div class="wb-label">Waga paczki (łącznie)</div>
             <div class="wb-display" id="weightDisplay">
               <input type="number" class="wb-num" id="weightInput" placeholder="0.0" step="0.1" min="0.1" max="999" readonly>
               <span class="wb-unit">kg</span>
@@ -1091,6 +979,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
             <button class="nk del" data-action="numpadDel">⌫</button>
           </div>
         </div>
+
         <div class="btn-row">
           <button class="btn btn-ghost" data-action="goBack1">← Wróć</button>
           <button class="btn btn-teal" data-action="goToPrint">Dalej: Podgląd →</button>
@@ -1103,6 +992,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       <div class="p-wrap">
         <div class="p-title">Podgląd etykiety</div>
         <div class="p-sub">Sprawdź dane przed wydrukiem — etykieta trafi do GODEX RT700</div>
+
         <div class="print-card">
           <div class="pc-head">
             <div class="pc-title">List przewozowy GLS</div>
@@ -1114,19 +1004,37 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
             <div class="pc-div"></div>
             <div><div class="pf-label">Odbiorca</div><div class="pf-val" id="f-name">—</div></div>
             <div><div class="pf-label">Telefon</div><div class="pf-val" id="f-phone">—</div></div>
-            <div><div class="pf-label">Adres dostawy</div><div class="pf-val" id="f-addr">—</div></div>
-            <div><div class="pf-label">Opis zawartości</div><div class="pf-val" id="f-desc">—</div></div>
+            <div style="grid-column:1/-1"><div class="pf-label">Adres dostawy</div><div class="pf-val" id="f-addr">—</div></div>
+            <div style="grid-column:1/-1"><div class="pf-label">Opis zawartości</div><div class="pf-val" id="f-desc">—</div></div>
             <div class="pc-div"></div>
-            <div><div class="pf-label">Waga przesyłki</div><div class="pf-val big" id="f-weight">— kg</div></div>
+            <div>
+              <div class="pf-label">Waga przesyłki</div>
+              <div class="pf-val big" id="f-weight">— kg</div>
+            </div>
+            <div>
+              <div class="pf-label">Ilość paczek</div>
+              <div id="f-pkgbadge" class="pkg-preview-badge" style="margin-top:8px">📦 1 szt.</div>
+            </div>
           </div>
         </div>
+
+        <!-- UWAGI — editable, auto-filled for Empik -->
+        <div class="uwagi-block">
+          <div class="uwagi-head">
+            <span class="uwagi-title">📝 Uwagi na liście przewozowym</span>
+            <span class="uwagi-auto-badge" id="uwagiAutoBadge">✦ Auto-Empik</span>
+          </div>
+          <textarea class="uwagi-textarea" id="uwagiField" placeholder="Wpisz uwagi dla kuriera lub nadawcy… (opcjonalne)"></textarea>
+          <div class="uwagi-hint">💡 Dla Empiku wypełniane automatycznie z dokumentu MW. Możesz edytować.</div>
+        </div>
+
         <div class="loading-print" id="loadingPrint">
           <div class="spin-lg"></div>
-          <div class="spin-msg">Generowanie listu przewozowego…<br>Wysyłka do drukarki GODEX RT700…</div>
+          <div class="spin-msg" id="loadingMsg">Generowanie listów przewozowych…<br>Wysyłka do drukarki GODEX RT700…</div>
         </div>
         <div class="btn-row" id="printButtons">
           <button class="btn btn-ghost" data-action="goBack2">← Wróć</button>
-          <button class="btn btn-print" data-action="printLabel">🖨️&nbsp; Drukuj etykietę</button>
+          <button class="btn btn-print" data-action="printLabel">🖨️&nbsp; Drukuj etykiety</button>
         </div>
       </div>
     </div>
@@ -1135,11 +1043,11 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     <div class="panel" id="panelSuccess">
       <div class="success-wrap">
         <div class="success-icon">✅</div>
-        <div class="success-title">Etykieta wydrukowana!</div>
-        <div class="success-sub">List przewozowy wysłany do GODEX RT700.<br>Paczka gotowa do nadania kurierowi GLS.</div>
-        <div class="tracking-box" id="trackingNum">—</div>
-        <div class="tracking-note">Numer śledzenia przesyłki GLS</div>
-        <div class="success-info">Oklej paczkę etykietą i przekaż kurierowi GLS.<br>Numer śledzenia zapisany w historii sesji.</div>
+        <div class="success-title" id="successTitle">Etykieta wydrukowana!</div>
+        <div class="success-sub" id="successSub">List przewozowy wysłany do GODEX RT700.<br>Paczka gotowa do nadania kurierowi GLS.</div>
+        <div class="tracking-list" id="trackingList"></div>
+        <div class="tracking-note" id="trackingNote">Numer śledzenia przesyłki GLS</div>
+        <div class="success-info">Oklej paczkę etykietą i przekaż kurierowi GLS.<br>Numery śledzenia zapisane w historii sesji.</div>
         <button class="btn-new" data-action="reset">＋&nbsp; Nowa paczka</button>
         <div class="confetti-toggle">
           <label>
@@ -1154,8 +1062,8 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       </div>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
+  </div>
+</div>
 
 <!-- HISTORY PANEL -->
 <div class="hist-panel">
@@ -1177,25 +1085,55 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
 <script>
 (function () {
-  var state = { docNum:'', name:'', addr:'', phone:'', desc:'', weight:'', counter:0 };
+  /* ═══════════════════════════════════════
+     STATE
+  ═══════════════════════════════════════ */
+  var state = {
+    docNum:'', name:'', addr:'', phone:'', desc:'',
+    weight:'', counter:0,
+    packageCount: 1,
+    isEmpik: false,
+    empikOrderNum: '',
+    empikSalonName: '',
+    selectedSalonAddr: '',
+    uwagi: ''
+  };
   var histArr = [];
   var activeFilter = 'all';
 
+  /* ═══════════════════════════════════════
+     EMPIK SALON DATABASE
+     (uzupełnić adresami gdy będą dostępne)
+  ═══════════════════════════════════════ */
+  var empikSalonDB = {
+    // Klucz: fragment nazwy salonu (lowercase), Wartość: adres dostawy
+    'jaworzno galeria galena':   { addr: '⏳ Adres do uzupełnienia — Jaworzno Galeria Galena' },
+    'katowice silesia city':     { addr: '⏳ Adres do uzupełnienia — Katowice Silesia City' },
+    'krakow galeria krakowska':  { addr: '⏳ Adres do uzupełnienia — Kraków Galeria Krakowska' },
+    'warszawa arkadia':          { addr: '⏳ Adres do uzupełnienia — Warszawa Arkadia' },
+    'wroclaw magnolia':          { addr: '⏳ Adres do uzupełnienia — Wrocław Magnolia' },
+    'poznan old browary':        { addr: '⏳ Adres do uzupełnienia — Poznań Old Browary' },
+    'gdansk galeria baltycka':   { addr: '⏳ Adres do uzupełnienia — Gdańsk Galeria Bałtycka' },
+  };
+
+  var EMPIK_UWAGI_PREFIX = 'Dostawca 100318, Zamowienie Nr ';
+
+  /* ═══════════════════════════════════════
+     MOCK DOC DATA
+  ═══════════════════════════════════════ */
   var mockData = {
-    'WZ/2024/1042':{ name:'Kowalski Sp. z o.o.',            addr:'ul. Lipowa 12, 00-840 Warszawa',       phone:'+48 22 123 45 67', desc:'Sprzęt elektroniczny, 3 szt.' },
-    'WZ/2024/1043':{ name:'ABC Transport Sp. k.',            addr:'ul. Długa 5/3, 30-001 Kraków',         phone:'+48 12 987 65 43', desc:'Dokumenty, opakowanie kruche' },
-    'WZ/2024/1044':{ name:'Jan Nowak',                       addr:'os. Piastowskie 7/15, 61-157 Poznań',  phone:'+48 601 234 567',  desc:'Ubrania, 2 kartony' },
-    'WZ/2024/1045':{ name:'Firma XYZ Srl',                   addr:'ul. Rynek 1, 50-101 Wrocław',          phone:'+48 71 456 78 90', desc:'Części zamienne, ciężkie' },
-    'WZ/2024/1046':{ name:'Sklep Budowlany MAXBUD',          addr:'ul. Morska 33, 80-340 Gdańsk',         phone:'+48 58 333 22 11', desc:'Narzędzia ręczne, 5 poz.' },
-    'WZ/2024/1047':{ name:'Logistyka Pro Sp. z o.o.',        addr:'ul. Fabryczna 20, 93-431 Łódź',        phone:'+48 42 111 22 33', desc:'Paleta 1/2, materiały biurowe' },
-    'WZ/2024/1048':{ name:'Technika Przemysłowa Sp. z o.o.', addr:'ul. Przemysłowa 88, 40-020 Katowice',  phone:'+48 32 222 33 44', desc:'Moduły sterownicze, 1 szt.' },
-    'WZ/2024/1049':{ name:'Anna Wiśniewska',                 addr:'ul. Zielona 4/2, 15-344 Białystok',    phone:'+48 601 999 111',  desc:'Kosmetyki, zestaw prezentowy' },
-    'WZ/2024/1050':{ name:'Hurtownia Elektryczna ELMAX',     addr:'ul. Elektryczna 14, 70-952 Szczecin',  phone:'+48 91 444 55 66', desc:'Osprzęt elektryczny, 12 poz.' },
+    'WZ/2024/1042':{ name:'Kowalski Sp. z o.o.',            addr:'ul. Lipowa 12, 00-840 Warszawa',       phone:'+48 22 123 45 67', desc:'Sprzęt elektroniczny, 3 szt.', empik:false },
+    'MW/04339/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnet KW KONICA, 10 szt.',    empik:true,  empikSalon:'EMPIK JAWORZNO GALERIA GALENA', empikOrder:'826894697100' },
+    'WZ/2024/1044':{ name:'Jan Nowak',                       addr:'os. Piastowskie 7/15, 61-157 Poznań', phone:'+48 601 234 567',  desc:'Ubrania, 2 kartony',           empik:false },
+    'WZ/2024/1045':{ name:'Firma XYZ Srl',                   addr:'ul. Rynek 1, 50-101 Wrocław',         phone:'+48 71 456 78 90', desc:'Części zamienne, ciężkie',     empik:false },
+    'WZ/2024/1046':{ name:'Sklep Budowlany MAXBUD',          addr:'ul. Morska 33, 80-340 Gdańsk',        phone:'+48 58 333 22 11', desc:'Narzędzia ręczne, 5 poz.',     empik:false },
+    'WZ/2024/1047':{ name:'Logistyka Pro Sp. z o.o.',        addr:'ul. Fabryczna 20, 93-431 Łódź',       phone:'+48 42 111 22 33', desc:'Paleta 1/2, materiały biurowe',empik:false },
+    'WZ/2024/1048':{ name:'Technika Przemysłowa Sp. z o.o.', addr:'ul. Przemysłowa 88, 40-020 Katowice', phone:'+48 32 222 33 44', desc:'Moduły sterownicze, 1 szt.',   empik:false },
   };
 
   function g(id){ return document.getElementById(id); }
 
-  /* ── SKELETON LOADING — simulate fetch ── */
+  /* ═══ SKELETON ═══ */
   (function initSkeleton(){
     setTimeout(function(){
       g('skeleton').classList.remove('show');
@@ -1204,7 +1142,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     g('skeleton').classList.add('show');
   })();
 
-  /* ── TOAST ── */
+  /* ═══ TOAST ═══ */
   function toast(type, title, msg){
     var icons={ok:'✅',info:'ℹ️',warn:'⚠️',err:'❌'};
     var el=document.createElement('div');
@@ -1217,68 +1155,41 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     setTimeout(function(){ el.classList.add('out'); setTimeout(function(){ el.remove(); },350); },3500);
   }
 
-  /* ── CONFETTI ── */
-  var confettiActive=false;
+  /* ═══ CONFETTI ═══ */
   function launchConfetti(){
     if(!g('confettiToggle').checked) return;
-    var canvas=g('confettiCanvas');
-    var ctx=canvas.getContext('2d');
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
+    var canvas=g('confettiCanvas'), ctx=canvas.getContext('2d');
+    canvas.width=window.innerWidth; canvas.height=window.innerHeight;
     canvas.classList.add('active');
-    confettiActive=true;
-    var particles=[];
-    var colors=['#3b82f6','#22c55e','#f59e0b','#ef4444','#a855f7','#14b8a6','#f97316'];
-    for(var i=0;i<120;i++){
-      particles.push({
-        x:Math.random()*canvas.width,
-        y:-20-Math.random()*100,
-        vx:(Math.random()-.5)*4,
-        vy:2+Math.random()*4,
-        size:4+Math.random()*6,
-        color:colors[Math.floor(Math.random()*colors.length)],
-        rot:Math.random()*360,
-        rotV:(Math.random()-.5)*8,
-        shape:Math.random()>.5?'rect':'circle',
-        alpha:1
-      });
+    var particles=[], colors=['#3b82f6','#22c55e','#f59e0b','#ef4444','#a855f7','#14b8a6','#f97316'];
+    for(var i=0;i<140;i++){
+      particles.push({x:Math.random()*canvas.width,y:-20-Math.random()*100,vx:(Math.random()-.5)*4,vy:2+Math.random()*4,size:4+Math.random()*6,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360,rotV:(Math.random()-.5)*8,shape:Math.random()>.5?'rect':'circle',alpha:1});
     }
-    var frame=0;
+    var frame=0, active=true;
     function draw(){
-      if(!confettiActive) return;
+      if(!active) return;
       ctx.clearRect(0,0,canvas.width,canvas.height);
       var alive=false;
       particles.forEach(function(p){
         if(p.y>canvas.height+20||p.alpha<=0) return;
-        alive=true;
-        p.x+=p.vx; p.y+=p.vy; p.rot+=p.rotV; p.vy+=.06;
+        alive=true; p.x+=p.vx; p.y+=p.vy; p.rot+=p.rotV; p.vy+=.06;
         if(p.y>canvas.height*.6) p.alpha=Math.max(0,p.alpha-.015);
-        ctx.save();
-        ctx.globalAlpha=p.alpha;
-        ctx.translate(p.x,p.y);
-        ctx.rotate(p.rot*Math.PI/180);
-        ctx.fillStyle=p.color;
-        if(p.shape==='circle'){
-          ctx.beginPath();ctx.arc(0,0,p.size/2,0,Math.PI*2);ctx.fill();
-        } else {
-          ctx.fillRect(-p.size/2,-p.size/3,p.size,p.size*.6);
-        }
+        ctx.save(); ctx.globalAlpha=p.alpha; ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.color;
+        if(p.shape==='circle'){ctx.beginPath();ctx.arc(0,0,p.size/2,0,Math.PI*2);ctx.fill();}
+        else{ctx.fillRect(-p.size/2,-p.size/3,p.size,p.size*.6);}
         ctx.restore();
       });
-      if(alive&&frame<220){ frame++; requestAnimationFrame(draw); }
-      else { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.classList.remove('active'); confettiActive=false; }
+      if(alive&&frame<220){frame++;requestAnimationFrame(draw);}
+      else{ctx.clearRect(0,0,canvas.width,canvas.height);canvas.classList.remove('active');active=false;}
     }
     requestAnimationFrame(draw);
   }
 
-  /* ── PROGRESS ── */
+  /* ═══ PROGRESS ═══ */
   var pMap={1:'8%',2:'42%',3:'74%',4:'100%'};
-  function setProgress(n){
-    g('progressFill').style.width=pMap[n]||'0%';
-    g('stepTrackFill').style.width=pMap[n]||'0%';
-  }
+  function setProgress(n){ g('stepTrackFill').style.width=pMap[n]||'0%'; }
 
-  /* ── PANEL TRANSITIONS ── */
+  /* ═══ PANEL TRANSITIONS ═══ */
   function transitionTo(newN,back){
     var ids=['panel1','panel2','panel3','panelSuccess'];
     var newId=newN===4?'panelSuccess':'panel'+newN;
@@ -1293,10 +1204,8 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     setTimeout(function(){ g('mainContent').scrollTop=0; },60);
   }
 
-  /* ── STEPS ── */
   function setStep(n,back){
-    transitionTo(n,back);
-    setProgress(n);
+    transitionTo(n,back); setProgress(n);
     [1,2,3].forEach(function(i){
       var s=g('step'+i),c=g('sc'+i);
       s.classList.remove('active','done');
@@ -1304,39 +1213,33 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       else if(i===n){ s.classList.add('active'); c.textContent=i; }
       else{ c.textContent=i; }
     });
-    var titles=['Wybierz dokument','Podaj wagę','Podgląd etykiety','Wydrukowano'];
+    var titles=['Wybierz dokument','Waga i ilość paczek','Podgląd etykiety','Wydrukowano'];
     g('topbarTitle').textContent=titles[n-1]||'GLS Printer';
   }
 
-  /* ── SEARCH + CLEAR ── */
+  /* ═══ SEARCH + FILTER ═══ */
   g('searchInput').addEventListener('input',function(){
-    var q=this.value.trim().toLowerCase();
-    g('searchWrap').classList.toggle('has-value',q.length>0);
+    g('searchWrap').classList.toggle('has-value',this.value.trim().length>0);
     applyFilter();
   });
   g('searchClear').addEventListener('click',function(){
-    g('searchInput').value='';
-    g('searchWrap').classList.remove('has-value');
-    applyFilter();
-    g('searchInput').focus();
+    g('searchInput').value=''; g('searchWrap').classList.remove('has-value');
+    applyFilter(); g('searchInput').focus();
   });
-
-  /* ── FILTER ── */
   function applyFilter(){
     var q=g('searchInput').value.trim().toLowerCase();
     var rows=document.querySelectorAll('.doc-row');
     var vis=0;
     rows.forEach(function(r){
-      var statusMatch = activeFilter==='all' || r.dataset.status===activeFilter;
-      var textMatch   = !q || r.textContent.toLowerCase().indexOf(q)!==-1;
-      var show=statusMatch&&textMatch;
-      r.classList.toggle('filtered-out',!show);
-      if(show) vis++;
+      var sm=activeFilter==='all'||r.dataset.status===activeFilter;
+      var tm=!q||r.textContent.toLowerCase().indexOf(q)!==-1;
+      r.classList.toggle('filtered-out',!(sm&&tm));
+      if(sm&&tm) vis++;
     });
     g('noResults').style.display=vis===0?'block':'none';
   }
 
-  /* ── TABS ── */
+  /* ═══ TABS ═══ */
   function switchTab(tab,el){
     document.querySelectorAll('.p1-tab').forEach(function(t){ t.classList.remove('active'); });
     el.classList.add('active');
@@ -1345,52 +1248,148 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     g('tab-manual').classList.toggle('active',isManual);
   }
 
-  /* ── DOC SELECTION ── */
+  /* ═══ EMPIK DETECTION ═══ */
+  function detectEmpik(num, d){
+    if(!d.empik) return;
+    // Found Empik doc
+    state.isEmpik = true;
+    state.empikOrderNum = d.empikOrder || '';
+    state.empikSalonName = d.empikSalon || '';
+
+    // Try to match salon to DB
+    var salonKey = state.empikSalonName.toLowerCase()
+      .replace('empik ','').replace(/\s+/g,' ').trim();
+    var matched = null;
+    Object.keys(empikSalonDB).forEach(function(k){
+      if(salonKey.indexOf(k)!==-1 || k.indexOf(salonKey)!==-1) matched=k;
+    });
+
+    // Build salon addr for state
+    if(matched){
+      state.selectedSalonAddr = empikSalonDB[matched].addr;
+    } else {
+      state.selectedSalonAddr = '⏳ Adres do uzupełnienia — ' + state.empikSalonName;
+    }
+
+    // Override addr in state with resolved salon addr
+    state.addr = state.selectedSalonAddr;
+
+    // Show badge
+    var badge = g('empik-sidebar-badge');
+    if(badge) badge.style.display='inline-flex';
+  }
+
+  function buildEmpikSalonUI(){
+    var block = g('empikDetectBlock');
+    var optContainer = g('empikSalonOptions');
+    if(!block || !optContainer) return;
+    block.style.display = state.isEmpik ? 'block' : 'none';
+    if(!state.isEmpik) return;
+
+    g('empikOrderNum').textContent = state.empikOrderNum || '—';
+
+    // Build salon options: the detected one + a few alternatives
+    var options = [];
+    options.push({ name: state.empikSalonName, addr: state.selectedSalonAddr, selected: true });
+
+    // Add other DB salons as alternatives
+    Object.keys(empikSalonDB).forEach(function(k){
+      var label = k.split(' ').map(function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }).join(' ');
+      if(label.toLowerCase() !== state.empikSalonName.toLowerCase()){
+        options.push({ name: 'Empik ' + label, addr: empikSalonDB[k].addr, selected: false });
+      }
+    });
+
+    optContainer.innerHTML = options.map(function(o, i){
+      return '<div class="empik-salon-item'+(o.selected?' selected':'')+'" data-action="selectSalon" data-salon-idx="'+i+'" data-salon-name="'+encodeURIComponent(o.name)+'" data-salon-addr="'+encodeURIComponent(o.addr)+'">'
+        +'<div class="empik-salon-check"></div>'
+        +'<div><div class="empik-salon-name">'+o.name+'</div>'
+        +'<div class="empik-salon-addr">'+o.addr+'</div></div>'
+        +'</div>';
+    }).join('');
+  }
+
+  function buildEmpikUwagi(){
+    if(state.isEmpik && state.empikOrderNum){
+      var uwagi = EMPIK_UWAGI_PREFIX + state.empikOrderNum;
+      g('uwagiField').value = uwagi;
+      g('uwagiAutoBadge').classList.add('show');
+    } else {
+      g('uwagiField').value = '';
+      g('uwagiAutoBadge').classList.remove('show');
+    }
+  }
+
+  /* ═══ DOC SELECTION ═══ */
   function selectDoc(num){
     document.querySelectorAll('.doc-row').forEach(function(r){ r.classList.remove('selected'); });
     document.querySelectorAll('[data-doc="'+num+'"]').forEach(function(r){ r.classList.add('selected'); });
-    g('docInput').value=num;
+    g('docInput').value = num;
     loadDoc(num);
   }
 
   function loadDoc(forceNum){
     var num=forceNum||g('docInput').value.trim();
     if(!num) return;
-    // Show skeleton in sidebar
     g('docPreview').classList.remove('visible');
+    var badge = g('empik-sidebar-badge');
+    if(badge) badge.style.display='none';
+
     setTimeout(function(){
-      var d=mockData[num]||{name:'Klient Testowy',addr:'ul. Przykładowa 1, 00-001 Warszawa',phone:'+48 500 000 000',desc:'Towar ogólny'};
-      Object.assign(state,{docNum:num,name:d.name,addr:d.addr,phone:d.phone,desc:d.desc});
-      g('docBadge').textContent=num;
-      // derive type badge from number prefix
+      var d=mockData[num]||{name:'Klient Testowy',addr:'ul. Przykładowa 1, 00-001 Warszawa',phone:'+48 500 000 000',desc:'Towar ogólny',empik:false};
+      Object.assign(state,{docNum:num, name:d.name, addr:d.addr, phone:d.phone, desc:d.desc, isEmpik:false, empikOrderNum:'', empikSalonName:'', selectedSalonAddr:'', packageCount:1});
+
+      // Empik check
+      if(d.empik) detectEmpik(num, d);
+
+      // sidebar
+      g('docBadge').textContent = num;
       var typeMatch = num.match(/^([A-Z]+)\//);
       var typeStr = typeMatch ? typeMatch[1] : 'WZ';
-      var typeBadge = g('docTypeBadge');
-      if(typeBadge){
-        typeBadge.textContent = typeStr;
-        typeBadge.className = 'sdc-type-badge';
-        if(typeStr==='FV') typeBadge.style.cssText='background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.28)';
-        else if(typeStr==='MW') typeBadge.style.cssText='background:rgba(20,184,166,.15);color:#99f6e4;border:1px solid rgba(20,184,166,.28)';
-        else typeBadge.style.cssText='';
+      var tb = g('docTypeBadge');
+      if(tb){
+        tb.textContent = typeStr;
+        tb.style.cssText='';
+        if(typeStr==='FV') tb.style.cssText='background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.28)';
+        else if(typeStr==='MW') tb.style.cssText='background:rgba(20,184,166,.15);color:#99f6e4;border:1px solid rgba(20,184,166,.28)';
       }
-      g('d-name').textContent=d.name;
-      g('d-addr').textContent=d.addr;
-      g('d-phone').textContent=d.phone;
-      g('d-desc').textContent=d.desc;
+      g('d-name').textContent = d.name;
+      g('d-addr').textContent = state.addr || d.addr || '⏳ Adres — do rozpoznania';
+      g('d-phone').textContent = d.phone;
+      g('d-desc').textContent = d.desc;
       g('docPreview').classList.add('visible');
-      toast('info','Dokument załadowany',num+' · '+d.name);
+
+      // reset pkg count display
+      updatePkgDisplay();
+
+      if(state.isEmpik){
+        toast('info','Empik — rozpoznany 🟣', 'Salon: '+state.empikSalonName+' · Zam. '+state.empikOrderNum);
+      } else {
+        toast('info','Dokument załadowany', num+' · '+d.name);
+      }
     },350);
   }
 
   function clearDoc(){
-    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:''});
+    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:'',isEmpik:false,empikOrderNum:'',empikSalonName:'',selectedSalonAddr:'',packageCount:1});
     g('docPreview').classList.remove('visible');
     g('docInput').value='';
+    var badge = g('empik-sidebar-badge');
+    if(badge) badge.style.display='none';
     document.querySelectorAll('.doc-row').forEach(function(r){ r.classList.remove('selected'); });
     toast('warn','Dokument odznaczony','Wybierz nowy dokument z listy');
   }
 
-  /* ── NUMPAD ── */
+  /* ═══ PACKAGE COUNT ═══ */
+  function updatePkgDisplay(){
+    var el = g('pkgCount');
+    el.textContent = state.packageCount;
+    el.classList.toggle('many', state.packageCount > 1);
+  }
+  function pkgInc(){ if(state.packageCount < 9){ state.packageCount++; updatePkgDisplay(); } }
+  function pkgDec(){ if(state.packageCount > 1){ state.packageCount--; updatePkgDisplay(); } }
+
+  /* ═══ NUMPAD ═══ */
   function numpadPress(val){
     var inp=g('weightInput'),cur=inp.value;
     if(val==='.'&&cur.indexOf('.')!==-1) return;
@@ -1404,16 +1403,30 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     g('weightDisplay').classList.toggle('active',inp.value!=='');
   }
 
-  /* ── FLOW ── */
+  /* ═══ FLOW ═══ */
   function goToWeight(){
-    if(!state.docNum){ toast('err','Brak dokumentu','Wybierz dokument WZ przed przejściem dalej'); return; }
+    if(!state.docNum){ toast('err','Brak dokumentu','Wybierz dokument WZ/MW przed przejściem dalej'); return; }
     setStep(2,false);
     g('w-docnum').textContent=state.docNum;
     g('w-name').textContent=state.name;
-    g('w-addr').textContent=state.addr;
+    g('w-addr').textContent=state.addr||'—';
     g('weightInput').value='';
     g('weightDisplay').classList.remove('active','error');
-    toast('info','Krok 2 z 3','Wpisz wagę paczki na klawiaturze');
+    updatePkgDisplay();
+    buildEmpikSalonUI();
+    toast('info','Krok 2 z 3','Wpisz wagę i ustaw ilość paczek');
+  }
+
+  function selectSalon(el){
+    var name = decodeURIComponent(el.dataset.salonName||'');
+    var addr = decodeURIComponent(el.dataset.salonAddr||'');
+    state.empikSalonName = name;
+    state.selectedSalonAddr = addr;
+    state.addr = addr;
+    // update selection UI
+    document.querySelectorAll('.empik-salon-item').forEach(function(i){ i.classList.remove('selected'); });
+    el.classList.add('selected');
+    toast('ok','Salon wybrany', name);
   }
 
   function goToPrint(){
@@ -1428,60 +1441,100 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     setStep(3,false);
     g('f-docnum').textContent=state.docNum;
     g('f-name').textContent=state.name;
-    g('f-addr').textContent=state.addr;
+    g('f-addr').textContent=state.addr||'—';
     g('f-phone').textContent=state.phone;
     g('f-desc').textContent=state.desc;
     g('f-weight').textContent=state.weight+' kg';
-    toast('info','Krok 3 z 3','Sprawdź dane i naciśnij Drukuj');
+    g('f-pkgbadge').textContent='📦 '+state.packageCount+' szt.';
+    buildEmpikUwagi();
+    toast('info','Krok 3 z 3','Sprawdź dane, uzupełnij uwagi i naciśnij Drukuj');
   }
 
   function printLabel(){
+    var pkg = state.packageCount;
+    state.uwagi = g('uwagiField').value.trim();
     g('printButtons').style.display='none';
     g('loadingPrint').classList.add('show');
-    toast('info','Drukowanie…','Generowanie listu przewozowego GLS');
+    g('loadingMsg').innerHTML = pkg > 1
+      ? 'Generowanie '+pkg+' listów przewozowych…<br>Wysyłka do drukarki GODEX RT700…'
+      : 'Generowanie listu przewozowego…<br>Wysyłka do drukarki GODEX RT700…';
+    toast('info','Drukowanie…','Generowanie etykiet GLS ('+pkg+' szt.)');
     setTimeout(function(){
       g('loadingPrint').classList.remove('show');
       g('printButtons').style.display='flex';
-      var tr='00'+Math.floor(Math.random()*1e11).toString().padStart(11,'0')+'PL';
-      g('trackingNum').textContent=tr;
+
+      // Generate tracking numbers for each package
+      var trackings = [];
+      for(var i=0;i<pkg;i++){
+        trackings.push('00'+Math.floor(Math.random()*1e11).toString().padStart(11,'0')+'PL');
+      }
+
+      // Build success screen
+      var isSingle = pkg===1;
+      g('successTitle').textContent = isSingle ? 'Etykieta wydrukowana!' : pkg+' etykiet wydrukowanych!';
+      g('successSub').innerHTML = isSingle
+        ? 'List przewozowy wysłany do GODEX RT700.<br>Paczka gotowa do nadania kurierowi GLS.'
+        : pkg+' listów przewozowych wysłanych do GODEX RT700.<br>Paczki gotowe do nadania kurierowi GLS.';
+      g('trackingNote').textContent = isSingle ? 'Numer śledzenia przesyłki GLS' : 'Numery śledzenia przesyłek GLS';
+
+      // Tracking list
+      g('trackingList').innerHTML = trackings.map(function(tr, i){
+        return '<div class="tracking-item">'
+          +'<span class="tracking-item-badge">Paczka '+(i+1)+'/'+pkg+'</span>'
+          +'<span class="tracking-item-num">'+tr+'</span>'
+          +'</div>';
+      }).join('');
+
+      // History
       var now=new Date();
       var t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-      histArr.unshift({docNum:state.docNum,name:state.name,weight:state.weight,tracking:tr,time:t});
-      state.counter++;
+      histArr.unshift({
+        docNum:state.docNum, name:state.name,
+        weight:state.weight, tracking:trackings[0],
+        trackings:trackings, pkg:pkg, time:t,
+        isEmpik:state.isEmpik, salonName:state.empikSalonName
+      });
+      state.counter += pkg;
       g('sidebarCounter').textContent=state.counter;
       g('historyCount').textContent=histArr.length;
       g('counterRight').textContent=state.counter+' szt.';
       renderHistory();
       setStep(4,false);
       launchConfetti();
-      toast('ok','Wydrukowano!',state.name+' · '+state.weight+' kg');
-    },2200);
+      toast('ok','Wydrukowano!', state.name+' · '+state.weight+' kg · '+pkg+' szt.');
+    }, pkg > 1 ? 2800 : 2200);
   }
 
   function renderHistory(){
-    g('historyList').innerHTML=histArr.length===0
-      ?'<div class="hp-empty">Brak wydruków<br>w tej sesji</div>'
-      :histArr.map(function(h){
-        return '<div class="hp-item">'+
-          '<div class="hp-r1"><span class="hp-num">'+h.docNum+'</span><span class="hp-time">'+h.time+'</span></div>'+
-          '<div class="hp-name">'+h.name+'</div>'+
-          '<div class="hp-meta"><span class="hp-track">'+h.tracking+'</span><span class="hp-wt">'+h.weight+' kg</span></div>'+
-          '</div>';
-      }).join('');
+    if(histArr.length===0){
+      g('historyList').innerHTML='<div class="hp-empty">Brak wydruków<br>w tej sesji</div>';
+      return;
+    }
+    g('historyList').innerHTML = histArr.map(function(h){
+      var empikTag = h.isEmpik ? '<span class="hp-wt" style="background:rgba(168,85,247,.1);color:#c084fc;border-color:rgba(168,85,247,.2)">🟣 Empik</span>' : '';
+      var pkgTag = h.pkg > 1 ? '<span class="hp-pkg">📦 '+h.pkg+' szt.</span>' : '';
+      return '<div class="hp-item">'
+        +'<div class="hp-r1"><span class="hp-num">'+h.docNum+'</span><span class="hp-time">'+h.time+'</span></div>'
+        +'<div class="hp-name">'+(h.isEmpik&&h.salonName ? h.salonName : h.name)+'</div>'
+        +'<div class="hp-meta"><span class="hp-track">'+h.tracking+(h.pkg>1?'+':'')+'</span><span class="hp-wt">'+h.weight+' kg</span>'+pkgTag+empikTag+'</div>'
+        +'</div>';
+    }).join('');
   }
 
   function reset(){
-    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:'',weight:''});
+    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:'',weight:'',packageCount:1,isEmpik:false,empikOrderNum:'',empikSalonName:'',selectedSalonAddr:'',uwagi:''});
+    var badge=g('empik-sidebar-badge'); if(badge) badge.style.display='none';
     g('docPreview').classList.remove('visible');
     g('docInput').value=''; g('weightInput').value='';
     g('searchInput').value=''; g('searchWrap').classList.remove('has-value');
+    g('uwagiField').value=''; g('uwagiAutoBadge').classList.remove('show');
     document.querySelectorAll('.doc-row').forEach(function(r){ r.classList.remove('filtered-out','selected'); });
     g('noResults').style.display='none';
-    // reset filter
     activeFilter='all';
     document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active',b.dataset.filter==='all'); });
+    updatePkgDisplay();
     setStep(1,true);
-    toast('ok','Gotowe do nowej paczki','Wybierz kolejny dokument WZ');
+    toast('ok','Gotowe do nowej paczki','Wybierz kolejny dokument');
   }
 
   function closeIntro(){ g('introOverlay').classList.add('hidden'); toast('ok','Witaj!','GLS Printer gotowy do pracy'); }
@@ -1497,21 +1550,24 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     while(node&&node!==document.body){ if(node.dataset&&node.dataset.action) break; node=node.parentElement; }
     if(!node||!node.dataset||!node.dataset.action) return;
     var a=node.dataset.action;
-    if     (a==='closeIntro') closeIntro();
-    else if(a==='openHelp')   openHelp();
-    else if(a==='closeHelp')  closeHelp();
-    else if(a==='clearDoc')   clearDoc();
-    else if(a==='goToWeight') goToWeight();
-    else if(a==='goBack1')    { setStep(1,true); toast('info','Powrót','Krok 1 — wybór dokumentu'); }
-    else if(a==='goBack2')    { setStep(2,true); toast('info','Powrót','Krok 2 — waga paczki'); }
-    else if(a==='goToPrint')  goToPrint();
-    else if(a==='printLabel') printLabel();
-    else if(a==='reset')      reset();
-    else if(a==='numpadDel')  numpadDel();
-    else if(a==='loadDoc')    loadDoc();
-    else if(a==='numpad')     numpadPress(node.dataset.val);
-    else if(a==='selectDoc')  selectDoc(node.dataset.doc);
-    else if(a==='switchTab')  switchTab(node.dataset.tab,node);
+    if     (a==='closeIntro')  closeIntro();
+    else if(a==='openHelp')    openHelp();
+    else if(a==='closeHelp')   closeHelp();
+    else if(a==='clearDoc')    clearDoc();
+    else if(a==='goToWeight')  goToWeight();
+    else if(a==='goBack1')     { setStep(1,true); toast('info','Powrót','Krok 1 — wybór dokumentu'); }
+    else if(a==='goBack2')     { setStep(2,true); toast('info','Powrót','Krok 2 — waga i paczki'); }
+    else if(a==='goToPrint')   goToPrint();
+    else if(a==='printLabel')  printLabel();
+    else if(a==='reset')       reset();
+    else if(a==='numpadDel')   numpadDel();
+    else if(a==='loadDoc')     loadDoc();
+    else if(a==='numpad')      numpadPress(node.dataset.val);
+    else if(a==='selectDoc')   selectDoc(node.dataset.doc);
+    else if(a==='switchTab')   switchTab(node.dataset.tab,node);
+    else if(a==='pkgInc')      pkgInc();
+    else if(a==='pkgDec')      pkgDec();
+    else if(a==='selectSalon') selectSalon(node.closest('.empik-salon-item'));
     else if(a==='filter'){
       activeFilter=node.dataset.filter;
       document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active',b===node); });
