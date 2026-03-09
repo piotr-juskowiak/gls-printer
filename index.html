@@ -670,8 +670,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   </div>
   <div class="hd-sec">
     <div class="hd-sec-lbl">Empik</div>
-    <div class="hd-step"><div class="hd-t">📦 Dokumenty MW dla Empiku rozpoznawane automatycznie. Salon i numer zamówienia wyciągane z pola Uwagi dokumentu.</div></div>
-    <div class="hd-step"><div class="hd-t">🏪 Adresy salonów — do uzupełnienia w bazie (skontaktuj się z administratorem).</div></div>
+    <div class="hd-step"><div class="hd-t">📦 Dokumenty MW dla Empiku rozpoznawane automatycznie. Salon identyfikowany po <strong>kodzie GLN</strong> (z zamówienia Empiku, pole „Kod sklep GLN"). Numer zamówienia i uwagi GLS wypełniane bez ingerencji magazyniera.</div></div>
+    <div class="hd-step"><div class="hd-t">🏪 Baza salonów — klucz to GLN (unikalny, stały). Uzupełnić adresy w <code>empikSalonDB</code>. Nowe salony dodawać jako <code>'GLN': { name, addr }</code>.</div></div>
+    <div class="hd-step"><div class="hd-t">📝 Uwagi GLS: generowane automatycznie jako <strong>„Dostawca 100318, Zamowienie Nr [NR]"</strong>. Edytowalne ręcznie przed wydrukiem.</div></div>
   </div>
   <div class="hd-sec">
     <div class="hd-sec-lbl">Rozwiązywanie problemów</div>
@@ -852,9 +853,30 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
               </div>
               <div class="doc-row" data-action="selectDoc" data-doc="MW/04339/26" data-status="urgent">
                 <div class="dr-num-wrap"><span class="dr-num">MW/04339/26</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">🟣 EMPIK — Jaworzno Galeria Galena</div><div class="dr-addr">Magazyn docelowy EMPIK S.A.</div></div>
+                <div><div class="dr-company">🟣 EMPIK — Jaworzno Galeria Galena</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · GLN 5909000100084</div></div>
                 <div class="dr-time">08:32</div>
                 <div><span class="ds ds-urgent">Pilne</span></div>
+                <div class="dr-action"><span class="dr-arrow">›</span></div>
+              </div>
+              <div class="doc-row" data-action="selectDoc" data-doc="MW/04307/26" data-status="ready">
+                <div class="dr-num-wrap"><span class="dr-num">MW/04307/26</span><span class="dr-badge b-mw">MW</span></div>
+                <div><div class="dr-company">🟣 EMPIK — Tarnobrzeg Pasaż</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · zam. 826884297600</div></div>
+                <div class="dr-time">09:00</div>
+                <div><span class="ds ds-ready">Gotowe</span></div>
+                <div class="dr-action"><span class="dr-arrow">›</span></div>
+              </div>
+              <div class="doc-row" data-action="selectDoc" data-doc="MW/04306/26" data-status="ready">
+                <div class="dr-num-wrap"><span class="dr-num">MW/04306/26</span><span class="dr-badge b-mw">MW</span></div>
+                <div><div class="dr-company">🟣 EMPIK — Działdowo Park Handlowy</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · zam. 826884297500</div></div>
+                <div class="dr-time">09:05</div>
+                <div><span class="ds ds-ready">Gotowe</span></div>
+                <div class="dr-action"><span class="dr-arrow">›</span></div>
+              </div>
+              <div class="doc-row" data-action="selectDoc" data-doc="MW/04305/26" data-status="ready">
+                <div class="dr-num-wrap"><span class="dr-num">MW/04305/26</span><span class="dr-badge b-mw">MW</span></div>
+                <div><div class="dr-company">🟣 EMPIK — Żywiec</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · zam. 826885115900</div></div>
+                <div class="dr-time">09:10</div>
+                <div><span class="ds ds-ready">Gotowe</span></div>
                 <div class="dr-action"><span class="dr-arrow">›</span></div>
               </div>
               <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1044" data-status="ready">
@@ -927,7 +949,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
             <span class="empik-detect-icon">🟣</span>
             <div>
               <div class="empik-detect-title">Dokument Empik — dane rozpoznane</div>
-              <div class="empik-detect-sub">Salon i zamówienie wyciągnięte automatycznie z pola Uwagi MW</div>
+              <div class="empik-detect-sub">Salon rozpoznany po kodzie GLN z zamówienia Empiku. Numer zamówienia wypełniony automatycznie.</div>
             </div>
           </div>
           <div class="empik-order-row">
@@ -1095,6 +1117,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     isEmpik: false,
     empikOrderNum: '',
     empikSalonName: '',
+    empikGLN: '',
     selectedSalonAddr: '',
     uwagi: ''
   };
@@ -1103,17 +1126,23 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
   /* ═══════════════════════════════════════
      EMPIK SALON DATABASE
-     (uzupełnić adresami gdy będą dostępne)
+     Klucz: kod GLN salonu (z zamówienia Empiku, pole "Kod sklep GLN")
+     Wartość: { name, addr }
+     — uzupełniać na podstawie zamówień; GLN jest unikalny i stały
   ═══════════════════════════════════════ */
   var empikSalonDB = {
-    // Klucz: fragment nazwy salonu (lowercase), Wartość: adres dostawy
-    'jaworzno galeria galena':   { addr: '⏳ Adres do uzupełnienia — Jaworzno Galeria Galena' },
-    'katowice silesia city':     { addr: '⏳ Adres do uzupełnienia — Katowice Silesia City' },
-    'krakow galeria krakowska':  { addr: '⏳ Adres do uzupełnienia — Kraków Galeria Krakowska' },
-    'warszawa arkadia':          { addr: '⏳ Adres do uzupełnienia — Warszawa Arkadia' },
-    'wroclaw magnolia':          { addr: '⏳ Adres do uzupełnienia — Wrocław Magnolia' },
-    'poznan old browary':        { addr: '⏳ Adres do uzupełnienia — Poznań Old Browary' },
-    'gdansk galeria baltycka':   { addr: '⏳ Adres do uzupełnienia — Gdańsk Galeria Bałtycka' },
+    '5909000574779': { name: 'Salon Empik Warszawa Targówek',        addr: 'ul. Głębocka 15, 03-287 Warszawa' },
+    '5909000100084': { name: 'Salon Empik Jaworzno Galeria Galena',  addr: '⏳ Adres do uzupełnienia' },
+    '5909000100091': { name: 'Salon Empik Katowice Silesia City',    addr: '⏳ Adres do uzupełnienia' },
+    '5909000100107': { name: 'Salon Empik Kraków Galeria Krakowska', addr: '⏳ Adres do uzupełnienia' },
+    '5909000100114': { name: 'Salon Empik Warszawa Arkadia',         addr: '⏳ Adres do uzupełnienia' },
+    '5909000100121': { name: 'Salon Empik Wrocław Magnolia',         addr: '⏳ Adres do uzupełnienia' },
+    '5909000100138': { name: 'Salon Empik Poznań Old Browary',       addr: '⏳ Adres do uzupełnienia' },
+    '5909000100145': { name: 'Salon Empik Gdańsk Galeria Bałtycka',  addr: '⏳ Adres do uzupełnienia' },
+    // Salony bez jeszcze ustalonego GLN — identyfikowane przez nazwę (fallback)
+    '_tarnobrzeg_pasaz':   { name: 'Salon Empik Tarnobrzeg Pasaż',   addr: '⏳ Adres do uzupełnienia' },
+    '_dzialdowo_park':     { name: 'Salon Empik Działdowo Park Handlowy', addr: '⏳ Adres do uzupełnienia' },
+    '_zywiec':             { name: 'Sklep Empik Żywiec',             addr: '⏳ Adres do uzupełnienia' },
   };
 
   var EMPIK_UWAGI_PREFIX = 'Dostawca 100318, Zamowienie Nr ';
@@ -1123,7 +1152,12 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   ═══════════════════════════════════════ */
   var mockData = {
     'WZ/2024/1042':{ name:'Kowalski Sp. z o.o.',            addr:'ul. Lipowa 12, 00-840 Warszawa',       phone:'+48 22 123 45 67', desc:'Sprzęt elektroniczny, 3 szt.', empik:false },
-    'MW/04339/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnet KW KONICA, 10 szt.',    empik:true,  empikSalon:'EMPIK JAWORZNO GALERIA GALENA', empikOrder:'826894697100' },
+    // Empik MW — empikGLN pochodzi z pola "Kod sklep GLN" w zamówieniu Empiku
+    // empikSalon = nazwa salonu z pola Uwagi dokumentu MW (fallback gdy GLN jeszcze nie w bazie)
+    'MW/04339/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnet KW KONICA, 10 szt.',    empik:true,  empikGLN:'5909000100084', empikSalon:'EMPIK JAWORZNO GALERIA GALENA',     empikOrder:'826894697100' },
+    'MW/04305/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Zakładki fabularne, 30 szt.',  empik:true,  empikGLN:'',              empikSalon:'SKLEP EMPIK ZYWIEC',                empikOrder:'826885115900' },
+    'MW/04306/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnety B6 Wielkanoc, 25 szt.',empik:true,  empikGLN:'',              empikSalon:'SALON EMPIK DZIALDOWO PARK HANDLOWY',empikOrder:'826884297500' },
+    'MW/04307/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnety B6 Wielkanoc, 25 szt.',empik:true,  empikGLN:'',              empikSalon:'SALON EMPIK TARNOBRZEG PASAZ',       empikOrder:'826884297600' },
     'WZ/2024/1044':{ name:'Jan Nowak',                       addr:'os. Piastowskie 7/15, 61-157 Poznań', phone:'+48 601 234 567',  desc:'Ubrania, 2 kartony',           empik:false },
     'WZ/2024/1045':{ name:'Firma XYZ Srl',                   addr:'ul. Rynek 1, 50-101 Wrocław',         phone:'+48 71 456 78 90', desc:'Części zamienne, ciężkie',     empik:false },
     'WZ/2024/1046':{ name:'Sklep Budowlany MAXBUD',          addr:'ul. Morska 33, 80-340 Gdańsk',        phone:'+48 58 333 22 11', desc:'Narzędzia ręczne, 5 poz.',     empik:false },
@@ -1251,30 +1285,31 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   /* ═══ EMPIK DETECTION ═══ */
   function detectEmpik(num, d){
     if(!d.empik) return;
-    // Found Empik doc
     state.isEmpik = true;
     state.empikOrderNum = d.empikOrder || '';
+    state.empikGLN = d.empikGLN || '';
     state.empikSalonName = d.empikSalon || '';
 
-    // Try to match salon to DB
-    var salonKey = state.empikSalonName.toLowerCase()
-      .replace('empik ','').replace(/\s+/g,' ').trim();
+    // Lookup: 1) przez GLN (preferowany), 2) fallback przez klucz z nazwy
     var matched = null;
-    Object.keys(empikSalonDB).forEach(function(k){
-      if(salonKey.indexOf(k)!==-1 || k.indexOf(salonKey)!==-1) matched=k;
-    });
+    if(state.empikGLN && empikSalonDB[state.empikGLN]){
+      matched = empikSalonDB[state.empikGLN];
+    } else {
+      // Fallback: szukaj po fragmencie nazwy w kluczach zaczynających od '_'
+      var salonLower = state.empikSalonName.toLowerCase();
+      Object.keys(empikSalonDB).forEach(function(k){
+        if(k.charAt(0)==='_' && salonLower.indexOf(k.slice(1).replace(/_/g,' '))!==-1) matched=empikSalonDB[k];
+      });
+    }
 
-    // Build salon addr for state
     if(matched){
-      state.selectedSalonAddr = empikSalonDB[matched].addr;
+      state.empikSalonName = matched.name;
+      state.selectedSalonAddr = matched.addr;
     } else {
       state.selectedSalonAddr = '⏳ Adres do uzupełnienia — ' + state.empikSalonName;
     }
-
-    // Override addr in state with resolved salon addr
     state.addr = state.selectedSalonAddr;
 
-    // Show badge
     var badge = g('empik-sidebar-badge');
     if(badge) badge.style.display='inline-flex';
   }
@@ -1288,22 +1323,29 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
     g('empikOrderNum').textContent = state.empikOrderNum || '—';
 
-    // Build salon options: the detected one + a few alternatives
+    // Build options: detected salon first, then remaining DB entries
     var options = [];
-    options.push({ name: state.empikSalonName, addr: state.selectedSalonAddr, selected: true });
+    options.push({
+      gln: state.empikGLN || '—',
+      name: state.empikSalonName,
+      addr: state.selectedSalonAddr,
+      selected: true
+    });
 
-    // Add other DB salons as alternatives
     Object.keys(empikSalonDB).forEach(function(k){
-      var label = k.split(' ').map(function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }).join(' ');
-      if(label.toLowerCase() !== state.empikSalonName.toLowerCase()){
-        options.push({ name: 'Empik ' + label, addr: empikSalonDB[k].addr, selected: false });
+      var s = empikSalonDB[k];
+      if(s.name.toLowerCase() !== state.empikSalonName.toLowerCase()){
+        options.push({ gln: k.charAt(0)==='_' ? '—' : k, name: s.name, addr: s.addr, selected: false });
       }
     });
 
     optContainer.innerHTML = options.map(function(o, i){
+      var glnTag = o.gln !== '—'
+        ? '<span style="font-size:10px;font-family:\'JetBrains Mono\',monospace;color:var(--tx-muted);margin-left:6px">GLN '+o.gln+'</span>'
+        : '<span style="font-size:10px;color:var(--red-hi);margin-left:6px">GLN nieznany</span>';
       return '<div class="empik-salon-item'+(o.selected?' selected':'')+'" data-action="selectSalon" data-salon-idx="'+i+'" data-salon-name="'+encodeURIComponent(o.name)+'" data-salon-addr="'+encodeURIComponent(o.addr)+'">'
         +'<div class="empik-salon-check"></div>'
-        +'<div><div class="empik-salon-name">'+o.name+'</div>'
+        +'<div style="flex:1"><div class="empik-salon-name" style="display:flex;align-items:center">'+o.name+glnTag+'</div>'
         +'<div class="empik-salon-addr">'+o.addr+'</div></div>'
         +'</div>';
     }).join('');
@@ -1337,7 +1379,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
     setTimeout(function(){
       var d=mockData[num]||{name:'Klient Testowy',addr:'ul. Przykładowa 1, 00-001 Warszawa',phone:'+48 500 000 000',desc:'Towar ogólny',empik:false};
-      Object.assign(state,{docNum:num, name:d.name, addr:d.addr, phone:d.phone, desc:d.desc, isEmpik:false, empikOrderNum:'', empikSalonName:'', selectedSalonAddr:'', packageCount:1});
+      Object.assign(state,{docNum:num, name:d.name, addr:d.addr, phone:d.phone, desc:d.desc, isEmpik:false, empikOrderNum:'', empikGLN:'', empikSalonName:'', selectedSalonAddr:'', packageCount:1});
 
       // Empik check
       if(d.empik) detectEmpik(num, d);
@@ -1371,7 +1413,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   }
 
   function clearDoc(){
-    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:'',isEmpik:false,empikOrderNum:'',empikSalonName:'',selectedSalonAddr:'',packageCount:1});
+    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:'',isEmpik:false,empikOrderNum:'',empikGLN:'',empikSalonName:'',selectedSalonAddr:'',packageCount:1});
     g('docPreview').classList.remove('visible');
     g('docInput').value='';
     var badge = g('empik-sidebar-badge');
@@ -1522,7 +1564,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   }
 
   function reset(){
-    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:'',weight:'',packageCount:1,isEmpik:false,empikOrderNum:'',empikSalonName:'',selectedSalonAddr:'',uwagi:''});
+    Object.assign(state,{docNum:'',name:'',addr:'',phone:'',desc:'',weight:'',packageCount:1,isEmpik:false,empikOrderNum:'',empikGLN:'',empikSalonName:'',selectedSalonAddr:'',uwagi:''});
     var badge=g('empik-sidebar-badge'); if(badge) badge.style.display='none';
     g('docPreview').classList.remove('visible');
     g('docInput').value=''; g('weightInput').value='';
