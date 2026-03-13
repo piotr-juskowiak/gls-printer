@@ -844,6 +844,13 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
             </div>
             <div id="realRows" style="display:none">
               <div class="doc-group-row">Dzisiaj</div>
+              <div class="doc-row" data-action="selectDoc" data-doc="MW/04619/26" data-status="new">
+                <div class="dr-num-wrap"><span class="dr-num">MW/04619/26</span><span class="dr-badge b-mw">MW</span></div>
+                <div><div class="dr-company">🟣 EMPIK — Aleksanów Łódzki</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · GLN z uwag MW</div></div>
+                <div class="dr-time">13:03</div>
+                <div><span class="ds ds-new">Nowe</span></div>
+                <div class="dr-action"><span class="dr-arrow">›</span></div>
+              </div>
               <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1042" data-status="ready">
                 <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1042</span><span class="dr-badge b-wz">WZ</span></div>
                 <div><div class="dr-company">Kowalski Sp. z o.o.</div><div class="dr-addr">ul. Lipowa 12, 00-840 Warszawa</div></div>
@@ -1132,6 +1139,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   ═══════════════════════════════════════ */
   var empikSalonDB = {
     '5909000574779': { name: 'Salon Empik Warszawa Targówek',        addr: 'ul. Głębocka 15, 03-287 Warszawa' },
+    '5909000578340': { name: 'Salon Empik Aleksandrów Łódzki',      addr: '⏳ Adres do uzupełnienia' },
     '5909000100084': { name: 'Salon Empik Jaworzno Galeria Galena',  addr: '⏳ Adres do uzupełnienia' },
     '5909000100091': { name: 'Salon Empik Katowice Silesia City',    addr: '⏳ Adres do uzupełnienia' },
     '5909000100107': { name: 'Salon Empik Kraków Galeria Krakowska', addr: '⏳ Adres do uzupełnienia' },
@@ -1154,6 +1162,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     'WZ/2024/1042':{ name:'Kowalski Sp. z o.o.',            addr:'ul. Lipowa 12, 00-840 Warszawa',       phone:'+48 22 123 45 67', desc:'Sprzęt elektroniczny, 3 szt.', empik:false },
     // Empik MW — empikGLN pochodzi z pola "Kod sklep GLN" w zamówieniu Empiku
     // empikSalon = nazwa salonu z pola Uwagi dokumentu MW (fallback gdy GLN jeszcze nie w bazie)
+    'MW/04619/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnety B6 Wielkanoc, 30 szt.', empik:true,  empikGLN:'',              empikSalon:'',                                  empikOrder:'',            uwagi:'SALON EMPIK ALEKSANDROW LODZKI, GLN: 5909000578340, zam. 826864460800' },
     'MW/04339/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnet KW KONICA, 10 szt.',    empik:true,  empikGLN:'5909000100084', empikSalon:'EMPIK JAWORZNO GALERIA GALENA',     empikOrder:'826894697100' },
     'MW/04305/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Zakładki fabularne, 30 szt.',  empik:true,  empikGLN:'',              empikSalon:'SKLEP EMPIK ZYWIEC',                empikOrder:'826885115900' },
     'MW/04306/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnety B6 Wielkanoc, 25 szt.',empik:true,  empikGLN:'',              empikSalon:'SALON EMPIK DZIALDOWO PARK HANDLOWY',empikOrder:'826884297500' },
@@ -1282,13 +1291,45 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     g('tab-manual').classList.toggle('active',isManual);
   }
 
+  /* ═══ EMPIK UWAGI PARSER ═══
+     Fallback gdy WF-MAG nie przekazuje strukturalnych pól empikGLN / empikOrder.
+     Parsuje tekst pola "Uwagi" z dokumentu MW, np.:
+       "SALON EMPIK ALEKSANDROW LODZKI, GLN: 5909000578340, zam. 826864460800"
+  ═══════════════════════════════════════ */
+  function parseEmpikFromUwagi(txt) {
+    if (!txt) return {};
+    var glnMatch   = txt.match(/GLN[:\s]+(\d{13})/i);
+    var zamMatch   = txt.match(/zam\.?\s*(\d{8,})/i);
+    // Salon name = wszystko przed ", GLN" lub przed końcem linii
+    var salonMatch = txt.match(/^([^,\n]+?)(?:,?\s*GLN|\s*$)/i);
+    return {
+      empikGLN:   glnMatch   ? glnMatch[1].trim()   : '',
+      empikOrder: zamMatch   ? zamMatch[1].trim()   : '',
+      empikSalon: salonMatch ? salonMatch[1].trim() : ''
+    };
+  }
+
   /* ═══ EMPIK DETECTION ═══ */
   function detectEmpik(num, d){
     if(!d.empik) return;
     state.isEmpik = true;
-    state.empikOrderNum = d.empikOrder || '';
-    state.empikGLN = d.empikGLN || '';
-    state.empikSalonName = d.empikSalon || '';
+
+    // Pobierz strukturalne pola (z API/mockData)
+    var gln   = d.empikGLN   || '';
+    var order = d.empikOrder || '';
+    var salon = d.empikSalon || '';
+
+    // Fallback: jeśli brakuje GLN lub numeru zamówienia — parsuj z pola uwagi
+    if((!gln || !order) && d.uwagi) {
+      var parsed = parseEmpikFromUwagi(d.uwagi);
+      if(!gln   && parsed.empikGLN)   gln   = parsed.empikGLN;
+      if(!order && parsed.empikOrder) order = parsed.empikOrder;
+      if(!salon && parsed.empikSalon) salon = parsed.empikSalon;
+    }
+
+    state.empikOrderNum = order;
+    state.empikGLN = gln;
+    state.empikSalonName = salon;
 
     // Lookup: 1) przez GLN (preferowany), 2) fallback przez klucz z nazwy
     var matched = null;
