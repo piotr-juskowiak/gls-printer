@@ -1597,21 +1597,21 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
             </div>
             <div id="realRows" style="display:none">
               <div class="doc-group-row">Dane demonstracyjne</div>
-              <div class="doc-row" data-action="selectDoc" data-doc="MW/04619/26" data-status="new">
+              <div class="doc-row" data-action="selectDoc" data-doc="[DEMO] MW/04619/26" data-status="new">
                 <div class="dr-num-wrap"><span class="dr-num">[DEMO] MW/04619/26</span><span class="dr-badge b-mw">MW</span></div>
                 <div><div class="dr-company">🟣 EMPIK — Aleksandrów Łódzki</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · GLN z uwag MW</div></div>
                 <div class="dr-time">13:03</div>
                 <div><span class="ds ds-new">Nowe</span></div>
                 <div class="dr-action"><span class="dr-arrow">›</span></div>
               </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1042" data-status="ready">
+              <div class="doc-row" data-action="selectDoc" data-doc="[DEMO] WZ/2024/1042" data-status="ready">
                 <div class="dr-num-wrap"><span class="dr-num">[DEMO] WZ/2024/1042</span><span class="dr-badge b-wz">WZ</span></div>
                 <div><div class="dr-company">Kowalski Sp. z o.o.</div><div class="dr-addr">ul. Lipowa 12, 00-840 Warszawa</div></div>
                 <div class="dr-time">08:14</div>
                 <div><span class="ds ds-ready">Gotowe</span></div>
                 <div class="dr-action"><span class="dr-arrow">›</span></div>
               </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="MW/04339/26" data-status="urgent">
+              <div class="doc-row" data-action="selectDoc" data-doc="[DEMO] MW/04339/26" data-status="urgent">
                 <div class="dr-num-wrap"><span class="dr-num">[DEMO] MW/04339/26</span><span class="dr-badge b-mw">MW</span></div>
                 <div><div class="dr-company">🟣 EMPIK — Jaworzno Galeria Galena</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · GLN 5909000100084</div></div>
                 <div class="dr-time">08:32</div>
@@ -2386,7 +2386,10 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     var badge = g('empik-sidebar-badge');
     if(badge) badge.style.display='none';
 
-    if (USE_LIVE_API) {
+    var isDemo = num.indexOf('[DEMO]') !== -1;
+    var cleanNum = num.replace('[DEMO]', '').trim();
+
+    if (USE_LIVE_API && !isDemo) {
       // ── TRYB LIVE: zapytaj backend ──
       fetch(API_BASE + '/api/document/' + encodeURIComponent(num))
         .then(function(r){ return r.json(); })
@@ -2404,7 +2407,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     } else {
       // ── TRYB DEMO: mock data z opóźnieniem ──
       setTimeout(function(){
-        var d=mockData[num]||{name:'Klient Testowy',addr:'ul. Przykładowa 1, 00-001 Warszawa',phone:'+48 500 000 000',desc:'Towar ogólny',empik:false};
+        var d=mockData[cleanNum]||{name:'Klient Testowy',addr:'ul. Przykładowa 1, 00-001 Warszawa',phone:'+48 500 000 000',desc:'Towar ogólny',empik:false};
         applyDocData(num, {
           name: d.name, addr: d.addr, phone: d.phone, desc: d.desc,
           empik: d.empik, empikGLN: d.empikGLN||'', empikOrder: d.empikOrder||'',
@@ -2536,7 +2539,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       : 'Generowanie listu przewozowego…<br>Wysyłka do GLS ADE API…';
     toast('info','Drukowanie…','Generowanie etykiet GLS ('+pkg+' szt.)');
 
-    if (USE_LIVE_API) {
+    var isDemo = state.docNum.indexOf('[DEMO]') !== -1;
+
+    if (USE_LIVE_API && !isDemo) {
       // ── TRYB LIVE: wyślij do backendu → GLS API ──
       fetch(API_BASE + '/api/print', {
         method: 'POST',
