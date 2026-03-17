@@ -39,8 +39,8 @@
   --r2: 8px;
   --r3: 6px;
   --rail-w: 64px;
-  --sb-w:   290px;
-  --hist-w: 264px;
+  --sb-w:   320px;
+  --hist-w: 280px;
   --sh1: 0 1px 2px rgba(0,0,0,.25), 0 4px 12px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.06);
   --sh2: 0 2px 4px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.25), 0 20px 48px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.08);
   --sh-blue: 0 4px 16px rgba(59,130,246,.3);
@@ -64,8 +64,8 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 
 /* PROGRESS + TOAST */
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.step-track { height:2px; background:var(--b0); flex-shrink:0; }
-.step-track-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--teal)); transition:width .55s cubic-bezier(.4,0,.2,1); }
+.step-track { height:3px; background:var(--b0); flex-shrink:0; }
+.step-track-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--teal)); transition:width .55s cubic-bezier(.4,0,.2,1); box-shadow:0 0 8px rgba(59,130,246,.4); }
 .toast-container { position:fixed; top:24px; right:24px; z-index:9998; display:flex; flex-direction:column; gap:10px; pointer-events:none; }
 .toast {
   display:flex; align-items:flex-start; gap:12px; padding:14px 16px;
@@ -114,115 +114,268 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 /* SIDEBAR */
 .sidebar {
   width:var(--sb-w); background:var(--bg-side);
-  box-shadow:1px 0 0 var(--b0), 2px 0 8px rgba(0,0,0,.2);
+  box-shadow:1px 0 0 var(--b0), 2px 0 12px rgba(0,0,0,.25);
   display:flex; flex-direction:column; flex-shrink:0; overflow:hidden;
 }
-.sb-head{padding:24px 20px 20px;border-bottom:1px solid var(--b0)}
-.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.sb-logo{height:20px;filter:brightness(0) invert(.45)}
-.sb-divider{width:1px;height:18px;background:var(--b1)}
-.sb-app-name{font-size:13px;font-weight:600;color:var(--tx-tertiary)}
-.sb-printer{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.035);border:1px solid var(--b0);border-radius:var(--r2);padding:12px 14px;}
-.sb-printer-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.6);animation:blink 2.5s infinite;flex-shrink:0}
+.sb-head{padding:28px 24px 24px;border-bottom:1px solid var(--b0)}
+.sb-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.sb-logo{height:22px;filter:brightness(0) invert(.55)}
+.sb-divider{width:1px;height:20px;background:var(--b1)}
+.sb-app-name{font-size:14px;font-weight:700;color:var(--tx-secondary);letter-spacing:-.1px}
+.sb-printer{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:var(--r);padding:14px 16px;}
+.sb-printer-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(34,197,94,.7);animation:blink 2.5s infinite;flex-shrink:0}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.sb-printer-name{font-size:13px;font-weight:600;color:var(--tx-primary);line-height:1.3}
-.sb-printer-sub {font-size:11px;color:var(--tx-tertiary);margin-top:1px}
+.sb-printer-name{font-size:14px;font-weight:700;color:var(--tx-primary);line-height:1.3;letter-spacing:-.1px}
+.sb-printer-sub {font-size:11px;color:var(--tx-tertiary);margin-top:2px;font-family:'JetBrains Mono',monospace}
 
-.sb-steps{padding:24px 20px;border-bottom:1px solid var(--b0);display:flex;flex-direction:column;gap:0}
-.sb-step{display:flex;align-items:flex-start;gap:14px;padding:12px 0;position:relative}
-.sb-step:not(:last-child)::after{content:'';position:absolute;left:16px;top:46px;width:2px;height:calc(100% - 24px);background:var(--b0);border-radius:2px;}
+.sb-steps{padding:28px 24px;border-bottom:1px solid var(--b0);display:flex;flex-direction:column;gap:0}
+.sb-step{display:flex;align-items:flex-start;gap:16px;padding:14px 0;position:relative}
+.sb-step:not(:last-child)::after{content:'';position:absolute;left:17px;top:50px;width:2px;height:calc(100% - 26px);background:var(--b0);border-radius:2px;}
 .sb-step.done::after{background:linear-gradient(to bottom,rgba(34,197,94,.5),rgba(34,197,94,.08))}
-.sbc{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--b1);color:var(--tx-muted);transition:all .3s;font-family:'JetBrains Mono',monospace;}
-.sb-step.active .sbc{border-color:var(--blue);background:var(--blue);color:#fff;box-shadow:0 0 0 4px rgba(59,130,246,.15),0 4px 14px rgba(59,130,246,.35);}
+.sbc{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--b1);color:var(--tx-muted);transition:all .3s;font-family:'JetBrains Mono',monospace;}
+.sb-step.active .sbc{border-color:var(--blue);background:var(--blue);color:#fff;box-shadow:0 0 0 5px rgba(59,130,246,.15),0 4px 16px rgba(59,130,246,.4);}
 .sb-step.done .sbc{border-color:var(--green);background:rgba(34,197,94,.1);color:var(--green-hi)}
-.sb-step-text{padding-top:6px}
-.sb-step-name{font-size:13px;font-weight:600;color:var(--tx-tertiary);transition:color .3s}
-.sb-step.active .sb-step-name{color:var(--tx-primary);font-weight:700}
+.sb-step-text{padding-top:7px}
+.sb-step-name{font-size:14px;font-weight:600;color:var(--tx-tertiary);transition:color .3s}
+.sb-step.active .sb-step-name{color:var(--tx-primary);font-weight:700;letter-spacing:-.1px}
 .sb-step.done   .sb-step-name{color:var(--green)}
-.sb-step-hint{font-size:11px;color:var(--tx-muted);margin-top:2px;display:none;line-height:1.4}
+.sb-step-hint{font-size:12px;color:var(--tx-muted);margin-top:3px;display:none;line-height:1.5}
 .sb-step.active .sb-step-hint{display:block;color:var(--tx-tertiary)}
 
-/* SELECTED DOC CARD */
+/* ═══════════════════════════════
+   SELECTED DOC CARD — pro rebuild
+═══════════════════════════════ */
 .sb-doc-card {
-  margin: 12px 10px 0;
-  background: #111d2e;
+  margin: 14px 12px 0;
+  background: #0c1422;
   border: 1px solid rgba(255,255,255,.1);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   display: none;
-  animation: slideDown .28s cubic-bezier(.16,1,.3,1);
-  box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
+  animation: slideDown .3s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 2px 8px rgba(0,0,0,.4), 0 16px 48px rgba(0,0,0,.3);
+  flex-shrink: 0;
 }
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 .sb-doc-card.visible { display: block; }
-.sdc-header {display: flex; align-items: center; justify-content: space-between;padding: 10px 14px;background: rgba(34,197,94,.08);border-bottom: 1px solid rgba(34,197,94,.14);}
-.sdc-header-left { display: flex; align-items: center; gap: 7px; }
-.sdc-status-dot {width: 7px; height: 7px; border-radius: 50%;background: var(--green);box-shadow: 0 0 7px rgba(34,197,94,.7);flex-shrink: 0;}
-.sdc-header-label {font-size: 10px; font-weight: 700;text-transform: uppercase; letter-spacing: 2px;color: var(--green-hi);}
-.sdc-close {background: rgba(255,255,255,.06);border: 1px solid rgba(255,255,255,.1);color: var(--tx-tertiary); font-size: 11px;width: 22px; height: 22px;display: flex; align-items: center; justify-content: center;border-radius: 5px; transition: all .15s; flex-shrink: 0;}
-.sdc-close:hover { background: rgba(239,68,68,.18); color: var(--red-hi); }
-.sdc-docnum-block {padding: 14px 14px 12px;border-bottom: 1px solid rgba(255,255,255,.06);display: flex; align-items: center; justify-content: space-between;}
-.sdc-num {font-family: 'JetBrains Mono', monospace;font-size: 13px; font-weight: 600;color: #60a5fa;letter-spacing: .4px;}
-.sdc-type-badge {font-size: 10px; font-weight: 700;padding: 3px 8px; border-radius: 5px;text-transform: uppercase; letter-spacing: .5px;background: rgba(59,130,246,.15);color: #93c5fd;border: 1px solid rgba(59,130,246,.28);}
-.sdc-section {padding: 12px 14px;border-bottom: 1px solid rgba(255,255,255,.05);}
-.sdc-section:last-of-type { border-bottom: none; }
-.sdc-section-label {font-size: 9px; font-weight: 700;text-transform: uppercase; letter-spacing: 2.5px;color: var(--tx-muted);margin-bottom: 7px;}
-.sdc-company {font-size: 14px; font-weight: 700;color: #E5E7EB;line-height: 1.3; margin-bottom: 6px;letter-spacing: -.1px;}
-.sdc-meta-row {display: flex; align-items: flex-start; gap: 7px;margin-bottom: 5px;}
-.sdc-meta-row:last-child { margin-bottom: 0; }
-.sdc-meta-icon {width: 18px; height: 18px;background: rgba(255,255,255,.05);border: 1px solid rgba(255,255,255,.08);border-radius: 4px;display: flex; align-items: center; justify-content: center;font-size: 10px; flex-shrink: 0; margin-top: 1px;}
-.sdc-meta-text { font-size: 12px; color: #9CA3AF; line-height: 1.45; }
-.sdc-meta-text strong { color: #D1D5DB; font-weight: 500; }
 
-/* Empik badge in sidebar */
+/* ── HERO BLOCK: type + number ── */
+.sdc-hero {
+  padding: 18px 18px 16px;
+  background: linear-gradient(135deg, rgba(59,130,246,.12) 0%, rgba(59,130,246,.04) 100%);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  position: relative;
+  overflow: hidden;
+}
+.sdc-hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,.4), rgba(20,184,166,.3), transparent);
+}
+.sdc-hero-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.sdc-hero-badges { display: flex; align-items: center; gap: 7px; }
+.sdc-status-pill {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px;
+  color: var(--green-hi);
+  background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2);
+  border-radius: 20px; padding: 3px 9px;
+}
+.sdc-status-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,.8);
+  flex-shrink: 0; animation: blink 2.5s infinite;
+}
+.sdc-type-badge {
+  font-size: 9px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 6px;
+  background: rgba(59,130,246,.15); color: #93c5fd;
+  border: 1px solid rgba(59,130,246,.28);
+}
+.sdc-close {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+  color: var(--tx-muted); font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s; flex-shrink: 0;
+}
+.sdc-close:hover { background: rgba(239,68,68,.14); color: var(--red-hi); border-color: rgba(239,68,68,.22); }
+
+.sdc-hero-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px; font-weight: 800;
+  color: #e2e8f0; letter-spacing: .3px; line-height: 1;
+  margin-bottom: 2px;
+}
+.sdc-hero-sub {
+  font-size: 10px; color: var(--tx-muted); letter-spacing: .3px;
+}
+
+/* ── EMPIK BADGE ── */
 .empik-badge {
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:10px;font-weight:700;
-  padding:3px 9px;border-radius:20px;
-  background:rgba(168,85,247,.12);
-  border:1px solid rgba(168,85,247,.28);
-  color:#c084fc;letter-spacing:.3px;
-  margin-bottom:8px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: .3px;
+  padding: 5px 11px; border-radius: 8px;
+  background: rgba(168,85,247,.1); border: 1px solid rgba(168,85,247,.25);
+  color: #c084fc; margin: 14px 18px 0; width: calc(100% - 36px);
 }
 
-.sdc-contents {padding: 11px 14px;background: rgba(0,0,0,.15);border-top: 1px solid rgba(255,255,255,.05);border-bottom: 1px solid rgba(255,255,255,.05);display: flex; align-items: flex-start; gap: 8px;}
-.sdc-contents-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
-.sdc-contents-text { font-size: 12px; color: #9CA3AF; line-height: 1.4; font-style: italic; }
-.sdc-chips {padding: 10px 14px;display: flex; gap: 6px; flex-wrap: wrap;border-bottom: 1px solid rgba(255,255,255,.05);}
-.sdc-chip {font-size: 10px; font-weight: 600;padding: 3px 9px; border-radius: 20px;letter-spacing: .3px;background: rgba(255,255,255,.05);border: 1px solid rgba(255,255,255,.08);color: #6B7280;display: flex; align-items: center; gap: 4px;}
-.sdc-chip.active {background: rgba(20,184,166,.1);border-color: rgba(20,184,166,.25);color: #2dd4bf;}
-.sdc-foot {padding: 12px 14px;}
+/* ── RECIPIENT BLOCK ── */
+.sdc-recipient {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.sdc-recipient-name {
+  font-size: 13px; font-weight: 700; color: #f1f5f9;
+  line-height: 1.35; margin-bottom: 10px; letter-spacing: -.1px;
+}
+.sdc-row {
+  display: flex; align-items: flex-start; gap: 9px; margin-bottom: 8px;
+}
+.sdc-row:last-child { margin-bottom: 0; }
+.sdc-row-icon {
+  width: 24px; height: 24px; flex-shrink: 0; border-radius: 7px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.sdc-row-text {
+  font-size: 11.5px; color: #94a3b8; line-height: 1.5; padding-top: 3px;
+}
+
+/* ── CONTENTS BADGE ── */
+.sdc-contents-row {
+  margin: 12px 18px;
+  padding: 10px 13px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 9px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sdc-contents-icon-wrap {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.22);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.sdc-contents-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: var(--tx-muted); margin-bottom: 2px; }
+.sdc-contents-val   { font-size: 11px; color: #94a3b8; line-height: 1.4; }
+
+/* ── SERVICE GRID ── */
+.sdc-services {
+  padding: 0 18px 14px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
+}
+.sdc-svc {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 10px; border-radius: 8px;
+  background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+  font-size: 10px; font-weight: 600; color: #4b5563;
+  transition: all .15s;
+}
+.sdc-svc.on { background: rgba(20,184,166,.07); border-color: rgba(20,184,166,.2); color: var(--teal-hi); }
+.sdc-svc-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* ── CTA BUTTON ── */
+.sdc-foot { padding: 0 12px 12px; }
 .sdc-btn {
-  width: 100%;
-  background: linear-gradient(135deg, var(--blue), #1d4ed8);
-  border: none; border-radius: 8px; padding: 12px 16px;
-  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .8px; color: #fff;
-  transition: all .2s;
-  box-shadow: 0 2px 4px rgba(0,0,0,.3), 0 4px 14px rgba(59,130,246,.3);
+  width: 100%; border: none; border-radius: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1px; color: #fff;
   display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all .2s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 6px 20px rgba(59,130,246,.38);
+  position: relative; overflow: hidden;
 }
-.sdc-btn:hover {filter: brightness(1.1);transform: translateY(-1px);}
-.sdc-btn-icon { font-size: 14px; }
+.sdc-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.1) 0%, transparent 55%);
+  pointer-events: none;
+}
+.sdc-btn:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 10px 28px rgba(59,130,246,.5); }
+.sdc-btn:active { transform: translateY(0); }
+.sdc-btn svg { flex-shrink: 0; }
 
-.sb-history{margin-top:auto;border-top:1px solid var(--b0);padding:20px}
-.sb-hist-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--tx-muted);margin-bottom:10px}
-.sb-hist-count{display:flex;align-items:baseline;gap:7px;margin-bottom:12px}
-.sb-hist-num{font-size:34px;font-weight:900;color:var(--tx-primary);line-height:1}
-.sb-hist-sub{font-size:12px;color:var(--tx-tertiary)}
-.sb-statuses{display:flex;gap:12px}
-.sb-st{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tx-tertiary)}
-.sb-st-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(34,197,94,.5)}
+/* Unused old classes kept for compat */
+.sdc-header { display:none; }
+.sdc-docnum-block { display:none; }
+.sdc-section { display:none; }
+.sdc-contents { display:none; }
+.sdc-chips { display:none; }
+.sdc-num-wrap,.sdc-num,.sdc-num-eyebrow,.sdc-meta-row,.sdc-meta-icon,.sdc-meta-text,.sdc-company,.sdc-section-label,.sdc-contents-text,.sdc-contents-icon,.sdc-chip { display:none; }
+
+.sb-history{margin-top:auto;border-top:1px solid var(--b0);padding:24px}
+.sb-hist-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--tx-muted);margin-bottom:12px}
+.sb-hist-count{display:flex;align-items:baseline;gap:8px;margin-bottom:14px}
+.sb-hist-num{font-size:38px;font-weight:900;color:var(--tx-primary);line-height:1}
+.sb-hist-sub{font-size:13px;color:var(--tx-tertiary)}
+.sb-statuses{display:flex;gap:14px}
+.sb-st{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx-tertiary)}
+.sb-st-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(34,197,94,.5)}
 
 /* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.topbar{height:58px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--bg-side);border-bottom:1px solid var(--b0);position:relative;}
-.topbar::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(59,130,246,.3) 35%,rgba(20,184,166,.22) 65%,transparent 100%);}
-.topbar-title{font-size:16px;font-weight:700;color:var(--tx-primary);letter-spacing:-.15px}
+.topbar{
+  height:68px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 32px;
+  background: linear-gradient(180deg,
+    rgba(15,25,50,.98) 0%,
+    rgba(13,20,38,.95) 100%
+  );
+  border-bottom: 1px solid transparent;
+  position: relative;
+}
+/* Subtle side-to-side glow sweep */
+.topbar::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 100% at 15% 50%, rgba(59,130,246,.07) 0%, transparent 100%),
+    radial-gradient(ellipse 35% 100% at 85% 50%, rgba(20,184,166,.05) 0%, transparent 100%);
+}
+/* Accent line — wider, more vivid gradient */
+.topbar::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59,130,246,.0) 5%,
+    rgba(59,130,246,.7) 30%,
+    rgba(99,179,237,.9) 48%,
+    rgba(20,184,166,.7) 68%,
+    rgba(20,184,166,.0) 95%,
+    transparent 100%
+  );
+  filter: blur(.4px);
+}
+.topbar-title{
+  font-size:17px; font-weight:700; color:var(--tx-primary);
+  letter-spacing:-.2px; display:flex; align-items:center; gap:10px;
+}
+.topbar-title-step{
+  font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:2px;
+  color:var(--tx-muted); padding:4px 10px; border-radius:5px;
+  background:rgba(255,255,255,.04); border:1px solid var(--b0);
+}
 .topbar-right{display:flex;align-items:center;gap:10px}
-.topbar-tag{font-size:10px;font-weight:700;letter-spacing:.8px;padding:5px 11px;border-radius:20px;text-transform:uppercase;background:rgba(59,130,246,.12);color:var(--blue-hi);border:1px solid rgba(59,130,246,.2)}
-.topbar-btn{width:34px;height:34px;border-radius:var(--r3);background:rgba(255,255,255,.05);border:1px solid var(--b1);color:var(--tx-secondary);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.topbar-btn:hover{background:rgba(255,255,255,.09);color:var(--tx-primary)}
+.topbar-tag{
+  font-size:10px;font-weight:700;letter-spacing:.8px;padding:6px 14px;
+  border-radius:20px;text-transform:uppercase;
+  background:rgba(59,130,246,.1);color:var(--blue-hi);
+  border:1px solid rgba(59,130,246,.22);
+  display:flex;align-items:center;gap:6px;
+}
+.topbar-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue-hi);box-shadow:0 0 6px rgba(96,165,250,.8);animation:blink 2.5s infinite}
+.topbar-tag-teal{background:rgba(20,184,166,.1);color:var(--teal-hi);border-color:rgba(20,184,166,.22);}
+.topbar-tag-teal::before{background:var(--teal-hi);box-shadow:0 0 6px rgba(45,212,191,.8);}
+.topbar-btn{width:36px;height:36px;border-radius:var(--r2);background:rgba(255,255,255,.05);border:1px solid var(--b1);color:var(--tx-secondary);font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.topbar-btn:hover{background:rgba(255,255,255,.09);color:var(--tx-primary);border-color:var(--b2)}
 .content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0;scrollbar-width:thin;scrollbar-color:var(--bg-card) transparent;position:relative}
 .content::-webkit-scrollbar{width:5px}
 .content::-webkit-scrollbar-thumb{background:var(--bg-card);border-radius:4px}
@@ -239,32 +392,234 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 #panel1.active{display:flex}
 #panel1.slide-out{display:flex}
 
-/* P1 — DOCUMENT LIST */
-.p1-top{padding:24px 28px 0;flex-shrink:0}
-.search-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.search-wrap{flex:1;position:relative}
-.search-input{width:100%;background:var(--bg-input);border:1.5px solid var(--b1);border-radius:var(--r2);color:var(--tx-primary);font-family:'Inter',sans-serif;font-size:14px;font-weight:500;padding:13px 16px 13px 44px;outline:none;transition:all .2s;}
-.search-input:focus{border-color:var(--blue);background:rgba(30,40,60,.9);box-shadow:0 0 0 3px rgba(59,130,246,.15);}
-.search-input::placeholder{color:var(--tx-muted);font-weight:400}
-.search-ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--tx-tertiary);font-size:15px;pointer-events:none}
-.search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:none;background:none;border:none;color:var(--tx-tertiary);font-size:14px;padding:3px;border-radius:4px;transition:color .15s}
-.search-clear:hover{color:var(--tx-primary)}
-.search-wrap.has-value .search-clear{display:block}
-.filter-row{display:flex;align-items:center;gap:6px;margin-bottom:0}
-.filter-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx-muted);margin-right:2px;white-space:nowrap}
-.filter-btn{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;padding:6px 12px;border-radius:20px;border:1.5px solid var(--b0);background:transparent;color:var(--tx-tertiary);transition:all .15s;white-space:nowrap;}
-.filter-btn:hover{border-color:var(--b1);color:var(--tx-secondary)}
-.filter-btn.active{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.35);color:var(--blue-hi)}
-.filter-btn.f-urgent.active{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:var(--red-hi)}
-.filter-btn.f-ready.active{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:var(--green-hi)}
-.filter-btn.f-new.active{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:var(--blue-hi)}
-.p1-tab-row{display:flex;gap:4px;padding:14px 28px 0;flex-shrink:0}
-.p1-tab{padding:9px 18px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx-tertiary);border-radius:var(--r3);border:1.5px solid transparent;transition:all .15s}
-.p1-tab.active{background:rgba(255,255,255,.07);color:var(--tx-primary);border-color:var(--b2)}
-.p1-tab:hover:not(.active){color:var(--tx-secondary);background:rgba(255,255,255,.04)}
+/* ═══════════════════════════════════
+   P1 — TOP TOOLBAR redesigned
+═══════════════════════════════════ */
+.p1-top {
+  padding: 28px 32px 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-/* TABLE */
-.doc-table-wrap{padding:12px 28px 28px;flex:1;min-height:0;display:flex;flex-direction:column}
+/* Search bar */
+.search-row { display:flex; align-items:center; gap:10px; }
+.search-wrap { flex: 1; position: relative; }
+.search-input {
+  width: 100%;
+  background: rgba(255,255,255,.05);
+  border: none;
+  border-radius: 14px;
+  color: var(--tx-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 500;
+  padding: 14px 46px 14px 50px;
+  outline: none;
+  transition: all .22s cubic-bezier(.16,1,.3,1);
+  letter-spacing: -.1px;
+  box-shadow:
+    0 0 0 1.5px rgba(255,255,255,.07),
+    0 2px 8px rgba(0,0,0,.25),
+    0 1px 0 rgba(255,255,255,.05) inset;
+}
+.search-input:focus {
+  background: rgba(59,130,246,.07);
+  box-shadow:
+    0 0 0 2px rgba(59,130,246,.5),
+    0 4px 16px rgba(59,130,246,.15),
+    0 8px 24px rgba(0,0,0,.2),
+    0 1px 0 rgba(255,255,255,.06) inset;
+}
+.search-input::placeholder { color: var(--tx-muted); font-weight: 400; }
+.search-ico {
+  position: absolute; left: 17px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; display: flex; align-items: center;
+}
+.search-ico svg { opacity: .4; transition: opacity .2s; }
+.search-input:focus + .search-ico svg { opacity: .75; }
+.search-wrap.has-value .search-ico svg { opacity: .75; }
+.search-clear {
+  position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  color: var(--tx-tertiary); font-size: 10px; font-weight: 700;
+  width: 22px; height: 22px; border-radius: 6px;
+  display: none; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.search-clear:hover { background: rgba(239,68,68,.15); color: var(--red-hi); border-color: rgba(239,68,68,.25); }
+.search-wrap.has-value .search-clear { display: flex; }
+
+/* Filter strip — segmented pill group */
+.filter-row {
+  display: flex; align-items: center; gap: 10px;
+}
+.filter-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--tx-muted);
+  margin-right: 2px; white-space: nowrap; flex-shrink: 0;
+}
+.filter-pills {
+  display: flex; gap: 3px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 11px; padding: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2) inset;
+}
+.filter-btn {
+  font-size: 11px; font-weight: 600; letter-spacing: .3px;
+  padding: 7px 15px; border-radius: 8px;
+  border: none; background: transparent;
+  color: var(--tx-muted);
+  transition: all .18s cubic-bezier(.16,1,.3,1);
+  white-space: nowrap; display: flex; align-items: center; gap: 6px;
+}
+.filter-btn:hover { color: var(--tx-secondary); background: rgba(255,255,255,.05); }
+.filter-btn.active {
+  background: rgba(255,255,255,.1);
+  color: var(--tx-primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.07) inset;
+}
+.filter-btn.f-urgent.active { background: rgba(239,68,68,.14); color: var(--red-hi); }
+.filter-btn.f-ready.active  { background: rgba(34,197,94,.12);  color: var(--green-hi); }
+.filter-btn.f-new.active    { background: rgba(59,130,246,.14); color: var(--blue-hi); }
+.filter-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.filter-btn.f-urgent .filter-dot { background: var(--red); }
+.filter-btn.f-ready  .filter-dot { background: var(--green); }
+.filter-btn.f-new    .filter-dot { background: var(--blue); }
+.filter-btn.active .filter-dot   { opacity: 1; box-shadow: 0 0 5px currentColor; }
+
+/* Tabs — underline style */
+.p1-tab-row {
+  display: flex;
+  gap: 0;
+  padding: 0 32px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-top: 8px;
+}
+.p1-tab {
+  padding: 14px 22px 13px;
+  font-size: 13px; font-weight: 600;
+  color: var(--tx-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all .18s;
+  display: flex; align-items: center; gap: 9px;
+  white-space: nowrap; border-radius: 0;
+  border-top: none; border-left: none; border-right: none;
+  background: transparent;
+  letter-spacing: -.1px;
+}
+.p1-tab:hover:not(.active) { color: var(--tx-secondary); }
+.p1-tab.active {
+  color: var(--tx-primary);
+  border-bottom-color: var(--blue);
+  font-weight: 700;
+}
+.p1-tab-icon {
+  width: 22px; height: 22px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; flex-shrink: 0;
+  transition: all .18s;
+}
+.p1-tab.active .p1-tab-icon {
+  background: rgba(59,130,246,.14);
+  border-color: rgba(59,130,246,.28);
+}
+
+/* Manual tab — redesigned form */
+.manual-pane {
+  flex: 1; padding: 0; display: none;
+  flex-direction: column; align-items: stretch;
+}
+.manual-pane.active { display: flex; }
+.manual-inner {
+  max-width: 520px; margin: 0 auto;
+  padding: 40px 28px;
+  display: flex; flex-direction: column; gap: 0;
+  width: 100%;
+}
+.manual-eyebrow {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2.5px; color: var(--tx-muted); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.manual-eyebrow::after {
+  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.07);
+}
+.ml {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.8px; color: var(--tx-tertiary);
+  margin-bottom: 8px; display: block;
+}
+.mi-wrap { position: relative; margin-bottom: 14px; }
+.mi {
+  width: 100%;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  color: var(--tx-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px; font-weight: 600;
+  padding: 16px 20px;
+  outline: none;
+  transition: all .2s cubic-bezier(.16,1,.3,1);
+  letter-spacing: .5px;
+}
+.mi:focus {
+  border-color: var(--blue);
+  background: rgba(59,130,246,.06);
+  box-shadow: 0 0 0 4px rgba(59,130,246,.1);
+}
+.mi::placeholder { color: var(--tx-muted); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0; }
+.manual-hint {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.manual-hint-tag {
+  font-size: 11px; font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 10px; border-radius: 6px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--tx-muted); letter-spacing: .3px;
+  transition: all .15s;
+}
+.manual-hint-tag:hover {
+  background: rgba(59,130,246,.1);
+  border-color: rgba(59,130,246,.25);
+  color: var(--blue-hi);
+}
+.btn-fetch {
+  width: 100%;
+  background: linear-gradient(135deg, var(--blue) 0%, #1d4ed8 55%, #1e40af 100%);
+  color: #fff; border: none; border-radius: 12px;
+  padding: 16px;
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 800;
+  letter-spacing: .8px; text-transform: uppercase;
+  transition: all .2s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 6px 20px rgba(59,130,246,.35);
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+}
+.btn-fetch:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 10px 28px rgba(59,130,246,.48);
+}
+.btn-fetch svg { flex-shrink: 0; }
+
+/* No results state */
+.no-results {
+  display: none; padding: 60px 28px; text-align: center;
+}
+.no-results-icon { font-size: 36px; margin-bottom: 12px; opacity: .4; }
+.no-results-title { font-size: 15px; font-weight: 700; color: var(--tx-tertiary); margin-bottom: 5px; }
+.no-results-sub { font-size: 13px; color: var(--tx-muted); }
+.doc-table-wrap{padding:18px 32px 32px;flex:1;min-height:0;display:flex;flex-direction:column}
 .doc-table{flex:1;background:var(--bg-row);border:1px solid var(--b0);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;min-height:0;box-shadow:var(--sh1);}
 .doc-table-head{display:grid;grid-template-columns: 200px 1fr 90px 130px 48px;padding:12px 24px;border-bottom:1px solid var(--b1);background:rgba(10,16,28,.8);backdrop-filter:blur(16px);position:sticky;top:0;z-index:10;flex-shrink:0;}
 .dth{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--tx-muted)}
@@ -322,20 +677,96 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .sk-time{height:12px;width:40px}
 .sk-badge{height:24px;width:70px;border-radius:12px}
 
-/* Manual tab */
-.manual-pane{flex:1;padding:40px 28px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px}
-.manual-pane.active{display:flex}
-.manual-inner{width:100%;max-width:440px}
-.ml{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1.8px;color:var(--tx-tertiary);margin-bottom:9px;display:block}
-.mi{width:100%;background:var(--bg-input);border:1.5px solid var(--b1);border-radius:var(--r2);color:var(--tx-primary);font-family:'JetBrains Mono',monospace;font-size:16px;padding:15px 16px;outline:none;transition:all .2s;margin-bottom:14px}
-.mi:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
-.mi::placeholder{color:var(--tx-muted);font-family:'Inter',sans-serif}
-
-/* P2 — WEIGHT */
+/* TABLE */
 .p-wrap{max-width:580px}
-.p-title{font-size:24px;font-weight:800;color:var(--tx-primary);margin-bottom:5px;letter-spacing:-.3px}
-.p-sub  {font-size:14px;color:var(--tx-tertiary);margin-bottom:32px;line-height:1.5}
-.doc-banner{background:var(--bg-card);border:1px solid var(--b1);border-radius:var(--r);padding:20px 22px;margin-bottom:24px;display:flex;align-items:center;gap:18px;box-shadow:var(--sh1)}
+.p-title{font-size:27px;font-weight:800;color:var(--tx-primary);margin-bottom:6px;letter-spacing:-.4px}
+.p-sub  {font-size:14px;color:var(--tx-secondary);margin-bottom:32px;line-height:1.6}
+.doc-banner{background:var(--bg-card);border:1px solid var(--b1);border-radius:var(--r);padding:22px 24px;margin-bottom:24px;display:flex;align-items:center;gap:20px;box-shadow:var(--sh1)}
+
+/* BACK BUTTON in panel headers */
+.panel-back-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.28);
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; font-weight: 700;
+  color: var(--amber-hi);
+  letter-spacing: .3px;
+  transition: all .18s cubic-bezier(.16,1,.3,1);
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  text-transform: uppercase; letter-spacing: .6px;
+}
+.panel-back-btn:hover {
+  background: rgba(245,158,11,.18);
+  border-color: rgba(245,158,11,.45);
+  color: #fde68a;
+  transform: translateX(-2px);
+  box-shadow: 0 4px 14px rgba(245,158,11,.18);
+}
+.panel-back-btn:hover .pbtn-arrow { transform: translateX(-2px); }
+.pbtn-arrow { display: inline-flex; align-items: center; transition: transform .18s; }
+.pbtn-arrow svg path { stroke: currentColor; }
+
+/* P2 two-column layout */
+#panel2 { padding: 0 !important; overflow: hidden !important; }
+.p2-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  height: 100%;
+  overflow: hidden;
+}
+.p2-header {
+  padding: 20px 32px 20px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--b0);
+  background: linear-gradient(180deg, rgba(20,28,45,.4) 0%, transparent 100%);
+  display: flex; align-items: center; gap: 20px;
+}
+.p2-header-text { display: flex; flex-direction: column; gap: 3px; }
+.p2-body {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+.p2-left {
+  padding: 24px 24px 28px 32px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-card) transparent;
+}
+.p2-left::-webkit-scrollbar { width: 4px; }
+.p2-left::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 4px; }
+.p2-right {
+  padding: 24px 32px 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-card) transparent;
+  border-left: 1px solid var(--b0);
+}
+.p2-right .weight-block { margin-bottom: 16px; }
+.p2-right .pkg-block    { margin-bottom: 16px; }
+.p2-right .btn-row      { margin-top: auto; padding-top: 8px; }
+/* Make weight display more compact in side column */
+.p2-right .wb-display-area { padding: 24px 20px; }
+.p2-right .wb-num { font-size: 64px; width: 150px; }
+.p2-right .wb-unit { font-size: 22px; }
+.p2-right .wb-underline { width: 190px; }
+.p2-right .nk { min-height: 56px; font-size: 20px; padding: 14px; }
+.p2-right .btn-teal { flex: 1; }
+/* p2 wrapper to hold header + body */
+.p2-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
 .db-icon{font-size:26px}
 .db-num {font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue-hi);margin-bottom:4px;letter-spacing:.3px}
 .db-name{font-size:15px;font-weight:700;color:var(--tx-primary)}
@@ -416,35 +847,73 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   animation: slideDown .3s cubic-bezier(.16,1,.3,1);
 }
 .empik-detect-head {
-  display:flex; align-items:center; gap:10px; margin-bottom:12px;
+  display:flex; align-items:center; gap:10px; margin-bottom:14px;
 }
 .empik-detect-icon { font-size:20px; }
 .empik-detect-title { font-size:14px; font-weight:700; color:var(--purple-hi); }
-.empik-detect-sub { font-size:11px; color:var(--tx-tertiary); margin-top:2px; }
+.empik-detect-sub { font-size:11px; color:var(--tx-tertiary); margin-top:2px; line-height:1.5; }
 .empik-order-row {
-  display:flex; align-items:center; gap:8px; margin-bottom:12px;
+  display:flex; align-items:center; gap:10px; margin-bottom:16px;
 }
-.empik-order-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--tx-muted); white-space:nowrap; }
+.empik-order-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--tx-muted); white-space:nowrap; }
 .empik-order-num {
-  font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600;
+  font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700;
   color:var(--purple-hi);
   background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.22);
-  padding:4px 12px; border-radius:6px; flex:1;
+  padding:6px 14px; border-radius:8px; flex:1; letter-spacing:.5px;
 }
-.empik-salon-list { display:flex; flex-direction:column; gap:4px; }
-.empik-salon-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--tx-muted); margin-bottom:6px; }
+.empik-salon-list { display:flex; flex-direction:column; gap:6px; }
+.empik-salon-label {
+  font-size:10px; font-weight:700; text-transform:uppercase;
+  letter-spacing:2px; color:var(--tx-muted); margin-bottom:10px;
+}
 .empik-salon-item {
-  display:flex; align-items:flex-start; gap:10px;
-  background:rgba(255,255,255,.04); border:1px solid var(--b0);
-  border-radius:8px; padding:10px 12px;
-  transition:all .15s;
+  display:flex; align-items:center; gap:14px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
+  border-radius:10px; padding:13px 16px;
+  transition:all .18s cubic-bezier(.16,1,.3,1);
+  position: relative;
 }
-.empik-salon-item:hover { background:rgba(168,85,247,.08); border-color:rgba(168,85,247,.25); }
-.empik-salon-item.selected { background:rgba(168,85,247,.12); border-color:rgba(168,85,247,.4); }
-.empik-salon-check { width:16px; height:16px; border-radius:50%; border:2px solid var(--b1); flex-shrink:0; margin-top:2px; transition:all .15s; }
-.empik-salon-item.selected .empik-salon-check { background:var(--purple); border-color:var(--purple); }
-.empik-salon-name { font-size:13px; font-weight:600; color:var(--tx-primary); }
-.empik-salon-addr { font-size:11px; color:var(--tx-tertiary); margin-top:2px; }
+.empik-salon-item:hover {
+  background:rgba(168,85,247,.08); border-color:rgba(168,85,247,.3);
+  transform: translateX(2px);
+}
+.empik-salon-item.selected {
+  background:rgba(168,85,247,.12); border-color:rgba(168,85,247,.45);
+  box-shadow: 0 0 0 1px rgba(168,85,247,.2), 0 4px 16px rgba(168,85,247,.12);
+}
+.empik-salon-check {
+  width:18px; height:18px; border-radius:50%;
+  border:2px solid rgba(255,255,255,.18); flex-shrink:0;
+  transition:all .18s;
+  display:flex; align-items:center; justify-content:center;
+}
+.empik-salon-item.selected .empik-salon-check {
+  background:var(--purple); border-color:var(--purple);
+  box-shadow: 0 0 0 3px rgba(168,85,247,.2);
+}
+.empik-salon-item.selected .empik-salon-check::after {
+  content:''; width:6px; height:6px;
+  background:#fff; border-radius:50%;
+}
+.empik-salon-info { flex:1; min-width:0; }
+.empik-salon-name {
+  font-size:13px; font-weight:600; color:var(--tx-primary);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.empik-salon-item.selected .empik-salon-name { color:#e9d5ff; }
+.empik-salon-addr {
+  font-size:11px; color:var(--tx-tertiary); margin-top:3px;
+  line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.empik-salon-gln {
+  font-size:10px; font-weight:600; font-family:'JetBrains Mono',monospace;
+  color:var(--tx-muted); letter-spacing:.3px;
+  padding:2px 7px; border-radius:5px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
+  flex-shrink:0; white-space:nowrap;
+}
+.empik-salon-gln.unknown { color:var(--red-hi); background:rgba(239,68,68,.08); border-color:rgba(239,68,68,.2); }
 .empik-salon-pending { font-size:12px; color:var(--tx-muted); font-style:italic; padding:8px 0; }
 
 /* P3 — PRINT PREVIEW */
@@ -571,49 +1040,238 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .toggle-sw input:checked ~ .toggle-thumb{transform:translateX(16px);background:var(--blue-hi)}
 
 /* HISTORY PANEL */
-.hist-panel{width:var(--hist-w);flex-shrink:0;box-shadow:-1px 0 0 var(--b0),-3px 0 12px rgba(0,0,0,.2);background:rgba(10,16,26,.98);display:flex;flex-direction:column;overflow:hidden}
-.hp-head{padding:18px 22px;border-bottom:1px solid var(--b0);display:flex;align-items:center;justify-content:space-between}
-.hp-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--tx-tertiary)}
+.hist-panel{width:var(--hist-w);flex-shrink:0;box-shadow:-1px 0 0 var(--b0),-3px 0 14px rgba(0,0,0,.2);background:rgba(10,16,26,.98);display:flex;flex-direction:column;overflow:hidden}
+.hp-head{padding:20px 24px;border-bottom:1px solid var(--b0);display:flex;align-items:center;justify-content:space-between}
+.hp-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--tx-tertiary)}
 .hp-count{background:rgba(255,255,255,.05);border:1px solid var(--b1);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--tx-secondary);font-family:'JetBrains Mono',monospace}
 .hp-body{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--bg-card) transparent}
 .hp-body::-webkit-scrollbar{width:3px}
 .hp-body::-webkit-scrollbar-thumb{background:var(--bg-card);border-radius:3px}
-.hp-empty{padding:44px 20px;text-align:center;font-size:12px;color:var(--tx-muted);line-height:1.8}
-.hp-item{padding:14px 22px;border-bottom:1px solid var(--b0);transition:background .12s;position:relative}
+.hp-empty{padding:48px 24px;text-align:center;font-size:12px;color:var(--tx-muted);line-height:2}
+.hp-item{padding:16px 24px;border-bottom:1px solid var(--b0);transition:background .12s;position:relative}
 .hp-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--blue);opacity:.4}
 .hp-item:hover{background:rgba(255,255,255,.025)}
-.hp-r1{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.hp-r1{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
 .hp-num {font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--tx-primary)}
 .hp-time{font-size:10px;color:var(--tx-muted);font-family:'JetBrains Mono',monospace}
-.hp-name{font-size:12px;color:var(--tx-secondary);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hp-name{font-size:12px;color:var(--tx-secondary);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hp-meta{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .hp-track{font-size:10px;color:var(--blue-hi);font-family:'JetBrains Mono',monospace}
 .hp-wt  {font-size:10px;font-weight:700;color:var(--tx-tertiary);background:rgba(255,255,255,.05);border-radius:4px;padding:2px 7px;border:1px solid var(--b0)}
 .hp-pkg {font-size:10px;font-weight:700;color:var(--amber-hi);background:rgba(245,158,11,.08);border-radius:4px;padding:2px 7px;border:1px solid rgba(245,158,11,.2)}
-.hp-foot{margin-top:auto;border-top:1px solid var(--b0);padding:18px 22px}
-.hp-stat{display:flex;justify-content:space-between;margin-bottom:5px}
+.hp-foot{margin-top:auto;border-top:1px solid var(--b0);padding:20px 24px}
+.hp-stat{display:flex;justify-content:space-between;margin-bottom:6px}
 .hp-stat-lbl{font-size:10px;color:var(--tx-muted);text-transform:uppercase;letter-spacing:1.5px}
 .hp-stat-val{font-size:11px;font-weight:700;color:var(--tx-secondary);font-family:'JetBrains Mono',monospace}
-.hp-contact{margin-top:12px;padding-top:12px;border-top:1px solid var(--b0);font-size:10px;color:var(--tx-muted)}
-.hp-contact a{color:var(--blue-hi);text-decoration:none;font-size:11px;display:block;margin-top:3px}
+.hp-contact{margin-top:14px;padding-top:14px;border-top:1px solid var(--b0);font-size:10px;color:var(--tx-muted)}
+.hp-contact a{color:var(--blue-hi);text-decoration:none;font-size:11px;display:block;margin-top:4px}
 .hp-contact a:hover{text-decoration:underline}
 
-/* OVERLAYS */
-.overlay{position:fixed;inset:0;z-index:999;background:rgba(3,7,15,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:24px}
-.overlay.hidden{display:none}
-.popup{background:rgba(17,24,39,.92);backdrop-filter:blur(32px);border:1px solid var(--b1);border-radius:18px;padding:40px 36px;max-width:480px;width:100%;box-shadow:var(--sh2);animation:fadeUp .3s cubic-bezier(.16,1,.3,1)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.popup-logo   {height:24px;filter:brightness(0) invert(.45);margin-bottom:24px;display:block}
-.popup-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--blue-hi);margin-bottom:7px}
-.popup-title  {font-size:26px;font-weight:900;color:var(--tx-primary);margin-bottom:5px;letter-spacing:-.4px}
-.popup-sub    {font-size:14px;color:var(--tx-tertiary);margin-bottom:28px}
-.popup-steps  {list-style:none;margin-bottom:24px}
-.popup-steps li{display:flex;align-items:flex-start;gap:14px;padding:13px 0;border-bottom:1px solid var(--b0);font-size:13px;color:var(--tx-secondary);line-height:1.55}
-.popup-steps li:last-child{border-bottom:none}
-.pst-n{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.28);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--blue-hi);margin-top:1px}
-.popup-note{background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:var(--r2);padding:12px 14px;font-size:13px;color:var(--tx-tertiary);line-height:1.6;margin-bottom:24px}
-.btn-go{width:100%;background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;border:none;border-radius:var(--r2);padding:16px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .18s;box-shadow:var(--sh-blue)}
-.btn-go:hover{filter:brightness(1.08);transform:translateY(-1px)}
+/* ═══════════════════════════════
+   INTRO OVERLAY — redesigned
+═══════════════════════════════ */
+.overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(3,7,18,.88);
+  backdrop-filter: blur(20px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.overlay.hidden { display: none; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px) scale(.97); }
+  to   { opacity:1; transform:translateY(0)    scale(1);   }
+}
+@keyframes shimmerSlide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.popup {
+  background: linear-gradient(160deg, #0d1729 0%, #0a1020 60%, #0d1423 100%);
+  border: 1px solid rgba(59,130,246,.22);
+  border-radius: 24px;
+  padding: 0;
+  max-width: 520px; width: 100%;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04) inset,
+    0 1px 0 rgba(255,255,255,.08) inset,
+    0 24px 80px rgba(0,0,0,.6),
+    0 0 120px rgba(59,130,246,.08);
+  animation: fadeUp .4s cubic-bezier(.16,1,.3,1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Ambient glow blobs */
+.popup::before {
+  content: '';
+  position: absolute; top: -80px; right: -60px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(59,130,246,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.popup::after {
+  content: '';
+  position: absolute; bottom: -60px; left: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(20,184,166,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* TOP HERO */
+.popup-hero {
+  padding: 36px 36px 28px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  position: relative;
+}
+.popup-hero-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.popup-logo {
+  height: 22px;
+  filter: brightness(0) invert(.6);
+  display: block;
+}
+.popup-version-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px;
+  background: rgba(59,130,246,.1);
+  border: 1px solid rgba(59,130,246,.22);
+  color: var(--blue-hi);
+  display: flex; align-items: center; gap: 6px;
+}
+.popup-version-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px rgba(34,197,94,.8);
+  animation: blink 2s infinite;
+}
+.popup-eyebrow {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 3px; color: var(--tx-muted);
+  margin-bottom: 10px;
+}
+.popup-title {
+  font-size: 32px; font-weight: 900; color: #F8FAFC;
+  letter-spacing: -.6px; line-height: 1.1; margin-bottom: 10px;
+}
+.popup-title span {
+  background: linear-gradient(90deg, var(--blue-hi), var(--teal-hi));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.popup-sub {
+  font-size: 14px; color: var(--tx-tertiary); line-height: 1.6;
+}
+
+/* PRINTER STATUS PILL */
+.popup-printer-status {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(34,197,94,.07);
+  border: 1px solid rgba(34,197,94,.18);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-top: 20px;
+}
+.popup-printer-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 2px rgba(34,197,94,.2), 0 0 10px rgba(34,197,94,.6);
+  animation: blink 2.5s infinite; flex-shrink:0;
+}
+.popup-printer-text { font-size: 12px; color: var(--tx-secondary); }
+.popup-printer-text strong { color: var(--green-hi); font-weight: 700; }
+
+/* STEPS */
+.popup-steps-wrap {
+  padding: 24px 36px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.popup-steps-title {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2.5px; color: var(--tx-muted); margin-bottom: 14px;
+}
+.popup-step-card {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: background .15s, border-color .15s;
+  position: relative; overflow: hidden;
+}
+.popup-step-card:hover {
+  background: rgba(59,130,246,.06);
+  border-color: rgba(59,130,246,.18);
+}
+.popup-step-num {
+  width: 30px; height: 30px; border-radius: 9px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 1px;
+}
+.popup-step-num.s1 { background: rgba(59,130,246,.14); color: var(--blue-hi); border: 1px solid rgba(59,130,246,.28); }
+.popup-step-num.s2 { background: rgba(20,184,166,.12); color: var(--teal-hi); border: 1px solid rgba(20,184,166,.25); }
+.popup-step-num.s3 { background: rgba(34,197,94,.1);   color: var(--green-hi); border: 1px solid rgba(34,197,94,.22); }
+.popup-step-body { flex: 1; }
+.popup-step-name {
+  font-size: 13px; font-weight: 700; color: var(--tx-primary);
+  margin-bottom: 3px; letter-spacing: -.1px;
+}
+.popup-step-desc { font-size: 12px; color: var(--tx-tertiary); line-height: 1.5; }
+.popup-step-icon {
+  font-size: 18px; flex-shrink: 0; margin-top: 4px;
+  opacity: .7;
+}
+
+/* FOOTER / CTA */
+.popup-footer {
+  padding: 24px 36px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.popup-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(245,158,11,.07);
+  border: 1px solid rgba(245,158,11,.18);
+  border-radius: 10px; padding: 12px 16px;
+  font-size: 12px; color: #9CA3AF; line-height: 1.55;
+}
+.popup-note-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.btn-go {
+  width: 100%; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 55%, #1e40af 100%);
+  color: #fff; border: none; border-radius: 14px;
+  padding: 17px 24px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1px;
+  transition: all .22s cubic-bezier(.16,1,.3,1);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.15) inset,
+    0 6px 8px rgba(0,0,0,.35),
+    0 12px 32px rgba(59,130,246,.45);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-go::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  animation: shimmerSlide 3s ease-in-out infinite;
+}
+.btn-go:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.15) inset,
+    0 8px 12px rgba(0,0,0,.4),
+    0 18px 44px rgba(59,130,246,.55);
+}
+.btn-go svg { flex-shrink: 0; }
 .hd-overlay{position:fixed;inset:0;z-index:499;background:rgba(0,0,0,.28);display:none}
 .hd-overlay.show{display:block}
 .help-drawer{position:fixed;top:0;right:-320px;width:300px;height:100%;background:rgba(11,18,32,.96);backdrop-filter:blur(28px);border-left:1px solid var(--b1);box-shadow:-4px 0 20px rgba(0,0,0,.4);z-index:500;transition:right .3s cubic-bezier(.16,1,.3,1);padding:24px 22px;display:flex;flex-direction:column;overflow-y:auto}
@@ -642,17 +1300,69 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 <!-- INTRO -->
 <div class="overlay" id="introOverlay">
   <div class="popup">
-    <img src="https://studiohenry.pl/wp-content/uploads/2020/03/logo-henry.png" class="popup-logo" alt="Henry" onerror="this.style.display='none'">
-    <div class="popup-eyebrow">System logistyczny</div>
-    <div class="popup-title">GLS Label Printer</div>
-    <div class="popup-sub">Generowanie etykiet kurierskich dla drukarki GODEX RT700</div>
-    <ul class="popup-steps">
-      <li><div class="pst-n">1</div><div><strong style="color:var(--tx-primary)">Wybierz dokument WZ/MW</strong><br>Kliknij z listy lub wpisz numer ręcznie. Empik rozpoznawany automatycznie.</div></li>
-      <li><div class="pst-n">2</div><div><strong style="color:var(--tx-primary)">Podaj wagę i ilość paczek</strong><br>Wpisz wagę klawiaturą dotykową. Wybierz liczbę paczek (domyślnie 1).</div></li>
-      <li><div class="pst-n">3</div><div><strong style="color:var(--tx-primary)">Drukuj etykiety</strong><br>Sprawdź dane, uzupełnij uwagi i kliknij Drukuj.</div></li>
-    </ul>
-    <div class="popup-note">💡 Historia sesji w prawym panelu. Problemy? Kliknij <strong>?</strong> w nagłówku.</div>
-    <button class="btn-go" data-action="closeIntro">Rozpocznij pracę →</button>
+
+    <!-- Hero section -->
+    <div class="popup-hero">
+      <div class="popup-hero-top">
+        <img src="https://studiohenry.pl/wp-content/uploads/2020/03/logo-henry.png" class="popup-logo" alt="Henry" onerror="this.style.display='none'">
+        <div class="popup-version-badge">
+          <span class="popup-version-dot"></span>
+          v2.0 · Live
+        </div>
+      </div>
+      <div class="popup-eyebrow">System logistyczny</div>
+      <div class="popup-title">GLS Label<br><span>Printer</span></div>
+      <div class="popup-sub">Generowanie etykiet kurierskich GLS dla drukarki GODEX RT700 — szybko, bez błędów.</div>
+      <div class="popup-printer-status">
+        <div class="popup-printer-dot"></div>
+        <div class="popup-printer-text"><strong>GODEX RT700</strong> · 192.168.1.50 · port 9100 · Online</div>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="popup-steps-wrap">
+      <div class="popup-steps-title">Jak to działa — 3 kroki</div>
+
+      <div class="popup-step-card">
+        <div class="popup-step-num s1">1</div>
+        <div class="popup-step-body">
+          <div class="popup-step-name">Wybierz dokument WZ / MW</div>
+          <div class="popup-step-desc">Kliknij z listy lub wpisz numer ręcznie. Empik rozpoznawany automatycznie po GLN.</div>
+        </div>
+        <div class="popup-step-icon">📋</div>
+      </div>
+
+      <div class="popup-step-card">
+        <div class="popup-step-num s2">2</div>
+        <div class="popup-step-body">
+          <div class="popup-step-name">Podaj wagę i ilość paczek</div>
+          <div class="popup-step-desc">Wpisz wagę klawiaturą dotykową. Każda paczka otrzymuje osobną etykietę.</div>
+        </div>
+        <div class="popup-step-icon">⚖️</div>
+      </div>
+
+      <div class="popup-step-card">
+        <div class="popup-step-num s3">3</div>
+        <div class="popup-step-body">
+          <div class="popup-step-name">Sprawdź i drukuj etykiety</div>
+          <div class="popup-step-desc">Weryfikuj dane, uzupełnij uwagi — kliknij Drukuj. Etykieta leci do GODEX.</div>
+        </div>
+        <div class="popup-step-icon">🖨️</div>
+      </div>
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="popup-footer">
+      <div class="popup-note">
+        <div class="popup-note-icon">💡</div>
+        <div>Historia wydruków widoczna w panelu po prawej. Problemy? Kliknij <strong style="color:var(--tx-primary)">?</strong> w nagłówku aplikacji.</div>
+      </div>
+      <button class="btn-go" data-action="closeIntro">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Rozpocznij pracę
+      </button>
+    </div>
+
   </div>
 </div>
 
@@ -736,46 +1446,73 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   </div>
 
   <div class="sb-doc-card" id="docPreview">
-    <div class="sdc-header">
-      <div class="sdc-header-left">
-        <div class="sdc-status-dot"></div>
-        <span class="sdc-header-label">Wybrany dokument</span>
+
+    <!-- HERO: status + number + close -->
+    <div class="sdc-hero">
+      <div class="sdc-hero-top">
+        <div class="sdc-hero-badges">
+          <div class="sdc-status-pill">
+            <span class="sdc-status-dot"></span>
+            Wybrany
+          </div>
+          <span class="sdc-type-badge" id="docTypeBadge">WZ</span>
+        </div>
+        <button class="sdc-close" data-action="clearDoc">
+          <svg width="9" height="9" viewBox="0 0 10 10"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
       </div>
-      <button class="sdc-close" data-action="clearDoc">✕</button>
+      <div class="sdc-hero-num" id="docBadge">—</div>
+      <div class="sdc-hero-sub">Numer dokumentu WF-Mag</div>
     </div>
-    <div class="sdc-docnum-block">
-      <div class="sdc-num" id="docBadge">—</div>
-      <span class="sdc-type-badge" id="docTypeBadge">WZ</span>
+
+    <!-- EMPIK badge (conditional) -->
+    <div id="empik-sidebar-badge" class="empik-badge" style="display:none">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="#a855f7" opacity=".3"/><circle cx="6" cy="6" r="2.5" fill="#c084fc"/></svg>
+      EMPIK — rozpoznany automatycznie
     </div>
-    <div class="sdc-section">
-      <div class="sdc-section-label">Odbiorca</div>
-      <div id="empik-sidebar-badge" class="empik-badge" style="display:none">🟣 EMPIK — rozpoznany</div>
-      <div class="sdc-company" id="d-name">—</div>
-      <div class="sdc-meta-row">
-        <div class="sdc-meta-icon">📍</div>
-        <div class="sdc-meta-text" id="d-addr">—</div>
+
+    <!-- RECIPIENT -->
+    <div class="sdc-recipient">
+      <div class="sdc-recipient-name" id="d-name">—</div>
+      <div class="sdc-row">
+        <div class="sdc-row-icon">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.79 1.5 4 3.29 4 5.5c0 3.25 4 8 4 8s4-4.75 4-8c0-2.21-1.79-3.5-4-3.5zm0 4.75a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" fill="#60a5fa"/></svg>
+        </div>
+        <div class="sdc-row-text" id="d-addr">—</div>
       </div>
-      <div class="sdc-meta-row">
-        <div class="sdc-meta-icon">📞</div>
-        <div class="sdc-meta-text" id="d-phone">—</div>
+      <div class="sdc-row">
+        <div class="sdc-row-icon">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3.5 2.5h2.2l1.1 2.7-1.1.8c.7 1.4 1.8 2.5 3.2 3.2l.8-1.1 2.7 1.1v2.2c0 .8-4.4 2.8-9.5-6.4-.6-1.4.3-2.5.6-2.5z" fill="#60a5fa"/></svg>
+        </div>
+        <div class="sdc-row-text" id="d-phone">—</div>
       </div>
     </div>
-    <div class="sdc-contents">
-      <div class="sdc-contents-icon">📦</div>
-      <div class="sdc-contents-text" id="d-desc">—</div>
+
+    <!-- CONTENTS -->
+    <div class="sdc-contents-row">
+      <div class="sdc-contents-icon-wrap">📦</div>
+      <div>
+        <div class="sdc-contents-label">Zawartość</div>
+        <div class="sdc-contents-val" id="d-desc">—</div>
+      </div>
     </div>
-    <div class="sdc-chips">
-      <span class="sdc-chip active">🚚 GLS Standard</span>
-      <span class="sdc-chip active">24h</span>
-      <span class="sdc-chip">Ubezpieczenie</span>
-      <span class="sdc-chip">Pobranie</span>
+
+    <!-- SERVICES GRID -->
+    <div class="sdc-services">
+      <div class="sdc-svc on"><span class="sdc-svc-dot"></span>GLS Standard</div>
+      <div class="sdc-svc on"><span class="sdc-svc-dot"></span>Dostawa 24h</div>
+      <div class="sdc-svc"><span class="sdc-svc-dot"></span>Ubezpieczenie</div>
+      <div class="sdc-svc"><span class="sdc-svc-dot"></span>Pobranie</div>
     </div>
+
+    <!-- CTA -->
     <div class="sdc-foot">
       <button class="sdc-btn" data-action="goToWeight">
-        <span class="sdc-btn-icon">⚖️</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3a3 3 0 100 6 3 3 0 000-6zM8 10l1 2.5h6L16 10M6 20h12l-2-7.5H8L6 20z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Podaj wagę i drukuj
       </button>
     </div>
+
   </div>
 
   <div class="sb-history">
@@ -794,9 +1531,10 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 <!-- MAIN -->
 <div class="main">
   <div class="topbar">
-    <div class="topbar-title" id="topbarTitle">Wybierz dokument</div>
+    <div class="topbar-title" id="topbarTitle"><span class="topbar-title-step">Krok 1 z 3</span>Wybierz dokument</div>
     <div class="topbar-right">
-      <span class="topbar-tag">WF-Mag ● GLS API</span>
+      <span class="topbar-tag">WF-MAG</span>
+      <span class="topbar-tag topbar-tag-teal">GLS API</span>
       <button class="topbar-btn" data-action="openHelp">?</button>
     </div>
   </div>
@@ -807,24 +1545,39 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     <!-- ═══ P1 ═══ -->
     <div class="panel active" id="panel1">
       <div class="p1-top">
+        <!-- Search -->
         <div class="search-row">
           <div class="search-wrap" id="searchWrap">
-            <span class="search-ico">🔍</span>
-            <input class="search-input" id="searchInput" type="text" placeholder="Szukaj dokumentu, firmy lub adresu…" autocomplete="off">
+            <span class="search-ico">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="#6B7280" stroke-width="1.8"/><path d="M13 13l3.5 3.5" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <input class="search-input" id="searchInput" type="text" placeholder="Szukaj po numerze, firmie lub adresie…" autocomplete="off">
             <button class="search-clear" id="searchClear" type="button">✕</button>
           </div>
         </div>
+
+        <!-- Filters -->
         <div class="filter-row">
-          <span class="filter-label">Filtr:</span>
-          <button class="filter-btn active" data-action="filter" data-filter="all">Wszystkie</button>
-          <button class="filter-btn f-urgent" data-action="filter" data-filter="urgent">⚠ Pilne</button>
-          <button class="filter-btn f-ready"  data-action="filter" data-filter="ready">✔ Gotowe</button>
-          <button class="filter-btn f-new"    data-action="filter" data-filter="new">● Nowe</button>
+          <span class="filter-label">Status</span>
+          <div class="filter-pills">
+            <button class="filter-btn active" data-action="filter" data-filter="all">Wszystkie</button>
+            <button class="filter-btn f-urgent" data-action="filter" data-filter="urgent"><span class="filter-dot"></span>Pilne</button>
+            <button class="filter-btn f-ready"  data-action="filter" data-filter="ready"><span class="filter-dot"></span>Gotowe</button>
+            <button class="filter-btn f-new"    data-action="filter" data-filter="new"><span class="filter-dot"></span>Nowe</button>
+          </div>
         </div>
       </div>
+
+      <!-- Tabs -->
       <div class="p1-tab-row">
-        <div class="p1-tab active" data-action="switchTab" data-tab="list">📋 Lista WZ</div>
-        <div class="p1-tab" data-action="switchTab" data-tab="manual">✏️ Wpisz ręcznie</div>
+        <div class="p1-tab active" data-action="switchTab" data-tab="list">
+          <span class="p1-tab-icon">📋</span>
+          Lista dokumentów
+        </div>
+        <div class="p1-tab" data-action="switchTab" data-tab="manual">
+          <span class="p1-tab-icon">✏️</span>
+          Wpisz numer ręcznie
+        </div>
       </div>
       <div class="doc-table-wrap">
         <div class="doc-table" id="tableWrap">
@@ -843,93 +1596,31 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
               <div class="sk-row"><div class="sk sk-num"></div><div><div class="sk sk-company" style="width:65%"></div><div class="sk sk-addr" style="width:70%"></div></div><div class="sk sk-time"></div><div class="sk sk-badge"></div><div></div></div>
             </div>
             <div id="realRows" style="display:none">
-              <div class="doc-group-row">Dzisiaj</div>
-              <div class="doc-row" data-action="selectDoc" data-doc="MW/04619/26" data-status="new">
-                <div class="dr-num-wrap"><span class="dr-num">MW/04619/26</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">🟣 EMPIK — Aleksanów Łódzki</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · GLN z uwag MW</div></div>
-                <div class="dr-time">13:03</div>
-                <div><span class="ds ds-new">Nowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
+              <!-- Dane z WF-Mag zostaną załadowane tutaj automatycznie -->
+              <div class="no-results" id="noResults">
+                <div class="no-results-icon">🔍</div>
+                <div class="no-results-title">Brak wyników</div>
+                <div class="no-results-sub">Spróbuj innej frazy lub zmień filtr statusu</div>
               </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1042" data-status="ready">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1042</span><span class="dr-badge b-wz">WZ</span></div>
-                <div><div class="dr-company">Kowalski Sp. z o.o.</div><div class="dr-addr">ul. Lipowa 12, 00-840 Warszawa</div></div>
-                <div class="dr-time">08:14</div>
-                <div><span class="ds ds-ready">Gotowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="MW/04339/26" data-status="urgent">
-                <div class="dr-num-wrap"><span class="dr-num">MW/04339/26</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">🟣 EMPIK — Jaworzno Galeria Galena</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · GLN 5909000100084</div></div>
-                <div class="dr-time">08:32</div>
-                <div><span class="ds ds-urgent">Pilne</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="MW/04307/26" data-status="ready">
-                <div class="dr-num-wrap"><span class="dr-num">MW/04307/26</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">🟣 EMPIK — Tarnobrzeg Pasaż</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · zam. 826884297600</div></div>
-                <div class="dr-time">09:00</div>
-                <div><span class="ds ds-ready">Gotowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="MW/04306/26" data-status="ready">
-                <div class="dr-num-wrap"><span class="dr-num">MW/04306/26</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">🟣 EMPIK — Działdowo Park Handlowy</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · zam. 826884297500</div></div>
-                <div class="dr-time">09:05</div>
-                <div><span class="ds ds-ready">Gotowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="MW/04305/26" data-status="ready">
-                <div class="dr-num-wrap"><span class="dr-num">MW/04305/26</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">🟣 EMPIK — Żywiec</div><div class="dr-addr">Magazyn docelowy EMPIK S.A. · zam. 826885115900</div></div>
-                <div class="dr-time">09:10</div>
-                <div><span class="ds ds-ready">Gotowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1044" data-status="ready">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1044</span><span class="dr-badge b-wz">WZ</span></div>
-                <div><div class="dr-company">Jan Nowak</div><div class="dr-addr">os. Piastowskie 7/15, 61-157 Poznań</div></div>
-                <div class="dr-time">09:05</div>
-                <div><span class="ds ds-ready">Gotowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1045" data-status="new">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1045</span><span class="dr-badge b-fv">FV</span></div>
-                <div><div class="dr-company">Firma XYZ Srl</div><div class="dr-addr">ul. Rynek 1, 50-101 Wrocław</div></div>
-                <div class="dr-time">09:18</div>
-                <div><span class="ds ds-new">Nowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1046" data-status="ready">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1046</span><span class="dr-badge b-wz">WZ</span></div>
-                <div><div class="dr-company">Sklep Budowlany MAXBUD</div><div class="dr-addr">ul. Morska 33, 80-340 Gdańsk</div></div>
-                <div class="dr-time">09:44</div>
-                <div><span class="ds ds-ready">Gotowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1047" data-status="urgent">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1047</span><span class="dr-badge b-mw">MW</span></div>
-                <div><div class="dr-company">Logistyka Pro Sp. z o.o.</div><div class="dr-addr">ul. Fabryczna 20, 93-431 Łódź</div></div>
-                <div class="dr-time">10:02</div>
-                <div><span class="ds ds-urgent">Pilne</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="doc-row" data-action="selectDoc" data-doc="WZ/2024/1048" data-status="new">
-                <div class="dr-num-wrap"><span class="dr-num">WZ/2024/1048</span><span class="dr-badge b-fv">FV</span></div>
-                <div><div class="dr-company">Technika Przemysłowa Sp. z o.o.</div><div class="dr-addr">ul. Przemysłowa 88, 40-020 Katowice</div></div>
-                <div class="dr-time">10:30</div>
-                <div><span class="ds ds-new">Nowe</span></div>
-                <div class="dr-action"><span class="dr-arrow">›</span></div>
-              </div>
-              <div class="no-results" id="noResults">Brak wyników dla podanej frazy</div>
             </div>
           </div>
         </div>
         <div class="manual-pane" id="tab-manual">
           <div class="manual-inner">
-            <label class="ml">Numer dokumentu (WZ / FV / MW)</label>
-            <input class="mi" type="text" id="docInput" placeholder="np. WZ/2024/1042 lub MW/04339/26">
-            <button class="btn-fetch" data-action="loadDoc">Pobierz dane z WF-Mag →</button>
+            <div class="manual-eyebrow">Wpisz numer ręcznie</div>
+            <label class="ml">Numer dokumentu</label>
+            <div class="mi-wrap">
+              <input class="mi" type="text" id="docInput" placeholder="np. WZ/2024/1042">
+            </div>
+            <div class="manual-hint">
+              <span class="manual-hint-tag">WZ/2024/1042</span>
+              <span class="manual-hint-tag">MW/04339/26</span>
+              <span class="manual-hint-tag">FV/2024/0089</span>
+            </div>
+            <button class="btn-fetch" data-action="loadDoc">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M13 6l6 6-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Pobierz dane z WF-Mag
+            </button>
           </div>
         </div>
       </div>
@@ -937,81 +1628,106 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
     <!-- ═══ P2 ═══ -->
     <div class="panel" id="panel2">
-      <div class="p-wrap">
-        <div class="p-title">Waga i ilość paczek</div>
-        <div class="p-sub">Wpisz wagę i wybierz liczbę paczek — każda dostanie osobną etykietę</div>
+      <div class="p2-wrapper">
 
-        <div class="doc-banner">
-          <div class="db-icon">📦</div>
-          <div>
-            <div class="db-num" id="w-docnum">—</div>
-            <div class="db-name" id="w-name">—</div>
-            <div class="db-addr" id="w-addr">—</div>
+        <!-- Header -->
+        <div class="p2-header">
+          <button class="panel-back-btn" data-action="goBack1">
+            <span class="pbtn-arrow">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Wróć
+          </button>
+          <div class="p2-header-text">
+            <div class="p-title" style="margin-bottom:0">Waga i ilość paczek</div>
+            <div class="p-sub" style="margin-bottom:0;font-size:13px">Wpisz wagę i wybierz liczbę paczek — każda dostanie osobną etykietę</div>
           </div>
         </div>
 
-        <!-- EMPIK detect block — shown only for Empik docs -->
-        <div class="empik-detect-block" id="empikDetectBlock" style="display:none">
-          <div class="empik-detect-head">
-            <span class="empik-detect-icon">🟣</span>
-            <div>
-              <div class="empik-detect-title">Dokument Empik — dane rozpoznane</div>
-              <div class="empik-detect-sub">Salon rozpoznany po kodzie GLN z zamówienia Empiku. Numer zamówienia wypełniony automatycznie.</div>
+        <!-- Two-column body -->
+        <div class="p2-body">
+
+          <!-- LEFT: doc info + Empik -->
+          <div class="p2-left">
+
+            <div class="doc-banner">
+              <div class="db-icon">📦</div>
+              <div>
+                <div class="db-num" id="w-docnum">—</div>
+                <div class="db-name" id="w-name">—</div>
+                <div class="db-addr" id="w-addr">—</div>
+              </div>
             </div>
-          </div>
-          <div class="empik-order-row">
-            <span class="empik-order-label">Nr zamówienia:</span>
-            <span class="empik-order-num" id="empikOrderNum">—</span>
-          </div>
-          <div class="empik-salon-list">
-            <div class="empik-salon-label">Salon docelowy — potwierdź lub wybierz:</div>
-            <div id="empikSalonOptions">
-              <!-- filled dynamically -->
+
+            <!-- EMPIK detect block — shown only for Empik docs -->
+            <div class="empik-detect-block" id="empikDetectBlock" style="display:none">
+              <div class="empik-detect-head">
+                <span class="empik-detect-icon">🟣</span>
+                <div>
+                  <div class="empik-detect-title">Dokument Empik — dane rozpoznane</div>
+                  <div class="empik-detect-sub">Salon rozpoznany po kodzie GLN z zamówienia Empiku. Numer zamówienia wypełniony automatycznie.</div>
+                </div>
+              </div>
+              <div class="empik-order-row">
+                <span class="empik-order-label">Nr zamówienia:</span>
+                <span class="empik-order-num" id="empikOrderNum">—</span>
+              </div>
+              <div class="empik-salon-list">
+                <div class="empik-salon-label">Salon docelowy — potwierdź lub wybierz:</div>
+                <div id="empikSalonOptions">
+                  <!-- filled dynamically -->
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- PACKAGE COUNT STEPPER -->
-        <div class="pkg-block">
-          <div class="pkg-label-wrap">
-            <span class="pkg-label">Ilość paczek</span>
-            <span class="pkg-hint">Każda paczka = osobna etykieta GLS</span>
           </div>
-          <div class="pkg-stepper">
-            <button class="pkg-btn" data-action="pkgDec">−</button>
-            <div class="pkg-count" id="pkgCount">1</div>
-            <button class="pkg-btn" data-action="pkgInc">＋</button>
-          </div>
-        </div>
 
-        <div class="weight-block">
-          <div class="wb-display-area">
-            <div class="wb-label">Waga paczki (łącznie)</div>
-            <div class="wb-display" id="weightDisplay">
-              <input type="number" class="wb-num" id="weightInput" placeholder="0.0" step="0.1" min="0.1" max="999" readonly>
-              <span class="wb-unit">kg</span>
+          <!-- RIGHT: package count + weight + buttons -->
+          <div class="p2-right">
+
+            <!-- PACKAGE COUNT STEPPER -->
+            <div class="pkg-block">
+              <div class="pkg-label-wrap">
+                <span class="pkg-label">Ilość paczek</span>
+                <span class="pkg-hint">Każda paczka = osobna etykieta GLS</span>
+              </div>
+              <div class="pkg-stepper">
+                <button class="pkg-btn" data-action="pkgDec">−</button>
+                <div class="pkg-count" id="pkgCount">1</div>
+                <button class="pkg-btn" data-action="pkgInc">＋</button>
+              </div>
             </div>
-            <div class="wb-underline"></div>
-          </div>
-          <div class="numpad">
-            <button class="nk" data-action="numpad" data-val="7">7</button>
-            <button class="nk" data-action="numpad" data-val="8">8</button>
-            <button class="nk" data-action="numpad" data-val="9">9</button>
-            <button class="nk" data-action="numpad" data-val="4">4</button>
-            <button class="nk" data-action="numpad" data-val="5">5</button>
-            <button class="nk" data-action="numpad" data-val="6">6</button>
-            <button class="nk" data-action="numpad" data-val="1">1</button>
-            <button class="nk" data-action="numpad" data-val="2">2</button>
-            <button class="nk" data-action="numpad" data-val="3">3</button>
-            <button class="nk" data-action="numpad" data-val=".">&#44;</button>
-            <button class="nk" data-action="numpad" data-val="0">0</button>
-            <button class="nk del" data-action="numpadDel">⌫</button>
-          </div>
-        </div>
 
-        <div class="btn-row">
-          <button class="btn btn-ghost" data-action="goBack1">← Wróć</button>
-          <button class="btn btn-teal" data-action="goToPrint">Dalej: Podgląd →</button>
+            <div class="weight-block">
+              <div class="wb-display-area">
+                <div class="wb-label">Waga paczki (łącznie)</div>
+                <div class="wb-display" id="weightDisplay">
+                  <input type="number" class="wb-num" id="weightInput" placeholder="0.0" step="0.1" min="0.1" max="999" readonly>
+                  <span class="wb-unit">kg</span>
+                </div>
+                <div class="wb-underline"></div>
+              </div>
+              <div class="numpad">
+                <button class="nk" data-action="numpad" data-val="7">7</button>
+                <button class="nk" data-action="numpad" data-val="8">8</button>
+                <button class="nk" data-action="numpad" data-val="9">9</button>
+                <button class="nk" data-action="numpad" data-val="4">4</button>
+                <button class="nk" data-action="numpad" data-val="5">5</button>
+                <button class="nk" data-action="numpad" data-val="6">6</button>
+                <button class="nk" data-action="numpad" data-val="1">1</button>
+                <button class="nk" data-action="numpad" data-val="2">2</button>
+                <button class="nk" data-action="numpad" data-val="3">3</button>
+                <button class="nk" data-action="numpad" data-val=".">&#44;</button>
+                <button class="nk" data-action="numpad" data-val="0">0</button>
+                <button class="nk del" data-action="numpadDel">⌫</button>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button class="btn btn-teal" style="width:100%" data-action="goToPrint">Dalej: Podgląd →</button>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -1019,8 +1735,18 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     <!-- ═══ P3 ═══ -->
     <div class="panel" id="panel3">
       <div class="p-wrap">
-        <div class="p-title">Podgląd etykiety</div>
-        <div class="p-sub">Sprawdź dane przed wydrukiem — etykieta trafi do GODEX RT700</div>
+        <div style="display:flex;align-items:center;gap:18px;margin-bottom:24px">
+          <button class="panel-back-btn" data-action="goBack2">
+            <span class="pbtn-arrow">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Wróć
+          </button>
+          <div>
+            <div class="p-title" style="margin-bottom:4px">Podgląd etykiety</div>
+            <div class="p-sub" style="margin-bottom:0;font-size:13px">Sprawdź dane przed wydrukiem — etykieta trafi do GODEX RT700</div>
+          </div>
+        </div>
 
         <div class="print-card">
           <div class="pc-head">
@@ -1062,8 +1788,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
           <div class="spin-msg" id="loadingMsg">Generowanie listów przewozowych…<br>Wysyłka do drukarki GODEX RT700…</div>
         </div>
         <div class="btn-row" id="printButtons">
-          <button class="btn btn-ghost" data-action="goBack2">← Wróć</button>
-          <button class="btn btn-print" data-action="printLabel">🖨️&nbsp; Drukuj etykiety</button>
+          <button class="btn btn-print" style="flex:1" data-action="printLabel">🖨️&nbsp; Drukuj etykiety</button>
         </div>
       </div>
     </div>
@@ -1133,36 +1858,219 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
   /* ═══════════════════════════════════════
      EMPIK SALON DATABASE
-     Klucz: kod GLN salonu (z zamówienia Empiku, pole "Kod sklep GLN")
-     Wartość: { name, addr }
-     — uzupełniać na podstawie zamówień; GLN jest unikalny i stały
+     Klucze GLN (preferowane) — uzupełniane z zamówień Empiku
+     Klucze _name (fallback) — gdy GLN nieznany, dopasowanie po nazwie z Uwag MW
+     Adresy: magazyn docelowy salonu do którego jedzie paczka GLS
   ═══════════════════════════════════════ */
   var empikSalonDB = {
-    '5909000574779': { name: 'Salon Empik Warszawa Targówek',        addr: 'ul. Głębocka 15, 03-287 Warszawa' },
-    '5909000578340': { name: 'Salon Empik Aleksandrów Łódzki',      addr: '⏳ Adres do uzupełnienia' },
-    '5909000100084': { name: 'Salon Empik Jaworzno Galeria Galena',  addr: '⏳ Adres do uzupełnienia' },
-    '5909000100091': { name: 'Salon Empik Katowice Silesia City',    addr: '⏳ Adres do uzupełnienia' },
-    '5909000100107': { name: 'Salon Empik Kraków Galeria Krakowska', addr: '⏳ Adres do uzupełnienia' },
-    '5909000100114': { name: 'Salon Empik Warszawa Arkadia',         addr: '⏳ Adres do uzupełnienia' },
-    '5909000100121': { name: 'Salon Empik Wrocław Magnolia',         addr: '⏳ Adres do uzupełnienia' },
-    '5909000100138': { name: 'Salon Empik Poznań Old Browary',       addr: '⏳ Adres do uzupełnienia' },
-    '5909000100145': { name: 'Salon Empik Gdańsk Galeria Bałtycka',  addr: '⏳ Adres do uzupełnienia' },
-    // Salony bez jeszcze ustalonego GLN — identyfikowane przez nazwę (fallback)
-    '_tarnobrzeg_pasaz':   { name: 'Salon Empik Tarnobrzeg Pasaż',   addr: '⏳ Adres do uzupełnienia' },
-    '_dzialdowo_park':     { name: 'Salon Empik Działdowo Park Handlowy', addr: '⏳ Adres do uzupełnienia' },
-    '_zywiec':             { name: 'Sklep Empik Żywiec',             addr: '⏳ Adres do uzupełnienia' },
+    // ── GLN znane z zamówień ──────────────────────────────────────────
+    '5909000574779': { name: 'Salon Empik Warszawa Targówek',          addr: 'ul. Głębocka 15, 03-287 Warszawa' },
+    '5909000578340': { name: 'Salon Empik Aleksandrów Łódzki',        addr: '⏳ Adres do uzupełnienia' },
+    '5909000100084': { name: 'Salon Empik Jaworzno Galeria Galena',    addr: 'ul. Grunwaldzka 59, 43-600 Jaworzno' },
+    '5909000100091': { name: 'Salon Empik Katowice Silesia City',      addr: 'ul. Chorzowska 107, 40-101 Katowice' },
+    '5909000100107': { name: 'Salon Empik Kraków Galeria Krakowska',   addr: 'ul. Pawia 5, 31-154 Kraków' },
+    '5909000100114': { name: 'Salon Empik Warszawa Arkadia',           addr: 'al. Jana Pawła II 82, 00-175 Warszawa' },
+    '5909000100121': { name: 'Salon Empik Wrocław Magnolia',           addr: 'ul. Legnicka 60, 54-206 Wrocław' },
+    '5909000100138': { name: 'Salon Empik Poznań Stary Browar',        addr: 'ul. Półwiejska 42, 61-888 Poznań' },
+    '5909000100145': { name: 'Salon Empik Gdańsk Galeria Bałtycka',    addr: 'al. Grunwaldzka 141, 80-264 Gdańsk' },
+
+    // ── Fallback po nazwie (gdy GLN brak w zamówieniu) ────────────────
+    // Klucz: fragment nazwy salonu z pola Uwagi MW (bez "salon/sklep empik", małe litery, _ zamiast spacji)
+    // Matching: salonName.indexOf(key.replace(/_/g,' ')) !== -1  (po normalizacji PL znaków)
+
+    // Warszawa i okolice
+    '_warszawa_arkadia':          { name: 'Salon Empik Warszawa Arkadia',           addr: 'al. Jana Pawła II 82, 00-175 Warszawa' },
+    '_warszawa_blue_city':        { name: 'Salon Empik Warszawa Blue City',         addr: 'al. Jerozolimskie 179, 02-222 Warszawa' },
+    '_warszawa_wola_park':        { name: 'Salon Empik Warszawa Wola Park',         addr: 'ul. Górczewska 124, 01-460 Warszawa' },
+    '_warszawa_promenada':        { name: 'Salon Empik Warszawa Promenada',         addr: 'ul. Ostrobramska 75C, 04-175 Warszawa' },
+    '_warszawa_sadyba':           { name: 'Salon Empik Warszawa Sadyba',            addr: 'ul. Powsińska 31, 02-903 Warszawa' },
+    '_warszawa_bielany':          { name: 'Salon Empik Warszawa Bielany',           addr: 'al. Zjednoczenia 25, 01-829 Warszawa' },
+    '_warszawa_nowy_swiat':       { name: 'Salon Empik Warszawa Nowy Świat',        addr: 'ul. Nowy Świat 15/17, 00-029 Warszawa' },
+    '_warszawa_janki':            { name: 'Salon Empik Warszawa Janki',             addr: 'ul. Mszczonowska 3, 05-090 Janki' },
+    '_warszawa_piaseczno':        { name: 'Salon Empik Warszawa Piaseczno',         addr: 'ul. Puławska 46, 05-500 Piaseczno' },
+    '_warszawa_targowek':         { name: 'Salon Empik Warszawa Targówek',          addr: 'ul. Głębocka 15, 03-287 Warszawa' },
+    '_warszawa_annopol':          { name: 'Salon Empik Warszawa Annopol',           addr: 'ul. Annopol 2, 03-236 Warszawa' },
+    '_warszawa_westfield':        { name: 'Salon Empik Warszawa Westfield Arkadia', addr: 'al. Jana Pawła II 82, 00-175 Warszawa' },
+    '_warszawa_mokotow':          { name: 'Salon Empik Warszawa Mokotów',           addr: 'ul. Wołoska 12, 02-675 Warszawa' },
+
+    // Kraków
+    '_krakow_galeria_krakowska':  { name: 'Salon Empik Kraków Galeria Krakowska',   addr: 'ul. Pawia 5, 31-154 Kraków' },
+    '_krakow_krokus':             { name: 'Salon Empik Kraków Krokus',              addr: 'al. Bora Komorowskiego 37, 31-469 Kraków' },
+    '_krakow_kazimierz':          { name: 'Salon Empik Kraków Kazimierz',           addr: 'ul. Podgórska 34, 31-536 Kraków' },
+    '_krakow_zakopianka':         { name: 'Salon Empik Kraków Zakopianka',          addr: 'ul. Zakopiańska 62, 30-418 Kraków' },
+    '_krakow_plaza':              { name: 'Salon Empik Kraków Plaza',               addr: 'al. Pokoju 44, 31-564 Kraków' },
+    '_krakow_serenada':           { name: 'Salon Empik Kraków Serenada',            addr: 'ul. Opolska 1 lok. 207, 31-276 Kraków' },
+    '_krakow_bonarka':            { name: 'Salon Empik Kraków Bonarka',             addr: 'ul. Kamieńskiego 11, 30-644 Kraków' },
+
+    // Wrocław
+    '_wroclaw_magnolia':          { name: 'Salon Empik Wrocław Magnolia',           addr: 'ul. Legnicka 60, 54-206 Wrocław' },
+    '_wroclaw_bielany':           { name: 'Salon Empik Wrocław Bielany',            addr: 'ul. Czekoladowa 9, 55-075 Wrocław' },
+    '_wroclaw_rynek':             { name: 'Salon Empik Wrocław Rynek',              addr: 'ul. Rynek 50, 50-116 Wrocław' },
+    '_wroclaw_kosciuszki':        { name: 'Salon Empik Wrocław Kościuszki',         addr: 'pl. Kościuszki 21/23, 50-026 Wrocław' },
+    '_wroclaw_renoma':            { name: 'Salon Empik Wrocław Renoma',             addr: 'ul. Świdnicka 40, 50-027 Wrocław' },
+
+    // Poznań
+    '_poznan_stary_browar':       { name: 'Salon Empik Poznań Stary Browar',        addr: 'ul. Półwiejska 42, 61-888 Poznań' },
+    '_poznan_king_cross':         { name: 'Salon Empik Poznań King Cross',          addr: 'ul. Bukowska 156, 60-195 Poznań' },
+    '_poznan_plaza':              { name: 'Salon Empik Poznań Plaza',               addr: 'ul. Kaspra Drużbickiego 2, 61-693 Poznań' },
+    '_poznan_panorama':           { name: 'Salon Empik Poznań Panorama',            addr: 'ul. Górecka 30, 60-201 Poznań' },
+    '_poznan_mega':               { name: 'Salon Empik Poznań Mega',               addr: 'ul. Ratajczaka 44, 61-816 Poznań' },
+
+    // Łódź
+    '_lodz_manufaktura':          { name: 'Salon Empik Łódź Manufaktura',           addr: 'ul. Karskiego 5, 91-071 Łódź' },
+    '_lodz_galeria':              { name: 'Salon Empik Łódź Galeria',               addr: 'ul. Piłsudskiego 15/23, 90-307 Łódź' },
+    '_lodz_piotrkowska':          { name: 'Salon Empik Łódź Piotrkowska',           addr: 'ul. Piotrkowska 81, 90-423 Łódź' },
+    '_lodz_port_lodz':            { name: 'Salon Empik Łódź Port Łódź',             addr: 'ul. Wojska Polskiego 3/5, 91-755 Łódź' },
+
+    // Katowice i Śląsk
+    '_katowice_silesia':          { name: 'Salon Empik Katowice Silesia',           addr: 'ul. Chorzowska 107, 40-101 Katowice' },
+    '_katowice_trzy_stawy':       { name: 'Salon Empik Katowice Trzy Stawy',        addr: 'ul. Pułaskiego 60, 40-276 Katowice' },
+    '_katowice_centrum':          { name: 'Salon Empik Katowice Centrum',           addr: 'ul. P. Skargi 6, 40-091 Katowice' },
+    '_katowice_galeria_katowicka':{ name: 'Salon Empik Katowice Galeria Katowicka', addr: 'ul. 3 Maja 30, 40-097 Katowice' },
+    '_sosnowiec_plejada':         { name: 'Salon Empik Sosnowiec Plejada',          addr: 'ul. Staszica 8b, 41-200 Sosnowiec' },
+    '_bytom_plejada':             { name: 'Salon Empik Bytom Plejada',              addr: 'ul. Dolnośląska 25, 41-923 Bytom' },
+    '_zabrze_m1':                 { name: 'Salon Empik Zabrze M1',                  addr: 'ul. Plutonowego R. Szkubacza 1, 41-800 Zabrze' },
+    '_gliwice_rynek':             { name: 'Salon Empik Gliwice Rynek',              addr: 'ul. Rynek 4-5, 44-100 Gliwice' },
+    '_rybnik_sobieskiego':        { name: 'Salon Empik Rybnik Sobieskiego',         addr: 'ul. Sobieskiego 18, 44-200 Rybnik' },
+    '_rybnik_focus':              { name: 'Salon Empik Rybnik Focus Park',          addr: 'ul. Chrobrego 1, 44-200 Rybnik' },
+    '_ruda_slaska':               { name: 'Salon Empik Ruda Śląska',                addr: 'ul. 1-go Maja 310, 41-710 Ruda Śląska' },
+    '_tychy_city_point':          { name: 'Salon Empik Tychy City Point',           addr: 'al. Jana Pawła II 16/18, 43-100 Tychy' },
+    '_czeladz_m1':                { name: 'Salon Empik Czeladź M1',                 addr: 'ul. Będzińska 80, 41-253 Czeladź' },
+    '_dabrowa_gornicza':          { name: 'Salon Empik Dąbrowa Górnicza',           addr: 'ul. Sobieskiego 6, 41-300 Dąbrowa Górnicza' },
+    '_jaworzno_galeria_galena':   { name: 'Salon Empik Jaworzno Galeria Galena',    addr: 'ul. Grunwaldzka 59, 43-600 Jaworzno' },
+    '_bielsko_biala':             { name: 'Salon Empik Bielsko-Biała',              addr: 'ul. Sarni Stok 2, 43-300 Bielsko-Biała' },
+    '_zywiec':                    { name: 'Salon Empik Żywiec',                     addr: 'ul. Browarna 1, 34-300 Żywiec' },
+
+    // Gdańsk, Trójmiasto, Pomorze
+    '_gdansk_galeria_baltycka':   { name: 'Salon Empik Gdańsk Galeria Bałtycka',    addr: 'al. Grunwaldzka 141, 80-264 Gdańsk' },
+    '_gdansk_alfa':               { name: 'Salon Empik Gdańsk Alfa',                addr: 'ul. Kołobrzeska 41c, 80-390 Gdańsk' },
+    '_gdansk_matarnia':           { name: 'Salon Empik Gdańsk Matarnia',            addr: 'ul. Złota Karczma 26, 80-298 Gdańsk' },
+    '_gdansk_glowny':             { name: 'Salon Empik Gdańsk Główny',              addr: 'ul. Podwale Grodzkie 8, 80-895 Gdańsk' },
+    '_gdynia_centrum':            { name: 'Salon Empik Gdynia Centrum',             addr: 'ul. Świętojańska 68, 81-393 Gdynia' },
+    '_sopot_monte_cassino':       { name: 'Salon Empik Sopot Monte Cassino',        addr: 'ul. Bohaterów M.C. 57/59, 81-759 Sopot' },
+    '_rumia_port':                { name: 'Salon Empik Rumia Port Handlowy',        addr: 'ul. Grunwaldzka 108, 84-230 Rumia' },
+    '_slupsk_jantar':             { name: 'Salon Empik Słupsk Jantar',              addr: 'ul. Szczecińska 58, 76-200 Słupsk' },
+    '_slupsk_galeria':            { name: 'Salon Empik Słupsk Galeria',             addr: 'ul. Tuwima 32-33, 76-200 Słupsk' },
+    '_slupsk_stary_rynek':        { name: 'Salon Empik Słupsk Stary Rynek',         addr: 'ul. Stary Rynek 6, 76-200 Słupsk' },
+    '_starogard_gdanski':         { name: 'Salon Empik Starogard Gdański',          addr: 'ul. Rynek 15, 83-200 Starogard Gdański' },
+    '_elblag':                    { name: 'Salon Empik Elbląg Zielone Tarasy',      addr: 'ul. Teatralna 5, 82-300 Elbląg' },
+    '_kwidyzn':                   { name: 'Salon Empik Kwidzyn',                    addr: '⏳ Adres do uzupełnienia' },
+
+    // Szczecin, Zachodniopomorskie
+    '_szczecin_galaxy':           { name: 'Salon Empik Szczecin Galaxy',            addr: 'al. Wyzwolenia 18, 70-554 Szczecin' },
+    '_szczecin_ster':             { name: 'Salon Empik Szczecin Ster',              addr: 'ul. Ku Słońcu 67, 71-047 Szczecin' },
+    '_szczecin_dtc':              { name: 'Salon Empik Szczecin DTC',               addr: 'al. Niepodległości 60, 70-404 Szczecin' },
+    '_szczecin_wojska_polskiego': { name: 'Salon Empik Szczecin Wojska Polskiego',  addr: 'al. Wojska Polskiego 2, 70-470 Szczecin' },
+    '_swinoujscie':               { name: 'Salon Empik Świnoujście Fala',           addr: 'ul. Armii Krajowej 8, 72-600 Świnoujście' },
+    '_koszalin_emka':             { name: 'Salon Empik Koszalin Emka',              addr: 'ul. Jana Pawła II 20, 75-452 Koszalin' },
+    '_koszalin_zwyciestwa':       { name: 'Salon Empik Koszalin Zwycięstwa',        addr: 'ul. Zwycięstwa 106/108, 75-011 Koszalin' },
+
+    // Bydgoszcz, Toruń, Kujawsko-Pomorskie
+    '_bydgoszcz_galeria':         { name: 'Salon Empik Bydgoszcz Galeria',          addr: 'ul. Fordońska 141, 85-739 Bydgoszcz' },
+    '_bydgoszcz_dtc':             { name: 'Salon Empik Bydgoszcz DTC',              addr: 'ul. Gdańska 15, 85-005 Bydgoszcz' },
+    '_torun_copernicus':          { name: 'Salon Empik Toruń Copernicus',           addr: 'ul. Żółkiewskiego 15, 87-100 Toruń' },
+    '_torun_starowka':            { name: 'Salon Empik Toruń Starówka',             addr: 'ul. Wielkie Garbary 18, 87-100 Toruń' },
+    '_wloclawek':                 { name: 'Salon Empik Włocławek City',             addr: 'ul. Pułaskiego 14, 87-800 Włocławek' },
+    '_inowroclaw':                { name: 'Salon Empik Inowrocław',                 addr: '⏳ Adres do uzupełnienia' },
+    '_grudziadz':                 { name: 'Salon Empik Grudziądz',                  addr: '⏳ Adres do uzupełnienia' },
+
+    // Lublin, Lubelskie
+    '_lublin_plaza':              { name: 'Salon Empik Lublin Plaza',               addr: 'ul. Obrońców Pokoju 1a, 20-030 Lublin' },
+    '_lublin_klonowa':            { name: 'Salon Empik Lublin Klonowa',             addr: '⏳ Adres do uzupełnienia' },
+    '_chelm':                     { name: 'Salon Empik Chełm Lubelska',             addr: 'ul. Lubelska 61, 22-100 Chełm' },
+    '_biala_podlaska':            { name: 'Salon Empik Biała Podlaska',             addr: '⏳ Adres do uzupełnienia' },
+    '_zamosc':                    { name: 'Salon Empik Zamość',                     addr: '⏳ Adres do uzupełnienia' },
+    '_pulawy':                    { name: 'Salon Empik Puławy',                     addr: '⏳ Adres do uzupełnienia' },
+
+    // Rzeszów, Podkarpackie
+    '_rzeszow_galeria':           { name: 'Salon Empik Rzeszów Galeria',            addr: 'ul. Lisa Kuli 19, 35-025 Rzeszów' },
+    '_rzeszow_plaza':             { name: 'Salon Empik Rzeszów Plaza',              addr: 'ul. Rejtana 65, 35-959 Rzeszów' },
+    '_krosno':                    { name: 'Salon Empik Krosno',                     addr: '⏳ Adres do uzupełnienia' },
+    '_jaslo':                     { name: 'Salon Empik Jasło',                      addr: '⏳ Adres do uzupełnienia' },
+    '_tarnobrzeg_pasaz':          { name: 'Salon Empik Tarnobrzeg Pasaż',           addr: 'ul. Sokola 1, 39-400 Tarnobrzeg' },
+
+    // Białystok, Podlaskie
+    '_bialystok_galeria_biala':   { name: 'Salon Empik Białystok Galeria Biała',    addr: 'ul. Czesława Miłosza 2, 15-265 Białystok' },
+    '_bialystok_rynek':           { name: 'Salon Empik Białystok Rynek',            addr: 'ul. Sienkiewicza 3, 15-432 Białystok' },
+    '_bialystok_biala':           { name: 'Salon Empik Białystok Biała',            addr: 'ul. Czesława Miłosza 2, 15-265 Białystok' },
+    '_suwalki':                   { name: 'Salon Empik Suwałki Ratusz',             addr: 'ul. Kościuszki 48, 16-400 Suwałki' },
+
+    // Olsztyn, Warmińsko-Mazurskie
+    '_olsztyn_alfa':              { name: 'Salon Empik Olsztyn Alfa',               addr: 'al. Józefa Piłsudskiego 16, 10-576 Olsztyn' },
+    '_olsztyn':                   { name: 'Salon Empik Olsztyn',                    addr: 'al. Józefa Piłsudskiego 16, 10-576 Olsztyn' },
+
+    // Kielce, Świętokrzyskie
+    '_kielce_echo':               { name: 'Salon Empik Kielce Echo',                addr: 'ul. Świętokrzyska 20, 25-406 Kielce' },
+    '_kielce_warszawska':         { name: 'Salon Empik Kielce Warszawska',          addr: 'ul. Warszawska 5, 25-512 Kielce' },
+    '_kielce':                    { name: 'Salon Empik Kielce',                     addr: 'ul. Świętokrzyska 20, 25-406 Kielce' },
+    '_ostrowiec_swietokrzyski':   { name: 'Salon Empik Ostrowiec Świętokrzyski',    addr: 'ul. Mickiewicza 32, 27-400 Ostrowiec Świętokrzyski' },
+
+    // Radom, Płock, Mazowieckie
+    '_radom':                     { name: 'Salon Empik Radom M1',                   addr: 'ul. Grzecznarowskiego 28, 26-604 Radom' },
+    '_plock':                     { name: 'Salon Empik Płock Starówka',             addr: 'pl. Narutowicza 5, 09-400 Płock' },
+    '_siedlce':                   { name: 'Salon Empik Siedlce',                    addr: '⏳ Adres do uzupełnienia' },
+
+    // Opole, Opolskie
+    '_opole_karolinka':           { name: 'Salon Empik Opole Karolinka',            addr: 'ul. Wrocławska 154, 45-837 Opole' },
+    '_opole_arkadia':             { name: 'Salon Empik Opole Arkadia',              addr: 'ul. Krakowska 45/47, 45-075 Opole' },
+    '_opole':                     { name: 'Salon Empik Opole',                      addr: 'ul. Wrocławska 154, 45-837 Opole' },
+
+    // Legnica, Wałbrzych, Dolnośląskie
+    '_legnica_ferio':             { name: 'Salon Empik Legnica Ferio',              addr: 'ul. Chojnowska 41, 59-220 Legnica' },
+    '_legnica_galeria_piastow':   { name: 'Salon Empik Legnica Galeria Piastów',    addr: 'ul. NMP 9, 59-220 Legnica' },
+    '_legnica':                   { name: 'Salon Empik Legnica',                    addr: 'ul. Chojnowska 41, 59-220 Legnica' },
+    '_walbrzych':                 { name: 'Salon Empik Wałbrzych Grunwald',         addr: 'al. Wyzwolenia 2, 58-300 Wałbrzych' },
+    '_jelenia_gora':              { name: 'Salon Empik Jelenia Góra',               addr: '⏳ Adres do uzupełnienia' },
+    '_lubin':                     { name: 'Salon Empik Lubin Ratusz',               addr: 'ul. Rynek 23, 59-300 Lubin' },
+
+    // Zielona Góra, Gorzów, Lubuskie
+    '_zielona_gora_focus':        { name: 'Salon Empik Zielona Góra Focus',         addr: 'ul. Wrocławska 17, 65-427 Zielona Góra' },
+    '_zielona_gora':              { name: 'Salon Empik Zielona Góra',               addr: 'ul. Wrocławska 17, 65-427 Zielona Góra' },
+    '_gorzow':                    { name: 'Salon Empik Gorzów Wlkp.',               addr: 'ul. Sikorskiego 120/128, 66-400 Gorzów Wlkp.' },
+
+    // Poznań / Wielkopolskie
+    '_kalisz':                    { name: 'Salon Empik Kalisz DTC',                 addr: 'pl. Św. Józefa 12, 62-800 Kalisz' },
+    '_gniezno':                   { name: 'Salon Empik Gniezno Chrobrego',          addr: 'ul. Bolesława Chrobrego 11, 62-200 Gniezno' },
+    '_ostrow_wielkopolski':       { name: 'Salon Empik Ostrów Wlkp. Kolejowa',      addr: 'ul. Kolejowa 24B, 63-400 Ostrów Wlkp.' },
+    '_leszno':                    { name: 'Salon Empik Leszno Manhattan',           addr: 'ul. Jana Pawła II 16, 64-100 Leszno' },
+    '_pila':                      { name: 'Salon Empik Piła Bydgoska',              addr: 'ul. Bydgoska 137, 64-920 Piła' },
+    '_konin':                     { name: 'Salon Empik Konin',                      addr: '⏳ Adres do uzupełnienia' },
+
+    // Nowy Sącz, Tarnów, Małopolskie
+    '_nowy_sacz_europa':          { name: 'Salon Empik Nowy Sącz Europa',           addr: 'ul. Nawojowska 1, 33-303 Nowy Sącz' },
+    '_nowy_sacz_rynek':           { name: 'Salon Empik Nowy Sącz Rynek',            addr: 'ul. Rynek 17, 33-300 Nowy Sącz' },
+    '_nowy_sacz':                 { name: 'Salon Empik Nowy Sącz',                  addr: 'ul. Nawojowska 1, 33-303 Nowy Sącz' },
+    '_tarnow':                    { name: 'Salon Empik Tarnów',                     addr: 'ul. Krakowska 25, 33-100 Tarnów' },
+    '_racibórz':                  { name: 'Salon Empik Racibórz Rynek',             addr: 'ul. Rynek 5, 47-400 Racibórz' },
+    '_raciborz':                  { name: 'Salon Empik Racibórz Rynek',             addr: 'ul. Rynek 5, 47-400 Racibórz' },
+
+    // Częstochowa, Łódzkie poza Łodzią
+    '_czestochowa':               { name: 'Salon Empik Częstochowa',                addr: 'ul. Najśw. Marii Panny 63/65, 42-200 Częstochowa' },
+    '_aleksandrow_lodzki':        { name: 'Salon Empik Aleksandrów Łódzki',        addr: '⏳ Adres do uzupełnienia' },
+    '_piotrkow_trybunalski':      { name: 'Salon Empik Piotrków Trybunalski',       addr: '⏳ Adres do uzupełnienia' },
+    '_belchatow':                 { name: 'Salon Empik Bełchatów',                  addr: '⏳ Adres do uzupełnienia' },
+    '_skierniewice':              { name: 'Salon Empik Skierniewice',               addr: '⏳ Adres do uzupełnienia' },
+
+    // Dzialdowo
+    '_dzialdowo_park':            { name: 'Salon Empik Działdowo Park Handlowy',    addr: '⏳ Adres do uzupełnienia' },
+    '_dzialdowo':                 { name: 'Salon Empik Działdowo',                  addr: '⏳ Adres do uzupełnienia' },
   };
 
   var EMPIK_UWAGI_PREFIX = 'Dostawca 100318, Zamowienie Nr ';
 
   /* ═══════════════════════════════════════
-     MOCK DOC DATA
+     API CONFIG — adres backendu
+     Zmień na IP swojego serwera w sieci lokalnej
+     np. 'http://192.168.1.100:3000'
+  ═══════════════════════════════════════ */
+  var API_BASE = 'http://localhost:3000';
+
+  /* ═══════════════════════════════════════
+     MOCK DOC DATA — fallback gdy brak backendu
   ═══════════════════════════════════════ */
   var mockData = {
     'WZ/2024/1042':{ name:'Kowalski Sp. z o.o.',            addr:'ul. Lipowa 12, 00-840 Warszawa',       phone:'+48 22 123 45 67', desc:'Sprzęt elektroniczny, 3 szt.', empik:false },
-    // Empik MW — empikGLN pochodzi z pola "Kod sklep GLN" w zamówieniu Empiku
-    // empikSalon = nazwa salonu z pola Uwagi dokumentu MW (fallback gdy GLN jeszcze nie w bazie)
-    'MW/04619/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnety B6 Wielkanoc, 30 szt.', empik:true,  empikGLN:'',              empikSalon:'',                                  empikOrder:'',            uwagi:'SALON EMPIK ALEKSANDROW LODZKI, GLN: 5909000578340, zam. 826864460800' },
+    'MW/04619/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnety B6 Wielkanoc, 30 szt.', empik:true, empikGLN:'', empikSalon:'', empikOrder:'', uwagi:'SALON EMPIK ALEKSANDROW LODZKI, GLN: 5909000578340, zam. 826864460800' },
     'MW/04339/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnet KW KONICA, 10 szt.',    empik:true,  empikGLN:'5909000100084', empikSalon:'EMPIK JAWORZNO GALERIA GALENA',     empikOrder:'826894697100' },
     'MW/04305/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Zakładki fabularne, 30 szt.',  empik:true,  empikGLN:'',              empikSalon:'SKLEP EMPIK ZYWIEC',                empikOrder:'826885115900' },
     'MW/04306/26': { name:'Magazyn docelowy EMPIK S.A.',    addr:'',                                    phone:'+48 22 451 20 00', desc:'Karnety B6 Wielkanoc, 25 szt.',empik:true,  empikGLN:'',              empikSalon:'SALON EMPIK DZIALDOWO PARK HANDLOWY',empikOrder:'826884297500' },
@@ -1173,6 +2081,23 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     'WZ/2024/1047':{ name:'Logistyka Pro Sp. z o.o.',        addr:'ul. Fabryczna 20, 93-431 Łódź',       phone:'+48 42 111 22 33', desc:'Paleta 1/2, materiały biurowe',empik:false },
     'WZ/2024/1048':{ name:'Technika Przemysłowa Sp. z o.o.', addr:'ul. Przemysłowa 88, 40-020 Katowice', phone:'+48 32 222 33 44', desc:'Moduły sterownicze, 1 szt.',   empik:false },
   };
+
+  var USE_LIVE_API = true; // ustaw true gdy backend jest gotowy
+
+  /* ═══ LIVE API — pobierz listę dokumentów ═══ */
+  function fetchDocumentList() {
+    if (!USE_LIVE_API) return; // mock — dane już są w HTML
+    fetch(API_BASE + '/api/documents')
+      .then(function(r){ return r.json(); })
+      .then(function(resp){
+        if (!resp.ok || !resp.data) return;
+        renderDocumentRows(resp.data);
+      })
+      .catch(function(err){
+        console.warn('API documents error:', err);
+        toast('warn','Tryb offline','Nie można pobrać listy z WF-Mag — używam demo danych');
+      });
+  }
 
   function g(id){ return document.getElementById(id); }
 
@@ -1257,7 +2182,10 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       else{ c.textContent=i; }
     });
     var titles=['Wybierz dokument','Waga i ilość paczek','Podgląd etykiety','Wydrukowano'];
-    g('topbarTitle').textContent=titles[n-1]||'GLS Printer';
+    var stepLabels=['Krok 1 z 3','Krok 2 z 3','Krok 3 z 3','Gotowe'];
+    var title = titles[n-1]||'GLS Printer';
+    var stepLabel = stepLabels[n-1]||'';
+    g('topbarTitle').innerHTML = (stepLabel ? '<span class="topbar-title-step">'+stepLabel+'</span>' : '') + title;
   }
 
   /* ═══ SEARCH + FILTER ═══ */
@@ -1268,6 +2196,14 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   g('searchClear').addEventListener('click',function(){
     g('searchInput').value=''; g('searchWrap').classList.remove('has-value');
     applyFilter(); g('searchInput').focus();
+  });
+
+  /* Hint tags — click to prefill */
+  document.querySelectorAll('.manual-hint-tag').forEach(function(tag){
+    tag.addEventListener('click',function(){
+      g('docInput').value=this.textContent.trim();
+      g('docInput').focus();
+    });
   });
   function applyFilter(){
     var q=g('searchInput').value.trim().toLowerCase();
@@ -1291,16 +2227,22 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     g('tab-manual').classList.toggle('active',isManual);
   }
 
-  /* ═══ EMPIK UWAGI PARSER ═══
-     Fallback gdy WF-MAG nie przekazuje strukturalnych pól empikGLN / empikOrder.
-     Parsuje tekst pola "Uwagi" z dokumentu MW, np.:
-       "SALON EMPIK ALEKSANDROW LODZKI, GLN: 5909000578340, zam. 826864460800"
-  ═══════════════════════════════════════ */
+  /* ═══ EMPIK DETECTION ═══ */
+
+  // Normalizacja: małe litery + usunięcie polskich znaków + trim
+  function normalizePL(s) {
+    return (s || '').toLowerCase()
+      .replace(/ą/g,'a').replace(/ć/g,'c').replace(/ę/g,'e')
+      .replace(/ł/g,'l').replace(/ń/g,'n').replace(/ó/g,'o')
+      .replace(/ś/g,'s').replace(/ź/g,'z').replace(/ż/g,'z')
+      .replace(/\s+/g,' ').trim();
+  }
+
+  // Parser pola Uwagi z MW: "SALON EMPIK ALEKSANDROW LODZKI, GLN: 5909000578340, zam. 826864460800"
   function parseEmpikFromUwagi(txt) {
     if (!txt) return {};
     var glnMatch   = txt.match(/GLN[:\s]+(\d{13})/i);
     var zamMatch   = txt.match(/zam\.?\s*(\d{8,})/i);
-    // Salon name = wszystko przed ", GLN" lub przed końcem linii
     var salonMatch = txt.match(/^([^,\n]+?)(?:,?\s*GLN|\s*$)/i);
     return {
       empikGLN:   glnMatch   ? glnMatch[1].trim()   : '',
@@ -1309,17 +2251,15 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     };
   }
 
-  /* ═══ EMPIK DETECTION ═══ */
   function detectEmpik(num, d){
     if(!d.empik) return;
     state.isEmpik = true;
 
-    // Pobierz strukturalne pola (z API/mockData)
     var gln   = d.empikGLN   || '';
     var order = d.empikOrder || '';
     var salon = d.empikSalon || '';
 
-    // Fallback: jeśli brakuje GLN lub numeru zamówienia — parsuj z pola uwagi
+    // Fallback: parsuj z pola uwagi gdy brakuje strukturalnych pól
     if((!gln || !order) && d.uwagi) {
       var parsed = parseEmpikFromUwagi(d.uwagi);
       if(!gln   && parsed.empikGLN)   gln   = parsed.empikGLN;
@@ -1331,15 +2271,19 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     state.empikGLN = gln;
     state.empikSalonName = salon;
 
-    // Lookup: 1) przez GLN (preferowany), 2) fallback przez klucz z nazwy
+    // Lookup: 1) przez GLN (preferowany), 2) fallback przez klucz z nazwy (z normalizacją PL)
     var matched = null;
-    if(state.empikGLN && empikSalonDB[state.empikGLN]){
-      matched = empikSalonDB[state.empikGLN];
+    if(gln && empikSalonDB[gln]){
+      matched = empikSalonDB[gln];
     } else {
-      // Fallback: szukaj po fragmencie nazwy w kluczach zaczynających od '_'
-      var salonLower = state.empikSalonName.toLowerCase();
+      var salonNorm = normalizePL(salon)
+        .replace(/\bsalon\b/g,'').replace(/\bsklep\b/g,'').replace(/\bempik\b/g,'').trim();
       Object.keys(empikSalonDB).forEach(function(k){
-        if(k.charAt(0)==='_' && salonLower.indexOf(k.slice(1).replace(/_/g,' '))!==-1) matched=empikSalonDB[k];
+        if(matched) return;
+        if(k.charAt(0)==='_'){
+          var keyNorm = k.slice(1).replace(/_/g,' ');
+          if(salonNorm.indexOf(keyNorm) !== -1) matched = empikSalonDB[k];
+        }
       });
     }
 
@@ -1347,7 +2291,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       state.empikSalonName = matched.name;
       state.selectedSalonAddr = matched.addr;
     } else {
-      state.selectedSalonAddr = '⏳ Adres do uzupełnienia — ' + state.empikSalonName;
+      state.selectedSalonAddr = '⏳ Adres do uzupełnienia — ' + salon;
     }
     state.addr = state.selectedSalonAddr;
 
@@ -1381,13 +2325,15 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     });
 
     optContainer.innerHTML = options.map(function(o, i){
-      var glnTag = o.gln !== '—'
-        ? '<span style="font-size:10px;font-family:\'JetBrains Mono\',monospace;color:var(--tx-muted);margin-left:6px">GLN '+o.gln+'</span>'
-        : '<span style="font-size:10px;color:var(--red-hi);margin-left:6px">GLN nieznany</span>';
+      var hasGln = o.gln !== '—';
+      var glnTag = hasGln
+        ? '<span class="empik-salon-gln">GLN ' + o.gln + '</span>'
+        : '<span class="empik-salon-gln unknown">GLN nieznany</span>';
       return '<div class="empik-salon-item'+(o.selected?' selected':'')+'" data-action="selectSalon" data-salon-idx="'+i+'" data-salon-name="'+encodeURIComponent(o.name)+'" data-salon-addr="'+encodeURIComponent(o.addr)+'">'
         +'<div class="empik-salon-check"></div>'
-        +'<div style="flex:1"><div class="empik-salon-name" style="display:flex;align-items:center">'+o.name+glnTag+'</div>'
+        +'<div class="empik-salon-info"><div class="empik-salon-name">'+o.name+'</div>'
         +'<div class="empik-salon-addr">'+o.addr+'</div></div>'
+        +glnTag
         +'</div>';
     }).join('');
   }
@@ -1418,39 +2364,64 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     var badge = g('empik-sidebar-badge');
     if(badge) badge.style.display='none';
 
-    setTimeout(function(){
-      var d=mockData[num]||{name:'Klient Testowy',addr:'ul. Przykładowa 1, 00-001 Warszawa',phone:'+48 500 000 000',desc:'Towar ogólny',empik:false};
-      Object.assign(state,{docNum:num, name:d.name, addr:d.addr, phone:d.phone, desc:d.desc, isEmpik:false, empikOrderNum:'', empikGLN:'', empikSalonName:'', selectedSalonAddr:'', packageCount:1});
+    if (USE_LIVE_API) {
+      // ── TRYB LIVE: zapytaj backend ──
+      fetch(API_BASE + '/api/document/' + encodeURIComponent(num))
+        .then(function(r){ return r.json(); })
+        .then(function(resp){
+          if (!resp.ok || !resp.data) {
+            toast('err','Nie znaleziono dokumentu', num + ' — sprawdź numer');
+            return;
+          }
+          applyDocData(num, resp.data);
+        })
+        .catch(function(err){
+          console.error('API loadDoc error:', err);
+          toast('err','Błąd połączenia z WF-Mag', err.message || 'Sprawdź serwer backendu');
+        });
+    } else {
+      // ── TRYB DEMO: mock data z opóźnieniem ──
+      setTimeout(function(){
+        var d=mockData[num]||{name:'Klient Testowy',addr:'ul. Przykładowa 1, 00-001 Warszawa',phone:'+48 500 000 000',desc:'Towar ogólny',empik:false};
+        applyDocData(num, {
+          name: d.name, addr: d.addr, phone: d.phone, desc: d.desc,
+          empik: d.empik, empikGLN: d.empikGLN||'', empikOrder: d.empikOrder||'',
+          empikSalon: d.empikSalon||'', uwagi: d.uwagi||'',
+        });
+      }, 350);
+    }
+  }
 
-      // Empik check
-      if(d.empik) detectEmpik(num, d);
+  function applyDocData(num, d){
+    Object.assign(state,{docNum:num, name:d.name, addr:d.addr, phone:d.phone, desc:d.desc, isEmpik:false, empikOrderNum:'', empikGLN:'', empikSalonName:'', selectedSalonAddr:'', packageCount:1});
 
-      // sidebar
-      g('docBadge').textContent = num;
-      var typeMatch = num.match(/^([A-Z]+)\//);
-      var typeStr = typeMatch ? typeMatch[1] : 'WZ';
-      var tb = g('docTypeBadge');
-      if(tb){
-        tb.textContent = typeStr;
-        tb.style.cssText='';
-        if(typeStr==='FV') tb.style.cssText='background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.28)';
-        else if(typeStr==='MW') tb.style.cssText='background:rgba(20,184,166,.15);color:#99f6e4;border:1px solid rgba(20,184,166,.28)';
-      }
-      g('d-name').textContent = d.name;
-      g('d-addr').textContent = state.addr || d.addr || '⏳ Adres — do rozpoznania';
-      g('d-phone').textContent = d.phone;
-      g('d-desc').textContent = d.desc;
-      g('docPreview').classList.add('visible');
+    // Empik check
+    if(d.empik) detectEmpik(num, d);
 
-      // reset pkg count display
-      updatePkgDisplay();
+    // sidebar
+    g('docBadge').textContent = num;
+    var typeMatch = num.match(/^([A-Z]+)\//);
+    var typeStr = typeMatch ? typeMatch[1] : 'WZ';
+    var tb = g('docTypeBadge');
+    if(tb){
+      tb.textContent = typeStr;
+      tb.style.cssText='';
+      if(typeStr==='FV') tb.style.cssText='background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.28)';
+      else if(typeStr==='MW') tb.style.cssText='background:rgba(20,184,166,.15);color:#99f6e4;border:1px solid rgba(20,184,166,.28)';
+    }
+    g('d-name').textContent = d.name;
+    g('d-addr').textContent = state.addr || d.addr || '⏳ Adres — do rozpoznania';
+    g('d-phone').textContent = d.phone;
+    g('d-desc').textContent = d.desc;
+    g('docPreview').classList.add('visible');
 
-      if(state.isEmpik){
-        toast('info','Empik — rozpoznany 🟣', 'Salon: '+state.empikSalonName+' · Zam. '+state.empikOrderNum);
-      } else {
-        toast('info','Dokument załadowany', num+' · '+d.name);
-      }
-    },350);
+    updatePkgDisplay();
+
+    if(state.isEmpik){
+      toast('info','Empik — rozpoznany 🟣', 'Salon: '+state.empikSalonName+' · Zam. '+state.empikOrderNum);
+    } else {
+      toast('info','Dokument załadowany', num+' · '+d.name);
+    }
   }
 
   function clearDoc(){
@@ -1539,53 +2510,94 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     g('printButtons').style.display='none';
     g('loadingPrint').classList.add('show');
     g('loadingMsg').innerHTML = pkg > 1
-      ? 'Generowanie '+pkg+' listów przewozowych…<br>Wysyłka do drukarki GODEX RT700…'
-      : 'Generowanie listu przewozowego…<br>Wysyłka do drukarki GODEX RT700…';
+      ? 'Generowanie '+pkg+' listów przewozowych…<br>Wysyłka do GLS ADE API…'
+      : 'Generowanie listu przewozowego…<br>Wysyłka do GLS ADE API…';
     toast('info','Drukowanie…','Generowanie etykiet GLS ('+pkg+' szt.)');
-    setTimeout(function(){
-      g('loadingPrint').classList.remove('show');
-      g('printButtons').style.display='flex';
 
-      // Generate tracking numbers for each package
-      var trackings = [];
-      for(var i=0;i<pkg;i++){
-        trackings.push('00'+Math.floor(Math.random()*1e11).toString().padStart(11,'0')+'PL');
-      }
+    if (USE_LIVE_API) {
+      // ── TRYB LIVE: wyślij do backendu → GLS API ──
+      fetch(API_BASE + '/api/print', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          docNum:       state.docNum,
+          name:         state.name,
+          addr:         state.addr,
+          phone:        state.phone,
+          desc:         state.desc,
+          weight:       state.weight,
+          packageCount: state.packageCount,
+          uwagi:        state.uwagi,
+          isEmpik:      state.isEmpik,
+          empikOrderNum:state.empikOrderNum,
+        }),
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(resp){
+        g('loadingPrint').classList.remove('show');
+        g('printButtons').style.display='flex';
 
-      // Build success screen
-      var isSingle = pkg===1;
-      g('successTitle').textContent = isSingle ? 'Etykieta wydrukowana!' : pkg+' etykiet wydrukowanych!';
-      g('successSub').innerHTML = isSingle
-        ? 'List przewozowy wysłany do GODEX RT700.<br>Paczka gotowa do nadania kurierowi GLS.'
-        : pkg+' listów przewozowych wysłanych do GODEX RT700.<br>Paczki gotowe do nadania kurierowi GLS.';
-      g('trackingNote').textContent = isSingle ? 'Numer śledzenia przesyłki GLS' : 'Numery śledzenia przesyłek GLS';
+        if (!resp.ok) {
+          toast('err','Błąd GLS API', resp.error || 'Nieznany błąd');
+          return;
+        }
 
-      // Tracking list
-      g('trackingList').innerHTML = trackings.map(function(tr, i){
-        return '<div class="tracking-item">'
-          +'<span class="tracking-item-badge">Paczka '+(i+1)+'/'+pkg+'</span>'
-          +'<span class="tracking-item-num">'+tr+'</span>'
-          +'</div>';
-      }).join('');
-
-      // History
-      var now=new Date();
-      var t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-      histArr.unshift({
-        docNum:state.docNum, name:state.name,
-        weight:state.weight, tracking:trackings[0],
-        trackings:trackings, pkg:pkg, time:t,
-        isEmpik:state.isEmpik, salonName:state.empikSalonName
+        finishPrint(resp.trackingNumbers);
+      })
+      .catch(function(err){
+        g('loadingPrint').classList.remove('show');
+        g('printButtons').style.display='flex';
+        toast('err','Błąd połączenia', err.message || 'Sprawdź serwer backendu');
       });
-      state.counter += pkg;
-      g('sidebarCounter').textContent=state.counter;
-      g('historyCount').textContent=histArr.length;
-      g('counterRight').textContent=state.counter+' szt.';
-      renderHistory();
-      setStep(4,false);
-      launchConfetti();
-      toast('ok','Wydrukowano!', state.name+' · '+state.weight+' kg · '+pkg+' szt.');
-    }, pkg > 1 ? 2800 : 2200);
+
+    } else {
+      // ── TRYB DEMO: symuluj opóźnienie ──
+      setTimeout(function(){
+        g('loadingPrint').classList.remove('show');
+        g('printButtons').style.display='flex';
+
+        var trackings = [];
+        for(var i=0;i<pkg;i++){
+          trackings.push('00'+Math.floor(Math.random()*1e11).toString().padStart(11,'0')+'PL');
+        }
+        finishPrint(trackings);
+      }, pkg > 1 ? 2800 : 2200);
+    }
+  }
+
+  function finishPrint(trackings){
+    var pkg = trackings.length;
+    var isSingle = pkg===1;
+
+    g('successTitle').textContent = isSingle ? 'Etykieta wydrukowana!' : pkg+' etykiet wydrukowanych!';
+    g('successSub').innerHTML = isSingle
+      ? 'List przewozowy wysłany do GODEX RT700.<br>Paczka gotowa do nadania kurierowi GLS.'
+      : pkg+' listów przewozowych wysłanych do GODEX RT700.<br>Paczki gotowe do nadania kurierowi GLS.';
+    g('trackingNote').textContent = isSingle ? 'Numer śledzenia przesyłki GLS' : 'Numery śledzenia przesyłek GLS';
+
+    g('trackingList').innerHTML = trackings.map(function(tr, i){
+      return '<div class="tracking-item">'
+        +'<span class="tracking-item-badge">Paczka '+(i+1)+'/'+pkg+'</span>'
+        +'<span class="tracking-item-num">'+tr+'</span>'
+        +'</div>';
+    }).join('');
+
+    var now=new Date();
+    var t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+    histArr.unshift({
+      docNum:state.docNum, name:state.name,
+      weight:state.weight, tracking:trackings[0],
+      trackings:trackings, pkg:pkg, time:t,
+      isEmpik:state.isEmpik, salonName:state.empikSalonName
+    });
+    state.counter += pkg;
+    g('sidebarCounter').textContent=state.counter;
+    g('historyCount').textContent=histArr.length;
+    g('counterRight').textContent=state.counter+' szt.';
+    renderHistory();
+    setStep(4,false);
+    launchConfetti();
+    toast('ok','Wydrukowano!', state.name+' · '+state.weight+' kg · '+pkg+' szt.');
   }
 
   function renderHistory(){
