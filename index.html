@@ -1122,13 +1122,13 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
 /* TOP HERO */
 .popup-hero {
-  padding: 36px 36px 28px;
+  padding: 48px 48px 40px;
   border-bottom: 1px solid rgba(255,255,255,.06);
   position: relative;
 }
 .popup-hero-top {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 36px;
 }
 .popup-logo {
   height: 22px;
@@ -1153,11 +1153,11 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .popup-eyebrow {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 3px; color: var(--tx-muted);
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .popup-title {
   font-size: 32px; font-weight: 900; color: #F8FAFC;
-  letter-spacing: -.6px; line-height: 1.1; margin-bottom: 10px;
+  letter-spacing: -.6px; line-height: 1.1; margin-bottom: 20px;
 }
 .popup-title span {
   background: linear-gradient(90deg, var(--blue-hi), var(--teal-hi));
@@ -1165,7 +1165,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   background-clip: text;
 }
 .popup-sub {
-  font-size: 14px; color: var(--tx-tertiary); line-height: 1.6;
+  font-size: 15px; color: var(--tx-tertiary); line-height: 1.6; margin-bottom: 10px;
 }
 
 /* PRINTER STATUS PILL */
@@ -1188,9 +1188,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
 /* STEPS */
 .popup-steps-wrap {
-  padding: 24px 36px;
+  padding: 32px 48px;
   border-bottom: 1px solid rgba(255,255,255,.06);
-  display: flex; flex-direction: column; gap: 4px;
+  display: flex; flex-direction: column; gap: 10px;
 }
 .popup-steps-title {
   font-size: 10px; font-weight: 700; text-transform: uppercase;
@@ -1233,17 +1233,9 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
 /* FOOTER / CTA */
 .popup-footer {
-  padding: 24px 36px;
+  padding: 32px 48px;
   display: flex; flex-direction: column; gap: 14px;
 }
-.popup-note {
-  display: flex; align-items: flex-start; gap: 10px;
-  background: rgba(245,158,11,.07);
-  border: 1px solid rgba(245,158,11,.18);
-  border-radius: 10px; padding: 12px 16px;
-  font-size: 12px; color: #9CA3AF; line-height: 1.55;
-}
-.popup-note-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
 .btn-go {
   width: 100%; position: relative; overflow: hidden;
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 55%, #1e40af 100%);
@@ -1290,15 +1282,181 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .hd-c-name {font-size:14px;font-weight:700;color:var(--tx-primary);margin-bottom:3px}
 .hd-c-email{color:var(--blue-hi);font-size:12px;text-decoration:none}
 .hd-c-email:hover{text-decoration:underline}
+
+/* ═══════════════════════════════
+   LOGIN SCREEN
+═══════════════════════════════ */
+.login-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(3,7,18,.92);
+  backdrop-filter: blur(28px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 24px; transition: opacity .4s ease-out, transform .4s ease-out;
+}
+.login-overlay::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, rgba(59,130,246,0.12), transparent 70%);
+}
+.login-overlay.hidden {
+  opacity: 0; pointer-events: none; transform: scale(1.02);
+}
+
+.login-card {
+  background: linear-gradient(160deg, #0d1729 0%, #0a1020 60%, #0d1423 100%);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 24px;
+  padding: 56px 48px; width: 100%; max-width: 680px;
+  box-shadow: var(--sh2), 0 0 100px rgba(59,130,246,.08);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+}
+.login-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,.5), rgba(20,184,166,.4), transparent);
+}
+
+.login-title {
+  font-size: 32px; font-weight: 900; 
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 12px; letter-spacing: -.6px; text-align: center;
+}
+.login-sub {
+  font-size: 15px; color: var(--tx-secondary);
+  margin-bottom: 40px; text-align: center;
+}
+
+.login-avatars {
+  display: flex; gap: 24px; width: 100%; margin-bottom: 32px;
+}
+.login-avatar-card {
+  flex: 1;
+  background: rgba(255,255,255,.03);
+  border: 2px solid rgba(255,255,255,.06);
+  border-radius: 20px;
+  padding: 28px 16px;
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer; transition: all .2s cubic-bezier(.16,1,.3,1);
+}
+.login-avatar-card:hover {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.12);
+  transform: translateY(-2px);
+}
+.login-avatar-card.active {
+  background: rgba(59,130,246,.1);
+  border-color: var(--blue);
+  box-shadow: 0 8px 32px rgba(59,130,246,.25);
+  transform: translateY(-2px);
+}
+.login-avatar-card.active .login-avatar-img { transform: scale(1.08); box-shadow: 0 0 0 3px var(--blue-hi), 0 8px 16px rgba(59,130,246,.4); border-color: transparent; }
+
+.login-avatar-img {
+  width: 84px; height: 84px; border-radius: 50%; object-fit: cover;
+  margin-bottom: 16px; transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 6px 16px rgba(0,0,0,.4);
+  border: 2px solid rgba(255,255,255,.1);
+}
+.login-avatar-name {
+  font-size: 18px; font-weight: 700; color: var(--tx-primary);
+  margin-bottom: 6px;
+}
+.login-avatar-role {
+  font-size: 11.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .5px; color: var(--tx-muted);
+}
+.login-avatar-card.active .login-avatar-role { color: var(--blue-hi); }
+
+.login-form {
+  width: 100%; overflow: hidden;
+  display: flex; flex-direction: column; gap: 16px;
+  max-height: 0; opacity: 0; transition: all .3s ease;
+}
+.login-form.visible {
+  max-height: 150px; opacity: 1; padding-top: 8px;
+}
+
+.pw-input-wrap { position: relative; }
+.pw-input {
+  width: 100%; background: rgba(0,0,0,.2);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  padding: 16px 20px;
+  font-family: 'Inter', sans-serif; font-size: 16px; color: var(--tx-primary);
+  outline: none; transition: all .2s; text-align: center; letter-spacing: 2.5px;
+}
+.pw-input:focus {
+  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+.pw-input::placeholder { letter-spacing: 0; color: var(--tx-muted); }
+
+.pw-error {
+  color: var(--red-hi); font-size: 12px; font-weight: 600;
+  text-align: center; position: absolute; bottom: -20px; left: 0; right: 0;
+  opacity: 0; transition: opacity .2s;
+}
+.pw-error.show { opacity: 1; }
+.shake { animation: shake .4s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.login-btn {
+  width: 100%; background: linear-gradient(135deg, var(--blue) 0%, #1d4ed8 100%);
+  color: #fff; border: none; border-radius: 14px;
+  padding: 16px; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all .2s; box-shadow: 0 4px 12px rgba(59,130,246,.3);
+}
+.login-btn:hover {
+  transform: translateY(-1px); box-shadow: 0 6px 16px rgba(59,130,246,.4);
+}
 </style>
 </head>
 <body>
+
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <img src="https://studiohenry.pl/wp-content/uploads/2020/03/logo-henry.png" alt="Henry" style="height: 28px; filter: brightness(0) invert(0.8); margin-bottom: 32px;">
+    <div class="login-title">Witaj w systemie</div>
+    <div class="login-sub">Wybierz swój profil logowania, aby kontynuować</div>
+    
+    <div class="login-avatars">
+      <div class="login-avatar-card" data-user="henry" id="avatarHenry">
+        <img src="assets/avatar_henry.png" class="login-avatar-img" alt="Henry">
+        <div class="login-avatar-name">Henry</div>
+        <div class="login-avatar-role">Właściciel</div>
+      </div>
+      <div class="login-avatar-card" data-user="piotr" id="avatarPiotr">
+        <img src="assets/avatar_piotr.png" class="login-avatar-img" alt="Piotr">
+        <div class="login-avatar-name">Piotr</div>
+        <div class="login-avatar-role">Twórca techniczny</div>
+      </div>
+      <div class="login-avatar-card" data-user="magazyn" id="avatarMagazyn">
+        <img src="assets/avatar_magazyn.png" class="login-avatar-img" alt="Magazyn">
+        <div class="login-avatar-name">Marek</div>
+        <div class="login-avatar-role">Magazynier</div>
+      </div>
+    </div>
+
+    <div class="login-form" id="loginForm">
+      <div class="pw-input-wrap">
+        <input type="password" class="pw-input" id="loginPassword" placeholder="Hasło" autocomplete="new-password">
+        <div class="pw-error" id="loginError">Nieprawidłowe hasło</div>
+      </div>
+      <button class="login-btn" id="loginSubmitBtn">Zaloguj się</button>
+    </div>
+  </div>
+</div>
 
 <canvas id="confettiCanvas"></canvas>
 <div class="toast-container" id="toastContainer"></div>
 
 <!-- INTRO -->
-<div class="overlay" id="introOverlay">
+<div class="overlay hidden" id="introOverlay">
   <div class="popup">
 
     <!-- Hero section -->
@@ -1307,7 +1465,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
         <img src="https://studiohenry.pl/wp-content/uploads/2020/03/logo-henry.png" class="popup-logo" alt="Henry" onerror="this.style.display='none'">
         <div class="popup-version-badge">
           <span class="popup-version-dot"></span>
-          v2.0 · Live
+          v2.0 · Live <span id="introUserBadge" style="margin-left:8px; opacity:0.8;"></span>
         </div>
       </div>
       <div class="popup-eyebrow">System logistyczny</div>
@@ -1353,10 +1511,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
     <!-- Footer CTA -->
     <div class="popup-footer">
-      <div class="popup-note">
-        <div class="popup-note-icon">💡</div>
-        <div>Historia wydruków widoczna w panelu po prawej. Problemy? Kliknij <strong style="color:var(--tx-primary)">?</strong> w nagłówku aplikacji.</div>
-      </div>
       <button class="btn-go" data-action="closeIntro">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Rozpocznij pracę
@@ -1873,7 +2027,8 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
     empikSalonName: '',
     empikGLN: '',
     selectedSalonAddr: '',
-    uwagi: ''
+    uwagi: '',
+    currentUser: null
   };
   var histArr = [];
   var activeFilter = 'all';
@@ -2694,6 +2849,74 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       activeFilter=node.dataset.filter;
       document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.toggle('active',b===node); });
       applyFilter();
+    }
+  });
+
+  /* ═══ LOGIN LOGIC ═══ */
+  var users = {
+    'henry': 'henry123',
+    'piotr': 'piotr123',
+    'magazyn': 'magazyn123'
+  };
+  var selectedAvatar = null;
+
+  document.querySelectorAll('.login-avatar-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('.login-avatar-card').forEach(function(c) { c.classList.remove('active'); });
+      this.classList.add('active');
+      selectedAvatar = this.dataset.user;
+      var form = g('loginForm');
+      form.classList.add('visible');
+      var pwInput = g('loginPassword');
+      pwInput.value = '';
+      g('loginError').classList.remove('show');
+      pwInput.focus();
+    });
+  });
+
+  g('loginPassword').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') g('loginSubmitBtn').click();
+  });
+
+  g('loginSubmitBtn').addEventListener('click', function() {
+    if (!selectedAvatar) return;
+    var pw = g('loginPassword').value;
+    var err = g('loginError');
+    if (users[selectedAvatar] === pw) {
+      // Success
+      state.currentUser = selectedAvatar;
+      err.classList.remove('show');
+      
+      // Update UI with user info
+      var userName = selectedAvatar === 'henry' ? 'Henry (Właściciel)' : 
+                     selectedAvatar === 'piotr' ? 'Piotr (Twórca)' : 'Marek (Magazynier)';
+      var avatarSrc = selectedAvatar === 'henry' ? 'assets/avatar_henry.png' : 
+                      selectedAvatar === 'piotr' ? 'assets/avatar_piotr.png' : 'assets/avatar_magazyn.png';
+      var imgTag = '<img src="' + avatarSrc + '" style="width:18px;height:18px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px;box-shadow:0 0 4px rgba(0,0,0,.5);">';
+      g('introUserBadge').innerHTML = imgTag + userName;
+      
+      // Update sidebar title to show who is logged in
+      var topbarTitle = g('topbarTitle');
+      if(topbarTitle) topbarTitle.innerHTML += ' <span style="font-size:12px; opacity:0.6; margin-left:10px; font-weight:normal;">Zalogowano: ' + imgTag + userName + '</span>';
+
+      var overlay = g('loginOverlay');
+      overlay.style.opacity = '0';
+      overlay.style.transform = 'scale(1.05)';
+      setTimeout(function() {
+        overlay.classList.add('hidden');
+        // Pokaż Intro jak dawniej
+        g('introOverlay').classList.remove('hidden');
+      }, 400);
+      
+    } else {
+      // Fail
+      err.classList.add('show');
+      var form = g('loginForm');
+      form.classList.remove('shake');
+      void form.offsetWidth; // trigger reflow
+      form.classList.add('shake');
+      g('loginPassword').value = '';
+      g('loginPassword').focus();
     }
   });
 
