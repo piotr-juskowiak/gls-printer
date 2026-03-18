@@ -1373,26 +1373,34 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   max-height: 0; opacity: 0; transition: all .3s ease;
 }
 .login-form.visible {
-  max-height: 150px; opacity: 1; padding-top: 8px;
+  max-height: 220px; opacity: 1; padding-top: 8px;
 }
 
-.pw-input-wrap { position: relative; }
+.pw-input-wrap { position: relative; display: flex; align-items: center; }
+.pw-input-icon {
+  position: absolute; left: 16px; color: var(--tx-muted);
+  pointer-events: none; opacity: 0.7; transition: color .2s, opacity .2s;
+}
 .pw-input {
-  width: 100%; background: rgba(0,0,0,.2);
-  border: 1px solid rgba(255,255,255,.1);
+  width: 100%; background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.08);
   border-radius: 14px;
-  padding: 16px 20px;
+  padding: 16px 20px 16px 44px;
   font-family: 'Inter', sans-serif; font-size: 16px; color: var(--tx-primary);
-  outline: none; transition: all .2s; text-align: center; letter-spacing: 2.5px;
+  outline: none; transition: all .2s; text-align: left; letter-spacing: 2px;
 }
 .pw-input:focus {
-  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+  border-color: var(--blue-hi); background: rgba(0,0,0,.4);
+  box-shadow: 0 0 0 4px rgba(59,130,246,.15);
 }
-.pw-input::placeholder { letter-spacing: 0; color: var(--tx-muted); }
+.pw-input:focus + .pw-input-icon, .pw-input-wrap:focus-within .pw-input-icon {
+  color: var(--blue-hi); opacity: 1;
+}
+.pw-input::placeholder { letter-spacing: 0; color: var(--tx-tertiary); font-weight: 400; }
 
 .pw-error {
-  color: var(--red-hi); font-size: 12px; font-weight: 600;
-  text-align: center; position: absolute; bottom: -20px; left: 0; right: 0;
+  color: var(--red-hi); font-size: 13px; font-weight: 600;
+  text-align: center; position: absolute; bottom: -24px; left: 0; right: 0;
   opacity: 0; transition: opacity .2s;
 }
 .pw-error.show { opacity: 1; }
@@ -1409,10 +1417,17 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   color: #fff; border: none; border-radius: 14px;
   padding: 16px; font-size: 15px; font-weight: 700;
   cursor: pointer; transition: all .2s; box-shadow: 0 4px 12px rgba(59,130,246,.3);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .login-btn:hover {
-  transform: translateY(-1px); box-shadow: 0 6px 16px rgba(59,130,246,.4);
+  transform: translateY(-1px); box-shadow: 0 6px 16px rgba(59,130,246,.4); filter: brightness(1.1);
 }
+
+.forgot-pw {
+  color: var(--tx-muted); font-size: 13px; text-align: center;
+  cursor: pointer; transition: color .2s; margin-top: 4px;
+}
+.forgot-pw:hover { color: var(--blue-hi); text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -1444,10 +1459,15 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
     <div class="login-form" id="loginForm">
       <div class="pw-input-wrap">
-        <input type="password" class="pw-input" id="loginPassword" placeholder="Hasło" autocomplete="new-password">
+        <svg class="pw-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <input type="password" class="pw-input" id="loginPassword" placeholder="Wprowadź hasło" autocomplete="new-password">
         <div class="pw-error" id="loginError">Nieprawidłowe hasło</div>
       </div>
-      <button class="login-btn" id="loginSubmitBtn">Zaloguj się</button>
+      <button class="login-btn" id="loginSubmitBtn">
+        Zaloguj się
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+      <div class="forgot-pw" id="forgotPwBtn">Zapomniałeś hasła?</div>
     </div>
   </div>
 </div>
@@ -2876,6 +2896,10 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
   g('loginPassword').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') g('loginSubmitBtn').click();
+  });
+
+  g('forgotPwBtn').addEventListener('click', function() {
+    showToast('Skontaktuj się z administratorem (Piotr), aby zresetować hasło.', false);
   });
 
   g('loginSubmitBtn').addEventListener('click', function() {
