@@ -367,13 +367,16 @@ button,[data-action],.rail-btn,.p1-tab,.doc-row,.nk,
 .topbar-tag{
   font-size:10px;font-weight:700;letter-spacing:.8px;padding:6px 14px;
   border-radius:20px;text-transform:uppercase;
-  background:rgba(59,130,246,.1);color:var(--blue-hi);
-  border:1px solid rgba(59,130,246,.22);
+  background:rgba(255,255,255,.05);color:var(--tx-muted);
+  border:1px solid rgba(255,255,255,.1);
   display:flex;align-items:center;gap:6px;
+  transition:all .3s ease;
 }
-.topbar-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue-hi);box-shadow:0 0 6px rgba(96,165,250,.8);animation:blink 2.5s infinite}
-.topbar-tag-teal{background:rgba(20,184,166,.1);color:var(--teal-hi);border-color:rgba(20,184,166,.22);}
-.topbar-tag-teal::before{background:var(--teal-hi);box-shadow:0 0 6px rgba(45,212,191,.8);}
+.topbar-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);box-shadow:none;animation:none}
+.topbar-tag.status-ok{background:rgba(34,197,94,.1);color:var(--green-hi);border-color:rgba(34,197,94,.22);}
+.topbar-tag.status-ok::before{background:var(--green-hi);box-shadow:0 0 6px rgba(34,197,94,.8);animation:blink 2.5s infinite}
+.topbar-tag.status-err{background:rgba(239,68,68,.1);color:var(--red-hi);border-color:rgba(239,68,68,.22);}
+.topbar-tag.status-err::before{background:var(--red-hi);box-shadow:0 0 6px rgba(239,68,68,.8);animation:blink 1.5s infinite}
 .topbar-btn{width:36px;height:36px;border-radius:var(--r2);background:rgba(255,255,255,.05);border:1px solid var(--b1);color:var(--tx-secondary);font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .topbar-btn:hover{background:rgba(255,255,255,.09);color:var(--tx-primary);border-color:var(--b2)}
 .content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0;scrollbar-width:thin;scrollbar-color:var(--bg-card) transparent;position:relative}
@@ -1707,8 +1710,8 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle"><span class="topbar-title-step">Krok 1 z 3</span>Wybierz dokument</div>
     <div class="topbar-right">
-      <span class="topbar-tag">WF-MAG</span>
-      <span class="topbar-tag topbar-tag-teal">GLS API</span>
+      <span id="indicator-wfmag" class="topbar-tag" title="Łączenie...">WF-MAG</span>
+      <span id="indicator-gls" class="topbar-tag" title="Łączenie...">GLS API</span>
       <button class="topbar-btn" data-action="openHelp">?</button>
     </div>
   </div>
@@ -2297,6 +2300,36 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   }
 
   function g(id){ return document.getElementById(id); }
+
+  /* ═══ HEALTH POLL ═══ */
+  function pollHealth() {
+    if(!USE_LIVE_API) return;
+    fetch(API_BASE + '/api/health', { cache: 'no-store' })
+      .then(function(r){ return r.json(); })
+      .then(function(s){
+        var wf = g('indicator-wfmag');
+        var gls = g('indicator-gls');
+        if(wf) {
+          wf.className = 'topbar-tag ' + (s.sql === 'connected' ? 'status-ok' : 'status-err');
+          wf.title = s.sql === 'connected' ? 'Połączono z WF-Mag' : 'Błąd SQL: ' + s.sql;
+        }
+        if(gls) {
+          gls.className = 'topbar-tag ' + (s.gls === 'connected' ? 'status-ok' : 'status-err');
+          gls.title = s.gls === 'connected' ? 'Połączono z GLS API' : 'Błąd GLS: ' + s.gls;
+        }
+      })
+      .catch(function(e){
+        var wf = g('indicator-wfmag');
+        var gls = g('indicator-gls');
+        if(wf) { wf.className = 'topbar-tag status-err'; wf.title = 'Brak połączenia z Node.js'; }
+        if(gls) { gls.className = 'topbar-tag status-err'; gls.title = 'Brak połączenia z Node.js'; }
+      });
+  }
+
+  if(USE_LIVE_API) {
+    pollHealth();
+    setInterval(pollHealth, 10000); // 10 sekund
+  }
 
   /* ═══ SKELETON ═══ */
   (function initSkeleton(){

@@ -118,7 +118,7 @@ async function fetchDocumentList() {
     FROM dbo.DokHan
     WHERE
       DH_Symbol IN ('WZ','MW','FV')
-      AND CAST(DH_DataDok AS DATE) = CAST(GETDATE() AS DATE)
+      AND DH_DataDok >= DATEADD(day, -14, GETDATE())
       AND (DH_Anulowany IS NULL OR DH_Anulowany = 0)
     ORDER BY DH_DataDok DESC, DH_NrDok DESC
   `;
@@ -469,15 +469,26 @@ app.post('/api/print', async (req, res) => {
  * Status serwera — używany przez frontend do sprawdzenia połączenia
  */
 app.get('/api/health', async (req, res) => {
-  const status = { server: 'ok', sql: 'unknown', timestamp: new Date().toISOString() };
+  const status = { server: 'ok', sql: 'unknown', gls: 'unknown', timestamp: new Date().toISOString() };
 
   try {
-    await getPool();
     const db = await getPool();
     await db.request().query('SELECT 1 AS test');
     status.sql = 'connected';
   } catch (err) {
     status.sql = 'error: ' + err.message;
+  }
+
+  try {
+    await axios.get(process.env.GLS_API_URL || 'https://ade.gls-poland.com/service.php', { timeout: 3000 });
+    // Any kind of response from GLS API means the endpoint exists and network is OK
+    status.gls = 'connected';
+  } catch (err) {
+    if (err.response) {
+      status.gls = 'connected';
+    } else {
+      status.gls = 'error: ' + err.message;
+    }
   }
 
   res.json(status);
