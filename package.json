@@ -4,8 +4,9 @@
   "description": "Backend GLS Printer — WF-Mag SQL + GLS ADE API",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node diagnose.js && node server.js",
+    "dev": "node diagnose.js && nodemon server.js",
+    "diagnose": "node diagnose.js"
   },
   "dependencies": {
     "axios": "^1.6.0",

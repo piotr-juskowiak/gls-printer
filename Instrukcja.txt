@@ -1,0 +1,29 @@
+INSTRUKCJA URUCHOMIENIA I OBSŁUGI PROGRAMU GLS PRINTER
+===================================================
+
+1. WYMAGANIA
+- Na komputerze, na którym ma działać aplikacja, musi być zainstalowane środowisko Node.js (do pobrania z nodejs.org).
+- Należy pamiętać, że wszystkie dane logowania do bazy (WF-Mag) oraz systemu GLS, a także dane nadawcy są zapisane w pliku o nazwie ".env" w tym folderze. Przed uruchomieniem w nowym miejscu upewnij się, że są one poprawne.
+
+2. JAK URUCHOMIĆ SERWER I PROGRAM?
+KROK 1: Wejdź do folderu z programem.
+KROK 2: Uruchom serwer klikając dwukrotnie w plik o nazwie "Uruchom program GLS Printer.bat".
+KROK 3: Otworzy się czarne okno terminala, które oznacza, że program ("wnętrzności" aplikacji komunikujące się z bazą i kurierem) zaczął działać. Zostaw to okienko otwarte.
+
+3. JAK KORZYSTAĆ Z PROGRAMU?
+KROK 1: Mając uruchomione czarne okienko serwera, otwórz w oknie przeglądarki internetowej plik "index.html" (zwykle wystarczy po prostu dwukrotnie go kliknąć).
+KROK 2: Zobaczysz interfejs aplikacji GLS Printer do drukowania etykiet z WF-Mag.
+KROK 3: Po zakończeniu pracy możesz zamknąć okno w przeglądarce.
+
+4. JAK WYŁĄCZYĆ PROGRAM?
+- Żeby wyłączyć serwer zamykasz po prostu otwarte wcześniej czarne okienko terminala (wiersz poleceń z uruchomionym serwerem).
+
+5. DOSTĘP Z INNEGO KOMPUTERA W SIECI
+Jeśli chcesz otworzyć interfejs na innym komputerze w tej samej siedzibie:
+1. Komputer z włączonym czarnym okienkiem traktujemy jako serwer.
+2. Na komputerze głównym sprawdzasz w ustawieniach sieci jego lokalny adres IP (zazwyczaj np. 192.168.x.x).
+3. Na drugim komputerze/telefonie musisz otworzyć tę stronę internetową. By to zrobić, udostępnij w sieci lokalnej plik "index.html" tak samo jak inne foldery współdzielone i otwórz ten plik. *Serwer w tle zawsze musi być włączony na komputerze macierzystym.*
+
+Częste błędy i ich rozwiązywanie:
+- Jeśli aplikacja wyświetla błędy przy starcie - być może zapomniano uruchomić skrypt "Uruchom program GLS Printer.bat" - to on łączy interfejs na stronie z bazą SQL!
+- Brak połączenia z bazą danych WF-Mag oznacza, że ​​w konfiguracji (.env) brakuje hasła lub ip komputera jest inne.
